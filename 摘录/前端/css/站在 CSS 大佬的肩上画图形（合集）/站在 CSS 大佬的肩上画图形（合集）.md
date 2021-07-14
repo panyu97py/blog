@@ -551,44 +551,4 @@ text[0].style.animationTimingFunction = "steps("+ text[0].outerText.length +"), 
 
 **效果如下：**
 
-![图片](站在 CSS 大佬的肩上画图形（合集）.assets/640-20210618155128672.gif)typing.gif
-
-**最后啰嗦一下，最近在看《css揭秘》这本书，顺便总结一下个人觉得不错的地方，方便自己在开发的时候可以偷一下懒，节约一下时间成本。如文中有不正确的地方，请留言提醒一下（请轻喷），如果jio得不错，请xdjmm点个赞鼓励一下，支持一下，感谢各位掘友！书中更多功能效果，请点击这里!：http://play.csssecrets.io/**
-
-**关于本文：**
-
-**来源：Leeon**
-
-**https://juejin.cn/post/6969441630289920008**
-
-## 最后
-
-欢迎关注【前端瓶子君】✿✿ヽ(°▽°)ノ✿
-
-回复「算法」，加入前端编程源码算法群，每日一道面试题（工作日），第二天瓶子君都会很认真的解答哟！
-
-回复「交流」，吹吹水、聊聊技术、吐吐槽！
-
-回复「阅读」，每日刷刷高质量好文！
-
-如果这篇文章对你有帮助，「在看」是最大的支持
-
-![前端瓶子君](站在 CSS 大佬的肩上画图形（合集）.assets/0-20210618155128492.png)
-
-**前端瓶子君** 
-
-瓶子君，2021致力于帮助前端开启技术专项+算法之路！
-
-39篇原创内容
-
-
-
-公众号
-
-[ 》》面试官也在看的算法资料《《](https://mp.weixin.qq.com/s?__biz=MzUzNjk5MTE1OQ==&mid=2247505199&idx=2&sn=3a59580b622ca1b1e060a77f0585f419&chksm=faef51f7cd98d8e15dc7e3c84eb26eaf0b1de5828293702c5c4a8ac42445f7b5fa344346b363&mpshare=1&scene=1&srcid=0616sFaAL6cDavBRHdJjHFE5&sharer_sharetime=1623849873567&sharer_shareid=4f8559b638a00ade6b7580d0c1aeb4aa&key=647b3f218ff636cdfef3db592d0668feca879ebe8ebdffac03c1a4c25c25f32c22b9c4ec49365b81b3f8238752a8c7f5af2eba15c9d54c3c35cd35ddaf101be6a9cb87618452dadc0957442093a0fa4319aa13939e34986aef0a7a1bfda2d59f5d8185b3f23c68ca9593b048e8f73de7edd365af11d2c234757a83834c324239&ascene=1&uin=MjUyMzE1MjE2MA%3D%3D&devicetype=iMac+MacBookPro16%2C1+OSX+OSX+10.16+build(20D91)&version=13000310&nettype=WIFI&lang=zh_CN&fontScale=100&exportkey=ARf3OCl%2Bn4FHB8JDT7Pi9wE%3D&pass_ticket=PTTr4L75GtIV8Ozct5ynxM1Vrt18ogzyPrXid5mb59JEFo6n4v21OQjzYMAp1B%2BU&wx_header=0&fontgear=2.000000)
-
-“在看和转发”就是最大的支持
-
-阅读 1011
-
-赞11在看11
+![图片](站在 CSS 大佬的肩上画图形（合集）.assets/640-20210618155128672.gif)
