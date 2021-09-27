@@ -2,7 +2,7 @@
 
 先上张图，如何使用纯 CSS 制作如下效果？
 
-[![underline](Untitled.assets/37917279-8f6fd236-3150-11e8-8b8d-fca96d1d6001-20210704092802174.gif)](https://user-images.githubusercontent.com/8554143/37917279-8f6fd236-3150-11e8-8b8d-fca96d1d6001.gif)
+[![underline](不可思议的纯CSS导航栏下划线跟随效果.assets/37917279-8f6fd236-3150-11e8-8b8d-fca96d1d6001-20210704092802174.gif)](https://user-images.githubusercontent.com/8554143/37917279-8f6fd236-3150-11e8-8b8d-fca96d1d6001.gif)
 
 在继续阅读下文之前，你可以先缓一缓。尝试思考一下上面的效果或者动手尝试一下，不借助 JS ，能否巧妙的实现上述效果。
 
@@ -53,7 +53,7 @@ li {
 
 那么，可能现在是这样子的（li 之间是相连在一起的，li 间的间隙使用 `padding` 产生）：
 
-[![image](Untitled.assets/37945781-6fed50f0-31b4-11e8-9d32-6ea3f455ad6e-20210704092802010.png)](https://user-images.githubusercontent.com/8554143/37945781-6fed50f0-31b4-11e8-9d32-6ea3f455ad6e.png)
+[![image](不可思议的纯CSS导航栏下划线跟随效果.assets/37945781-6fed50f0-31b4-11e8-9d32-6ea3f455ad6e-20210704092802010.png)](https://user-images.githubusercontent.com/8554143/37945781-6fed50f0-31b4-11e8-9d32-6ea3f455ad6e.png)
 
 ### 默认隐藏，动画效果
 
@@ -101,7 +101,7 @@ li:hover::before {
 
 得到，如下效果：
 
-[![navunderline](Untitled.assets/37947171-2a52c720-31bc-11e8-8791-dbe95b45cd6c-20210704092802529.gif)](https://user-images.githubusercontent.com/8554143/37947171-2a52c720-31bc-11e8-8791-dbe95b45cd6c.gif)
+[![navunderline](不可思议的纯CSS导航栏下划线跟随效果.assets/37947171-2a52c720-31bc-11e8-8791-dbe95b45cd6c-20210704092802529.gif)](https://user-images.githubusercontent.com/8554143/37947171-2a52c720-31bc-11e8-8791-dbe95b45cd6c.gif)
 
 ## 左移左出，右移右出
 
@@ -111,7 +111,7 @@ OK，感觉离成功近了一步。现在还剩下一个最难的问题：
 
 我们仔细看看，现在的效果：
 
-[![twounderline](Untitled.assets/37948755-3113c1c4-31c4-11e8-8472-2c85a645d56c-20210704092802492.gif)](https://user-images.githubusercontent.com/8554143/37948755-3113c1c4-31c4-11e8-8472-2c85a645d56c.gif)
+[![twounderline](不可思议的纯CSS导航栏下划线跟随效果.assets/37948755-3113c1c4-31c4-11e8-8472-2c85a645d56c-20210704092802492.gif)](https://user-images.githubusercontent.com/8554143/37948755-3113c1c4-31c4-11e8-8472-2c85a645d56c.gif)
 
 当从第一个 `li` 切换到第二个 `li` 的时候，第一个 `li` 下划线收回的方向不正确。所以，可以能我们需要将下划线的初始位置位移一下，设置为 `left: 100%`，这样每次下划线收回的时候，第一个 `li` 就正确了：
 
@@ -133,9 +133,9 @@ li:hover::before {
 ```
 
 看看效果：
-[![twounderline11](Untitled.assets/37949000-421f606c-31c5-11e8-82c1-b200a7d5124f-20210704092802342.gif)](https://user-images.githubusercontent.com/8554143/37949000-421f606c-31c5-11e8-82c1-b200a7d5124f.gif)
+[![twounderline11](不可思议的纯CSS导航栏下划线跟随效果.assets/37949000-421f606c-31c5-11e8-82c1-b200a7d5124f-20210704092802342.gif)](https://user-images.githubusercontent.com/8554143/37949000-421f606c-31c5-11e8-82c1-b200a7d5124f.gif)
 
-额，仔细对比两张图，第二种效果其实是捡了芝麻丢了西瓜。第一个 `li` 的方向是正确了，但是第二个 `li`下划线的移动方向又错误了。[![fxxk](Untitled.assets/37949063-9702bf2a-31c5-11e8-9faf-d2d3a6958833-20210704092802008.jpg)](https://user-images.githubusercontent.com/8554143/37949063-9702bf2a-31c5-11e8-9faf-d2d3a6958833.jpg)
+额，仔细对比两张图，第二种效果其实是捡了芝麻丢了西瓜。第一个 `li` 的方向是正确了，但是第二个 `li`下划线的移动方向又错误了。[![fxxk](不可思议的纯CSS导航栏下划线跟随效果.assets/37949063-9702bf2a-31c5-11e8-9faf-d2d3a6958833-20210704092802008.jpg)](https://user-images.githubusercontent.com/8554143/37949063-9702bf2a-31c5-11e8-9faf-d2d3a6958833.jpg)
 
  
 
@@ -171,7 +171,7 @@ li:hover ~ li::before {
 
 至此，我们想要的效果就实现拉！撒花。看看：
 
-[![underlineawhere](Untitled.assets/37949493-802228ac-31c7-11e8-9343-6c1150827cba-20210704092802531.gif)](https://user-images.githubusercontent.com/8554143/37949493-802228ac-31c7-11e8-9343-6c1150827cba.gif)
+[![underlineawhere](不可思议的纯CSS导航栏下划线跟随效果.assets/37949493-802228ac-31c7-11e8-9343-6c1150827cba-20210704092802531.gif)](https://user-images.githubusercontent.com/8554143/37949493-802228ac-31c7-11e8-9343-6c1150827cba.gif)
 
 效果不错，就是有点僵硬，我们可以适当改变缓动函数以及加上一个动画延迟，就可以实现上述开头里的那个效果了。当然，这些都是锦上添花的点缀。
 
