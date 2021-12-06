@@ -55,7 +55,7 @@ function Provider({ store, context, children }) {
   return <Context.Provider value={contextValue}>{children}</Context.Provider>
 }
 
-复制代码
+
 ```
 
 ## 从源码中provider作用大致是这样的
@@ -127,14 +127,14 @@ export default class Subscription {
 }
 
 
-复制代码
+
 ```
 
 看完 `Provider` 和 `Subscription`源码，我来解释一下两者到底有什么关联，首先`Provider`创建 `Subscription` 时候没有第二个参数，就说明`provider` 中的`Subscription` 不存在 `parentSub` 。 那么再调用`Provider`组件中`useEffect`钩子中`trySubscribe`的时候,会触发`this.store.subscribe` , `subscribe` 就是 `redux` 的 `subscribe` ,此时真正发起了订阅。
 
 ```js
 subscription.onStateChange = subscription.notifyNestedSubs 
-复制代码
+
 ```
 
 有此可知，最终`state`改变，触发的是`notifyNestedSubs`方法。我们再一次看看这个`notifyNestedSubs`。
@@ -144,7 +144,7 @@ subscription.onStateChange = subscription.notifyNestedSubs
 notifyNestedSubs() {
   this.listeners.notify()
 }
-复制代码
+
 ```
 
 最终向当前`Subscription` 的订阅者们发布 `notify`更新。
@@ -230,7 +230,7 @@ function createListenerCollection() {
     }
   }
 }
-复制代码
+
 ```
 
 **batch**
@@ -238,7 +238,7 @@ function createListenerCollection() {
 ```js
 import { unstable_batchedUpdates as batch } from './utils/reactBatchedUpdates'
 setBatch(batch)
-复制代码
+
 ```
 
 我们可以得出结论 `createListenerCollection` 可以产生一个 `listeners` 。 `listeners`的作用。
@@ -266,14 +266,14 @@ setBatch(batch)
 
 ```js
 function connect(mapStateToProps?, mapDispatchToProps?, mergeProps?, options?)
-复制代码
+
 ```
 
 **mapStateToProps**
 
 ```js
 const mapStateToProps = state => ({ todos: state.todos })
-复制代码
+
 ```
 
 作用很简单，组件依赖`redux`的 `state`,映射到业务组件的 `props`中，`state`改变触发,业务组件`props`改变，触发业务组件更新视图。当这个参数没有的时候，当前组件不会订阅 `store` 的改变。
@@ -288,7 +288,7 @@ const mapDispatchToProps = dispatch => {
     reset: () => dispatch({ type: 'RESET' })
   }
 }
-复制代码
+
 ```
 
 将 `redux` 中的`dispatch` 方法，映射到，业务组件的`props`中。
@@ -302,14 +302,14 @@ const mapDispatchToProps = dispatch => {
 * ownProps 组件本身的 props
 */
 (stateProps, dispatchProps, ownProps) => Object
-复制代码
+
 ```
 
 正常情况下，如果没有这个参数，会按照如下方式进行合并，返回的对象可以是，我们自定义的合并规则。我们还可以附加一些属性。
 
 ```js
 { ...ownProps, ...stateProps, ...dispatchProps }
-复制代码
+
 ```
 
 **options**
@@ -324,7 +324,7 @@ const mapDispatchToProps = dispatch => {
   areMergedPropsEqual?: Function, // 当 pure 为 true 时， 比较 经过 mergeProps 合并后的值 ， 是否与之前等  (next: Object, prev: Object) => boolean
   forwardRef?: boolean, //当为true 时候,可以通过ref 获取被connect包裹的组件实例。
 }
-复制代码
+
 ```
 
 `options`可以是如上属性，上面已经标注了每一个属性的作用，这里就不多说了。
@@ -382,7 +382,7 @@ export function createConnect({
 }
 
 export default /*#__PURE__*/ createConnect()
-复制代码
+
 ```
 
 我们先来分析一下整个函数做的事。
@@ -404,7 +404,7 @@ export default /*#__PURE__*/ createConnect()
 export function defaultMergeProps(stateProps, dispatchProps, ownProps) {
   return { ...ownProps, ...stateProps, ...dispatchProps }
 }
-复制代码
+
 ```
 
 这个函数返回了一个新的对象，也就是新的`props`。而且将 业务组件 `props` , `store` 中的 `state` ,和 `dispatch` 结合到一起，形成一个新对象，作为新的 `props` 传递给了业务组件。
@@ -434,7 +434,7 @@ export default function finalPropsSelectorFactory(
     options
   )
 }
-复制代码
+
 ```
 
 `finalPropsSelectorFactory` 的代码很简单， 首先得到真正connect 经过一层代理函数 `mapStateToProps` ,`mapDispatchToProps` ,`mergeProps`。然后调用`selectorFactory` (在`pure`模式下，`selectorFactory` 就是  **`pureFinalPropsSelectorFactory`** ) 。
@@ -501,7 +501,7 @@ export function pureFinalPropsSelectorFactory(
       : handleFirstCall(nextState, nextOwnProps)
   }
 }
-复制代码
+
 ```
 
 这个函数处理逻辑很清晰。大致上做了这些事。通过闭包的形式返回一个函数`pureFinalPropsSelector`。`pureFinalPropsSelector`通过判断是否是第一次初始化组件。
@@ -524,7 +524,7 @@ function Index(){
     return <div> { /* .... */ } </div>
 }
 export default connect(mapStateToProp)(Index)
-复制代码
+
 ```
 
 装饰器模式下:
@@ -540,7 +540,7 @@ class Index extends React.Component{
     }
 }
 
-复制代码
+
 ```
 
 我们上面讲到，`connect`执行 接受 `mapStateToProp` 等参数，最后返回 `connectAdvanced()` ，那么上述例子中`connect`执行第一步`connect(mapStateToProp)===connectAdvanced()`,也就是`connectAdvanced()`执行返回真正的`hoc`,用于包裹我们的业务组件。
@@ -572,7 +572,7 @@ export default function connectAdvanced(
       // WrappedComponent 被 connect 的业务组件本身
   }
 }
-复制代码
+
 ```
 
 `connectAdvanced`接受配置参数 ， 然后返回真正的 `HOC` `wrapWithConnect`。
@@ -588,7 +588,7 @@ connectAdvanced()
 //返回HOC
 wrapWithConnect
 
-复制代码
+
 ```
 
 接下来我们分析一下`wrapWithConnect`到底做了些什么？
@@ -647,7 +647,7 @@ function wrapWithConnect(WrappedComponent) {
     return hoistStatics(Connect, WrappedComponent)
   }
 }
-复制代码
+
 ```
 
 `wrapWithConnect` 的做的事大致分为一下几点：
@@ -677,7 +677,7 @@ class Child extends React.Component{
     }
 }
 export default connect(mapStateToProp)(Child)
-复制代码
+
 ```
 
 **父组件**
@@ -689,7 +689,7 @@ class Father extends React.Compoent{
         return <Child ref={(cur)=> this.child = cur }  { /* 获取到的不是`Child`本身 */ } />
     }
 }
-复制代码
+
 ```
 
 我们无法通过 `ref` 访问到 `Child` 组件。
@@ -698,14 +698,14 @@ class Father extends React.Compoent{
 
 ```js
 connect(mapStateToProp,mapDispatchToProps,mergeProps,{ forwardRef:true  })(Child)
-复制代码
+
 ```
 
 #### 第四步
 
 ```js
 hoistStatics(Connect, WrappedComponent)
-复制代码
+
 ```
 
 最后做的事情就是通过`hoistStatics`库 把子组件`WrappedComponent`的静态方法/属性，继承到父组件`Connect`上。因为在 高阶组件 包装 业务组件的过程中，如果不对静态属性或是方法加以额外处理，是不会被包装后的组件访问到的，所以需要类似`hoistStatics`这样的库，来做处理。
@@ -848,7 +848,7 @@ hoistStatics(Connect, WrappedComponent)
   
       return renderedChild
     }
-复制代码
+
 ```
 
 为了方便大家更直观的理解，我这里保留了影响流程的核心代码，我会**一步步分析** 整个核心部分。想要弄明白这里，需要对 `react-hooks` 和 `provider` 有一些了解。
@@ -892,7 +892,7 @@ function captureWrapperProps(
   lastChildProps.current = actualChildProps //经过 megeprops 之后形成的 prop
   renderIsScheduled.current = false  // 当前组件渲染完成
 }
-复制代码
+
 ```
 
 `captureWrapperProps` 的作用很简单，在一次组件渲染更新后，将上一次 **合并前** 和 **合并后** 的`props`,保存起来。这么做目的是，能过在两次`hoc`执行渲染中，对比`props stateProps`是否发生变化。从而确定是否更新 `hoc`，进一步更新组件。
@@ -936,7 +936,7 @@ function subscribeUpdates(
   return unsubscribeWrapper
 }
 
-复制代码
+
 ```
 
 **这绝对是整个订阅更新的核心，首先声明 `store` 更新订阅传播到此组件时的回调函数`checkForUpdates`把它赋值给`onStateChange`,如果`store`中的`state`发生改变，那么在组件订阅了`state`内容之后，相关联的`state`改变就会触发当前组件的`onStateChange`,来合并得到新的`props`,从而触发组件更新。**
@@ -986,7 +986,7 @@ function subscribeUpdates(
       })
     }
   }
-复制代码
+
 ```
 
 **`checkForUpdates` 通过调用 `childPropsSelector`来形成新的`props`,然后判断之前的 `prop` 和当前新的 `prop` 是否相等。如果相等，证明没有发生变化,无须更新当前组件，那么通过调用`notifyNestedSubs`来通知子代容器组件，检查是否需要更新。如果不相等证明订阅的`store.state`发生变化，那么立即执行`forceComponentUpdateDispatch`来触发组件的更新。**
@@ -1031,7 +1031,7 @@ const renderedWrappedComponent = useMemo(
     ),
     [reactReduxForwardedRef, WrappedComponent, actualChildProps]
 )
-复制代码
+
 ```
 
 # 五 总结
