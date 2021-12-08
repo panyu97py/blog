@@ -23,36 +23,9 @@
       - [微前端框架 之 single-spa 从入门到精通](摘录/未分类/前端微服务/微前端框架 之 single-spa 从入门到精通/微前端框架 之 single-spa 从入门到精通.md)
       - [微前端qiankun从搭建到部署的实践](摘录/未分类/前端微服务/微前端qiankun从搭建到部署的实践/微前端qiankun从搭建到部署的实践.md)
       - [HTML Entry 源码分析](摘录/未分类/前端微服务/HTML Entry 源码分析/HTML Entry 源码分析.md)
-    - [手写一个虚拟DOM库，彻底让你理解diff算法](摘录/未分类/手写一个虚拟DOM库，彻底让你理解diff算法/手写一个虚拟DOM库，彻底让你理解diff算法.md)
-    - Css
-      - [不可思议的纯CSS导航栏下划线跟随效果](摘录/未分类/css/不可思议的纯CSS导航栏下划线跟随效果/不可思议的纯CSS导航栏下划线跟随效果.md)
-      - [用一行CSS代码快速实现镂空邮票、优惠券效果](摘录/未分类/css/用一行CSS代码快速实现镂空邮票、优惠券效果/用一行CSS代码快速实现镂空邮票、优惠券效果.md)
-      - [站在 CSS 大佬的肩上画图形（合集）](摘录/未分类/css/站在 CSS 大佬的肩上画图形（合集）/站在 CSS 大佬的肩上画图形（合集）.md)
     - Js
       - [大文件上传如何做断点续传](摘录/未分类/js/大文件上传如何做断点续传/大文件上传如何做断点续传.md)
-      - [Android 和 IOS 使用 WebViewJavascriptBridge 进行交互方法](摘录/未分类/js/Android 和 IOS 使用 WebViewJavascriptBridge 进行交互方法/Android 和 IOS 使用 WebViewJavascriptBridge 进行交互方法.md)
-    - React
-      - [「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）](摘录/未分类/react/「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）/「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）.md)
-      - [手写系列-实现一个铂金段位的 React](摘录/未分类/react/手写系列-实现一个铂金段位的 React/手写系列-实现一个铂金段位的 React.md)
-      - [一名 vueCoder 总结的 React 基础](摘录/未分类/react/一名 vueCoder 总结的 React 基础/一名 vueCoder 总结的 React 基础.md)
-      - Hook
-        - 源码及实现原理解读
-          - 资料
-            - [react hook源码解析](摘录/未分类/react/Hook/源码及实现原理解读/资料/react hook源码解析/react hook源码解析.md)
-            - [react hook源码解析2(useMemo与useCallback与useRef)](摘录/未分类/react/Hook/源码及实现原理解读/资料/react hook源码解析2(useMemo与useCallback与useRef)/react hook源码解析2(useMemo与useCallback与useRef).md)
-            - [React Hooks: 没有魔法，只是数组](摘录/未分类/react/Hook/源码及实现原理解读/资料/React Hooks: 没有魔法，只是数组/React Hooks: 没有魔法，只是数组.md)
-            - [React Hooks源码解析，原来这么简单～](摘录/未分类/react/Hook/源码及实现原理解读/资料/React Hooks源码解析，原来这么简单～/React Hooks源码解析，原来这么简单～.md)
-        - [Use Ref](摘录/未分类/react/Hook/useRef/useRef.md)
-      - [redux中的connect用法介绍及原理解析](摘录/未分类/react/redux中的connect用法介绍及原理解析/redux中的connect用法介绍及原理解析.md)
-      * [入门学习](摘录/未分类/react/入门学习.md)
-    - React骚操作——jsx遇到template-directiveReact骚操作——jsx遇到template-directiveReact骚操作——jsx遇到template-directive
-      * [React骚操作——jsx遇到template-directive](摘录/未分类/React骚操作——jsx遇到template-directiveReact骚操作——jsx遇到template-directiveReact骚操作——jsx遇到template-directive/React骚操作——jsx遇到template-directive.md)
     - [vr看房实现](摘录/未分类/vr看房实现/vr看房实现.md)
-    - Webpack Babel
-      - [基于webpack修改插件源码，使用自定义文件替换node_modules里面的源码文件](摘录/未分类/webpack&babel/基于webpack修改插件源码，使用自定义文件替换node_modules里面的源码文件/基于webpack修改插件源码，使用自定义文件替换node_modules里面的源码文件.md)
-      - [使用babel插件监控是否遗留合并冲突代码](摘录/未分类/webpack&babel/使用babel插件监控是否遗留合并冲突代码/使用babel插件监控是否遗留合并冲突代码.md)
-      - [手把手写一个检测vue单文件template是否有合并冲突的webpack插件](摘录/未分类/webpack&babel/手把手写一个检测vue单文件template是否有合并冲突的webpack插件/手把手写一个检测vue单文件template是否有合并冲突的webpack插件.md)
-      - [Webpack - 手把手教你写一个 loader  plugin](摘录/未分类/webpack&babel/Webpack - 手把手教你写一个 loader  plugin/Webpack - 手把手教你写一个 loader  plugin.md)
     * [轮播图的简单实现（可改造成为轮播表格）](摘录/未分类/轮播图的简单实现（可改造成为轮播表格）.md)
     * [使用Travis-ci自动SSH部署vue代码](摘录/未分类/使用Travis-ci自动SSH部署vue代码.md)
     * [学习清单](摘录/未分类/学习清单.md)
@@ -67,7 +40,26 @@
     * [Xcode_10_中关于_Error-Multiple_commands_produce](摘录/未分类/Xcode_10_中关于_Error-Multiple_commands_produce.md)
   - Java
     * [设计模式也可以这么简单](摘录/java/设计模式也可以这么简单.md)
+  - Javascript
+    * [手写一个虚拟DOM库，彻底让你理解diff算法](摘录/javascript/手写一个虚拟DOM库，彻底让你理解diff算法.md)
+    * [Android 和 IOS 使用 WebViewJavascriptBridge 进行交互方法](摘录/javascript/Android%20和 IOS 使用 WebViewJavascriptBridge 进行交互方法.md)
   - Linux
     - [Nginx](摘录/linux/Nginx/Nginx.md)
+  - React
+    - Hook
+      - [react hook源码解析](摘录/react/Hook/react hook源码解析/react hook源码解析.md)
+      - [react hook源码解析2(useMemo与useCallback与useRef)](摘录/react/Hook/react hook源码解析2(useMemo与useCallback与useRef)/react hook源码解析2(useMemo与useCallback与useRef).md)
+      - [React Hooks: 没有魔法，只是数组](摘录/react/Hook/React Hooks: 没有魔法，只是数组/React Hooks: 没有魔法，只是数组.md)
+      - [React Hooks源码解析，原来这么简单～](摘录/react/Hook/React Hooks源码解析，原来这么简单～/React Hooks源码解析，原来这么简单～.md)
+    * [「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）](摘录/react/「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）.md)
+    * [手写系列-实现一个铂金段位的 React](摘录/react/手写系列-实现一个铂金段位的%20React.md)
+    * [一名 vueCoder 总结的 React 基础](摘录/react/一名%20vueCoder 总结的 React 基础.md)
+    * [React骚操作——jsx遇到template-directive](摘录/react/React骚操作——jsx遇到template-directive.md)
+    * [redux中的connect用法介绍及原理解析](摘录/react/redux中的connect用法介绍及原理解析.md)
   - React Native
     - [React Native之配置URL方案](摘录/react-native/React Native之配置URL方案/React Native之配置URL方案.md)
+  - Webpack Babel
+    * [基于webpack修改插件源码，使用自定义文件替换node_modules里面的源码文件](摘录/webpack&babel/基于webpack修改插件源码，使用自定义文件替换node_modules里面的源码文件.md)
+    * [使用babel插件监控是否遗留合并冲突代码](摘录/webpack&babel/使用babel插件监控是否遗留合并冲突代码.md)
+    * [手把手写一个检测vue单文件template是否有合并冲突的webpack插件](摘录/webpack&babel/手把手写一个检测vue单文件template是否有合并冲突的webpack插件.md)
+    * [Webpack - 手把手教你写一个 loader  plugin](摘录/webpack&babel/Webpack%20- 手把手教你写一个 loader  plugin.md)
