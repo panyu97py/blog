@@ -49,7 +49,7 @@
 
 新建`.travis.yml`文件，写上如下代码：
 
-```yml
+```yaml
 language: node_js
 node_js:
 - 8
@@ -57,7 +57,7 @@ node_js:
 
 其中`language`指得是项目运行语言，因为这里是`node.js`项目，所以写的是`node_js`，如果你使用的是其他的语言可以参考官方的文档。之后的`-8`指的是使用`v8版本`的`node.js`.当然你也可以指定多个版本来分别执行代码，如：
 
-```yml
+```yaml
 node_js:
 - stable
 - '6'
@@ -84,7 +84,7 @@ cp ./dist/* <TARGET-PATH>
 
 所以`vue`项目完整的`.travis.yml`文件如下：
 
-```yml
+```yaml
 language: node_js
 node_js: stable
 branches:
@@ -178,7 +178,7 @@ travis encrypt-file deploy_rsa --add
 
 因为`Travis`只需要使用到私钥，所以我们这里讲私钥进行加密保存，这句话执行完成之后，你会看到在`.travis.yml`文件中被自动加了下面的代码(`--add`)，同时文件夹中也发现一个加密后的文件`deploy_rsa.enc`。
 
-```yml
+```yaml
 before_install:
 - openssl aes-256-cbc -K $encrypted_137f45644142_key -iv $encrypted_137f45644142_iv
   -in deploy_rsa.enc -out deploy_rsa -d
@@ -206,7 +206,7 @@ rm -f deploy_rsa deploy_rsa.pub和git add deploy_rsa.enc .travis.yml
 
 首先，我们需要在部署之前解密私钥，并使其生效，所以我们添加如下代码：
 
-```yml
+```yaml
 before_install:
 - openssl aes-256-cbc -K $encrypted_137f45644142_key -iv $encrypted_137f45644142_iv
   -in deploy_rsa.enc -out /tmp/deploy_rsa -d
@@ -219,7 +219,7 @@ before_install:
 
 于是我们最终的`.travis.yml`文件内容如下：
 
-```yml
+```yaml
 language: node_js
 node_js: stable
 branches:
