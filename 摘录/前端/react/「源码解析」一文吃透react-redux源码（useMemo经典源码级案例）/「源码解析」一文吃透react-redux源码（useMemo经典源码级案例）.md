@@ -333,7 +333,7 @@ const mapDispatchToProps = dispatch => {
 
 对于`connect` 组件 ，我们先看源码一探究竟
 
-```
+```js
 /src/connect/connect.js
 export function createConnect({
   connectHOC = connectAdvanced,
@@ -399,7 +399,7 @@ export default /*#__PURE__*/ createConnect()
 
 这里有一个函数非常重要,这个函数就是`mergeProps`, 请大家记住这个函数，因为这个函数是判断整个`connect`是否更新组件关键所在。上边说过 `connect`基本用法的时候说过，当我们不向`connect`传递第三个参数`mergeProps` 的时候，默认的`defaultMergeProps`如下
 
-```
+```js
 /src/connect/mergeProps.js
 export function defaultMergeProps(stateProps, dispatchProps, ownProps) {
   return { ...ownProps, ...stateProps, ...dispatchProps }
@@ -413,7 +413,7 @@ export function defaultMergeProps(stateProps, dispatchProps, ownProps) {
 
 前面说到`selectorFactory` 很重要，用于形成新的`props`,我们记下来看`selectorFactory` 源码。
 
-```
+```js
 /src/connect/selectorFactory.js
 export default function finalPropsSelectorFactory(
   dispatch,
@@ -547,7 +547,7 @@ class Index extends React.Component{
 
 接下来我们看 `connectAdvanced` 代码
 
-```
+```js
 /src/components/connectAdvanced.js
 export default function connectAdvanced(
   selectorFactory, // 每次 props,state改变执行 ，用于生成新的 props。
