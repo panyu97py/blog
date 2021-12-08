@@ -71,7 +71,7 @@ opengs://tasks:8088/tasksDetail?tasksId=102
 
 > 注册URL Scheme，即配置info.plist 文件即可
 
-![img](React Native之配置URL方案.assets/1616839419653-20210528192032014.jpg)
+![img](assets/React%20Native之配置URL方案.assets/1616839419653-20210528192032014.jpg)
 
 ### 调用方式
 
