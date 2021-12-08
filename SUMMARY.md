@@ -23,12 +23,8 @@
     - [微前端框架 之 single-spa 从入门到精通](摘录/微前端/微前端框架 之 single-spa 从入门到精通/微前端框架 之 single-spa 从入门到精通.md)
     - [微前端qiankun从搭建到部署的实践](摘录/微前端/微前端qiankun从搭建到部署的实践/微前端qiankun从搭建到部署的实践.md)
     - [HTML Entry 源码分析](摘录/微前端/HTML Entry 源码分析/HTML Entry 源码分析.md)
-  - 未分类
-    * [可视化拖拽组件库一些技术要点原理分析](摘录/未分类/可视化拖拽组件库一些技术要点原理分析.md)
-    - [vr看房实现](摘录/未分类/vr看房实现/vr看房实现.md)
-    * [Xcode_10_中关于_Error-Multiple_commands_produce](摘录/未分类/Xcode_10_中关于_Error-Multiple_commands_produce.md)
   - Java
-    * [设计模式也可以这么简单](摘录/java/设计模式也可以这么简单.md)
+     * [设计模式也可以这么简单](摘录/java/设计模式也可以这么简单.md)
   - Javascript
     * [手写一个虚拟DOM库，彻底让你理解diff算法](摘录/javascript/手写一个虚拟DOM库，彻底让你理解diff算法.md)
     * [Android 和 IOS 使用 WebViewJavascriptBridge 进行交互方法](摘录/javascript/Android%20和 IOS 使用 WebViewJavascriptBridge 进行交互方法.md)
@@ -53,3 +49,7 @@
     * [使用babel插件监控是否遗留合并冲突代码](摘录/webpack&babel/使用babel插件监控是否遗留合并冲突代码.md)
     * [手把手写一个检测vue单文件template是否有合并冲突的webpack插件](摘录/webpack&babel/手把手写一个检测vue单文件template是否有合并冲突的webpack插件.md)
     * [Webpack - 手把手教你写一个 loader  plugin](摘录/webpack&babel/Webpack%20- 手把手教你写一个 loader  plugin.md)
+  - 未分类
+      * [可视化拖拽组件库一些技术要点原理分析](摘录/未分类/可视化拖拽组件库一些技术要点原理分析.md)
+      - [vr看房实现](摘录/未分类/vr看房实现/vr看房实现.md)
+      * [Xcode_10_中关于_Error-Multiple_commands_produce](摘录/未分类/Xcode_10_中关于_Error-Multiple_commands_produce.md)
