@@ -47,7 +47,7 @@ HTML Entry` 是由 `import-html-entry` 库实现的，通过 `http` 请求加载
   styles: [样式的http地址],
  	entry: 入口脚本的地址，要不是标有 entry 的 script 的 src，要不就是最后一个 script 标签的 src
 }
-复制代码
+
 ```
 
 然后远程加载 `styles` 中的样式内容，将 `template` 模版中注释掉的 `link` 标签替换为相应的 `style` 元素。
@@ -72,7 +72,7 @@ HTML Entry` 是由 `import-html-entry` 库实现的，通过 `http` 请求加载
 		return execScripts(entry, scripts, proxy, { fetch, strictGlobal });
 	}
 }
-复制代码
+
 ```
 
 这就是 `HTML Entry` 的原理，更详细的内容可继续阅读下面的源码分析部分
@@ -136,7 +136,7 @@ export function importEntry(entry, opts = {}) {
 	}
 }
 
-复制代码
+
 ```
 
 ## importHTML
@@ -220,7 +220,7 @@ export default function importHTML(url, opts = {}) {
 		}));
 }
 
-复制代码
+
 ```
 
 ## processTpl
@@ -420,7 +420,7 @@ export default function processTpl(tpl, baseURI) {
 	};
 }
 
-复制代码
+
 ```
 
 ## getEmbedHTML
@@ -448,7 +448,7 @@ function getEmbedHTML(template, styles, opts = {}) {
 		});
 }
 
-复制代码
+
 ```
 
 ## getExternalScripts
@@ -505,7 +505,7 @@ export function getExternalScripts(scripts, fetch = defaultFetch, errorCallback 
 	));
 }
 
-复制代码
+
 ```
 
 ## getExternalStyleSheets
@@ -532,7 +532,7 @@ export function getExternalStyleSheets(styles, fetch = defaultFetch) {
 	));
 }
 
-复制代码
+
 ```
 
 ## execScripts
@@ -649,7 +649,7 @@ export function execScripts(entry, scripts, proxy = window, opts = {}) {
 		});
 }
 
-复制代码
+
 ```
 
 # 结语

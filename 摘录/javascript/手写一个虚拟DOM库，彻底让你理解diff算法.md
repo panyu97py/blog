@@ -497,7 +497,7 @@ const patchVNode = (oldVNode, newVNode) => {
         // ...
     }
 }
-复制代码
+
 ```
 
 逻辑很简单，直接把旧节点的类名替换成`newVNode`的类名。

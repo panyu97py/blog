@@ -44,7 +44,7 @@ function loop() {
 }
 
 window.onload = initThree;
-复制代码
+
 ```
 
 现在我们能看到一个黑乎乎的世界，因为现在`scene`里什么都没有，接着我们要把三维物体放进去了，使用3D引擎的实现方式无非都是以下几种
@@ -80,7 +80,7 @@ materials.push( new THREE.MeshBasicMaterial( { map: texture_back} ) );
 
 var box = new THREE.Mesh( new THREE.BoxGeometry( 1, 1, 1 ), materials );
 scene.add(box);
-复制代码
+
 ```
 
 ![2021-06-14 19_51_17.gif](vr看房实现.assets/4f10e5ddca004406a63e77d9504c3dc4~tplv-k3u1fbpfcp-watermark-20210616093556267.image)
@@ -89,7 +89,7 @@ scene.add(box);
 
 ```javascript
 box.geometry.scale( 1, 1, -1 );
-复制代码
+
 ```
 
 **现在我们进入了这个盒子！！**
@@ -110,7 +110,7 @@ var sphereGeometry = new THREE.SphereGeometry(/*半径*/1, /*垂直节点数量*
 var sphere = new THREE.Mesh(sphereGeometry);
 sphere.material.wireframe  = true;//用线框模式大家可以看得清楚是个球体而不是圆形
 scene.add(sphere);
-复制代码
+
 ```
 
 ![image.png](vr看房实现.assets/20e437117a654ba2b51ce1d47696de5b~tplv-k3u1fbpfcp-watermark-20210616093557277.image)
@@ -123,7 +123,7 @@ var sphereMaterial = new THREE.MeshBasicMaterial({map: texture});
 
 var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
 // sphere.material.wireframe  = true;
-复制代码
+
 ```
 
 ![2021-06-14 14_54_38.gif](vr看房实现.assets/5083e0cc881549d883d788c97fddf3d8~tplv-k3u1fbpfcp-watermark-20210616093557935.image)
@@ -135,7 +135,7 @@ var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
 ```javascript
 var sphereGeometry = new THREE.SphereGeometry(/*半径*/1, 50, 50);
 sphereGeometry.scale(1, 1, -1);
-复制代码
+
 ```
 
 ![2021-06-14 15_15_28.gif](vr看房实现.assets/1875fc36e0ef40a9a0c4c12fb9512ce5~tplv-k3u1fbpfcp-watermark-20210616093601556.image)
@@ -171,7 +171,7 @@ var hotPoints=[
         }
     }
 ];
-复制代码
+
 ```
 
 遍历这个数组，并将信息点的指示图添加到3D场景中
@@ -187,7 +187,7 @@ for(var i=0;i<hotPoints.length;i++){
 
    scene.add( sprite );
 }
-复制代码
+
 ```
 
 **看到HOT指示图了吗？**
@@ -199,7 +199,7 @@ for(var i=0;i<hotPoints.length;i++){
 ```javascript
 sprite.detail = hotPoints[i].detail;
 poiObjects.push(sprite);
-复制代码
+
 ```
 
 然后我们通过射线检测（raycast），就像是镜头中心向鼠标所点击的方向发射出一颗子弹，去检查这个子弹最终会打中哪些物体。
@@ -223,7 +223,7 @@ document.querySelector("#container").addEventListener("click",function(event){
         alert("点击了热点"+intersects[0].object.detail.title);
     }
 });
-复制代码
+
 ```
 
 # 方案二：CSS3D
@@ -302,7 +302,7 @@ function initCSS3D(){
         document.removeEventListener("mousemove", mouseMoveHandler);
     }
 }
-复制代码
+
 ```
 
 方案二的好处除了库很小以外，还是div+css来搭建三维场景的。但这个库的作者几乎不维护，遇到问题必须得自己想办法解决，比如使用在电脑上会看到明显的面片边缘
@@ -340,7 +340,7 @@ var hotPoints=[
         }
     }
 ];
-复制代码
+
 function initPoints(){
     var poiObjects = [];
     for(var i=0;i<hotPoints.length;i++){
@@ -360,7 +360,7 @@ function initPoints(){
         })
     }
 }
-复制代码
+
 ```
 
 这样就可以显示信息点了，并且由于是div，我们非常容易添加鼠标点击交互等效果
@@ -380,7 +380,7 @@ _p.size(207, 162).position(hotPoints[i].position.x,hotPoints[i].position.y,hotPo
             repeat: 'no-repeat',
             bothsides: false,
         }).update();
-复制代码
+
 ```
 
 # 需求升级了！
@@ -438,7 +438,7 @@ pano.readConfigUrlAsync("pano.xml",()=>{
             };
     }
 });
-复制代码
+
 ```
 
 哈哈，没想到最终的方案不仅极其简单的就实现了体验良好的VR全景，还附送了非常方便的信息点编辑。除去第一次开发的耗时，以后再制作新的VR场景也就是花个10分钟即可搞定。

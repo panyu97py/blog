@@ -31,7 +31,7 @@ async function unmount(props){
   //去掉body的class
   document.body.classList.remove('app-vue-history')
 }
-复制代码
+
 ```
 
 当然了，你写的全局样式也在这个`class`下面：
@@ -42,7 +42,7 @@ async function unmount(props){
         color: red
     }
 }
-复制代码
+
 ```
 
 ### js污染问题的解决
@@ -67,7 +67,7 @@ async function unmount(props){
   headEle.removeChild(linkEle);
   linkEle = null;
 }
-复制代码
+
 ```
 
 > 注意：上面例子中是修改icon标签，不影响页面的加载。如果某个子系统需要在页面加载之前加载某个js(例如配置文件)，需要将加载 js 的函数写成 promise，并且将这个周期函数放到 single-spa-vue 返回的周期前面。
@@ -89,7 +89,7 @@ singleSpa.registerApplication(
     location => location.pathname.startsWith('/app-vue-history/'),
     { authToken: "d83jD63UdZ6RS6f70D0" }
 )
-复制代码
+
 ```
 
 子系统（`appVueHistory`）接收数据：
@@ -100,7 +100,7 @@ export function mount(props) {
   console.log(props.authToken); 
   return vueLifecycles.mount(props);
 }
-复制代码
+
 ```
 
 关于子系统的生命周期函数：
@@ -186,7 +186,7 @@ function unmount(opts, mountedInstances, props) {
     instance.vueInstance.$el.style.display = "none";
   });
 }
-复制代码
+
 ```
 
 而子系统内部页面则和正常`vue`系统一样使用`<keep-alive>`标签来实现缓存。
@@ -199,7 +199,7 @@ function unmount(opts, mountedInstances, props) {
 path: "/about",
 name: "about",
 component: () => import( "../views/About.vue")
-复制代码
+
 ```
 
 而 `vue-cli3`生成的模板打包后的`index.html`中是有使用`prefetch`和`preload`来实现路由文件的预请求的：
@@ -207,7 +207,7 @@ component: () => import( "../views/About.vue")
 ```html
 <link href=/js/about.js rel=prefetch>
 <link href=/js/app.js rel=preload as=script>
-复制代码
+
 ```
 
 > `prefetch`预请求就是：浏览器网络空闲的时候请求并缓存文件
@@ -279,7 +279,7 @@ const sandbox = new Proxy(fakeWindow, {
       return propKey in rawWindow;
     },
 });
-复制代码
+
 ```
 
 大致原理就是记录`window`对象在子系统运行期间新增、修改和删除的属性和方法，然后会在子系统卸载的时候复原这些操作。
@@ -305,7 +305,7 @@ const hijack = function () {
   };
 }
 
-复制代码
+
 ```
 
 小细节：切换子系统不能立马清除子系统的延时定时器，比如说子系统有一个`message`提示，3秒钟后自动关闭，如果你立马清除掉了，就会一直存在了。那么延迟多久再清除子系统的定时器合适呢？5s？7s？10s？似乎都不太理想，作者最终决定不清除`setTimeout`，毕竟使用了一次之后就没用了，影响不大。
@@ -329,7 +329,7 @@ Object.getOwnPropertyDescriptor(window, "a")
     configurable: false
 }*/
 delete window.a // 返回false，表示删除失败
-复制代码
+
 ```
 
 > configurable：当且仅当指定对象的属性描述可以被改变或者属性可被删除时，为true
@@ -348,7 +348,7 @@ delete window.a // 返回false，表示删除失败
     //测试全局变量污染
     console.log('window.b',window.b)
 </script>
-复制代码
+
 ```
 
 qiankun处理后：
@@ -359,7 +359,7 @@ qiankun处理后：
     //测试全局变量污染
     console.log('window.b',window.b)
 }).bind(window.proxy)(window.proxy);
-复制代码
+
 ```
 
 那他是如何实现的呢？首先用正则匹配到`index.html`里面的外链`js`和内联`js`，然后外链`js`请求到内容字符串后存储到一个对象中，内联`js`直接用正则匹配到内容也记录到这个对象中：
@@ -367,7 +367,7 @@ qiankun处理后：
 ```js
 const fetchScript = scriptUrl => scriptCache[scriptUrl] ||
 		(scriptCache[scriptUrl] = fetch(scriptUrl).then(response => response.text()));
-复制代码
+
 ```
 
 然后运行的时候，采用`eval`函数：
@@ -377,7 +377,7 @@ const fetchScript = scriptUrl => scriptCache[scriptUrl] ||
 eval(`;(function(window){;${inlineScript}\n}).bind(window.proxy)(window.proxy);`)
 //外链js
 eval(`;(function(window){;${downloadedScriptText}\n}).bind(window.proxy)(window.proxy);`))
-复制代码
+
 ```
 
 同时，他还会考虑到外链`js`的`async`属性，即考虑到`js`文件的先后执行顺序，不得不说，这个作者真的是细节满满。
@@ -400,7 +400,7 @@ const isMobile =
 const isSlowNetwork = navigator.connection
   ? navigator.connection.saveData || /(2|3)g/.test(navigator.connection.effectiveType)
   : false;
-复制代码
+
 ```
 
 请求`js/css`文件它采用的是`fetch`请求，如果浏览器不支持，还需要`polyfill`。
@@ -422,7 +422,7 @@ function getExternalScripts(scripts, fetch = defaultFetch) {
 	}
     }));
 }
-复制代码
+
 ```
 
 ## 用qiankun框架实现微前端
@@ -461,7 +461,7 @@ export default {
   },
 }
 </script>
-复制代码
+
 ```
 
 1. 修改`main.js`，注册子项目，子项目入口文件采用`index.html`
@@ -520,7 +520,7 @@ registerMicroApps([
   },
 ]);
 start();
-复制代码
+
 ```
 
 注意：主项目中的`index.html`模板里面的`<div id="app"></div>`需要改为`<div id="container"></div>`
@@ -534,7 +534,7 @@ start();
 if (window.__POWERED_BY_QIANKUN__) {
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
 }
-复制代码
+
 ```
 
 1. 修改`main.js`，配合主项目导出`single-spa`需要的三个生命周期。注意：路由实例化需要在main.js里面完成，以便于路由的销毁，所以路由文件只需要导出路由配置即可（原模板导出的是路由实例）
@@ -575,7 +575,7 @@ export async function unmount() {
   instance = null;
   router = null;
 }
-复制代码
+
 ```
 
 1. 修改打包配置文件`vue.config.js` ，主要是允许跨域、以及打包成`umd`格式
@@ -606,7 +606,7 @@ module.exports = {
     },
   },
 };
-复制代码
+
 ```
 
 ### 子项目app-vue-history
@@ -629,7 +629,7 @@ function render() {
     render: h => h(App),
   }).$mount('#appVueHistory');
 }
-复制代码
+
 ```
 
 ### 项目之间的通信
@@ -664,7 +664,7 @@ registerMicroApps([
     props: { data : store } 
   },
 ]);
-复制代码
+
 ```
 
 子项目的`main.js`:
@@ -688,7 +688,7 @@ function render(parentStore) {
 export async function mount(props) {
   render(props.data);
 }
-复制代码
+
 ```
 
 子项目的`Home.vue`中使用：
@@ -713,7 +713,7 @@ export default {
   },
 }
 </script>
-复制代码
+
 ```
 
 ### 其他
@@ -725,7 +725,7 @@ start({
     prefetch: false, //默认是true，可选'all'
     jsSandbox: false, //默认是true
 })
-复制代码
+
 ```
 
 1. 子项目注册函数`registerMicroApps`也可以传递数据给子项目，并且可以设置全局的生命周期函数
@@ -760,7 +760,7 @@ registerMicroApps(
     ],
   },
 );
-复制代码
+
 ```
 
 1. `qiankun`的官方文档:[qiankun.umijs.org/zh/api/#reg…](https://qiankun.umijs.org/zh/api/#registermicroapps-apps-lifecycles-opts)
@@ -805,7 +805,7 @@ registerMicroApps(
     "test.71fba472.js",
   ]
 }
-复制代码
+
 ```
 
 这样既可以实现预加载，又可以复用公共依赖，并且不用修改太多的打包配置。难点在于如何将子系统需要的`js`文件写到配置文件里面去，有两个思路：方法1：写一个`node`服务，定期（或者子系统有更新时）去请求子系统的`index.html`文件，然后正则匹配到里面的`js`。方法2：子系统打包时，`webpack`会将生成的`js/css`文件的请求插入到`index.html`中（`HtmlWebpackPlugin`）,那么是否也可以将这些`js`文件的名称发送到服务器记录，但是有些静态`js`文件不是打包生成的就需要手动配置。

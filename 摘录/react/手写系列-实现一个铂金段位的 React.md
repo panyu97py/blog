@@ -41,7 +41,7 @@
 const element = <div title="foo">hello</div>
 const container = document.getElementById('container')
 ReactDOM.render(element, container);
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo.html)
@@ -70,7 +70,7 @@ ReactDOM.render(element, container);
 const element = React.createElement("div", {
   title: "foo"
 }, "hello");
-复制代码
+
 ```
 
 再来看看上文的 React.createElement 实际生成了一个怎么样的对象。
@@ -82,7 +82,7 @@ const element = <div title="foo">hello</div>
 console.log(element)
 const container = document.getElementById('container')
 ReactDOM.render(element, container);
-复制代码
+
 ```
 
 可以看到输出的 element 如下：
@@ -99,7 +99,7 @@ const element = {
         children: 'hello'
     }
 }
-复制代码
+
 ```
 
 简单总结一下，`React.createElement` 实际上是生成了一个 element 对象，该对象拥有以下属性：
@@ -117,42 +117,42 @@ const element = {
 
 ```javascript
 const node = document.createElement(element.type)
-复制代码
+
 ```
 
 1. 设置 node 节点的 title 为 element.props.title；
 
 ```javascript
 node["title"] = element.props.title
-复制代码
+
 ```
 
 1. 创建一个空的文本节点 text；
 
 ```javascript
 const text = document.createTextNode("")
-复制代码
+
 ```
 
 1. 设置文本节点的 nodeValue 为 element.props.children；
 
 ```javascript
 text["nodeValue"] = element.props.children
-复制代码
+
 ```
 
 1. 将文本节点 text 添加进 node 节点；
 
 ```javascript
 node.appendChild(text)
-复制代码
+
 ```
 
 1. 将 node 节点添加进 container 节点
 
 ```javascript
 container.appendChild(node)
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo2](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo2.html)
@@ -178,7 +178,7 @@ const element = {
         children: 'hello' // 子节点，注：实际上这里应该是数组结构，帮助我们存储更多子节点
     }
 }
-复制代码
+
 ```
 
 根据 element 的结构，设计了 createElement 函数，代码如下：
@@ -204,7 +204,7 @@ function createElement (type, props, ...children) {
         }
     }
 }
-复制代码
+
 ```
 
 这里有考虑到，当 children 是非对象时，应该创建一个 textElement 元素， 代码如下：
@@ -224,7 +224,7 @@ function createTextElement (text) {
         }
     }
 }
-复制代码
+
 ```
 
 接下来试一下，代码如下：
@@ -240,7 +240,7 @@ const element = myReact.createElement(
   myReact.createElement("b")
 )
 console.log(element)
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo3](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo3.html)
@@ -276,7 +276,7 @@ const element = {
         ]
     }
 }
-复制代码
+
 ```
 
 **JSX**
@@ -290,7 +290,7 @@ const element = myReact.createElement(
   myReact.createElement("a", null, "bar"),
   myReact.createElement("b")
 )
-复制代码
+
 ```
 
 而是通过 JSX 语法，代码如下：
@@ -302,7 +302,7 @@ const element = (
         <b></b>
     </div>
 )
-复制代码
+
 ```
 
 在 myReact 中，可以通过添加注释的形式，告诉 babel 转译我们指定的函数，来使用 JSX 语法，代码如下：
@@ -315,7 +315,7 @@ const element = (
         <b></b>
     </div>
 )
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo4](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo4.html)
@@ -338,7 +338,7 @@ function render (element, container) {
     const dom = document.createElement(element.type)
     container.appendChild(dom)
 }
-复制代码
+
 ```
 
 1. 将 element.children 都添加至 dom 节点中；
@@ -347,7 +347,7 @@ function render (element, container) {
 element.props.children.forEach(child => 
     render(child, dom)
 )
-复制代码
+
 ```
 
 1. 对文本节点进行特殊处理；
@@ -356,7 +356,7 @@ element.props.children.forEach(child =>
 const dom = element.type === 'TEXT_ELEMENT'
     ? document.createTextNode("")
     : document.createElement(element.type)
-复制代码
+
 ```
 
 1. 将 element 的 props 属性添加至 dom；
@@ -368,7 +368,7 @@ Object.keys(element.props)
     .forEach(name => {
       dom[name] = element.props[name]
 })
-复制代码
+
 ```
 
 以上我们实现了将 JSX 渲染到真实 DOM 的功能，接下来试一下，代码如下：
@@ -387,7 +387,7 @@ const element = (
 )
 
 myReact.render(element, document.getElementById('container'))
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo5](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo5.html)
@@ -414,7 +414,7 @@ function render (element, container) {
     )
     // 省略
 }
-复制代码
+
 ```
 
 这个递归调用是有问题的，一旦开始渲染，就会将所有节点及其子节点全部渲染完成这个进程才会结束。
@@ -465,7 +465,7 @@ requestIdleCallback(workLoop)
 function performUnitOfWork(nextUnitOfWork) {
   // TODO
 }
-复制代码
+
 ```
 
 performUnitOfWork 是用来执行单元事件，并返回下一个单元事件的，具体实现将在下文介绍。
@@ -497,7 +497,7 @@ myReact.render(
   </div>,
   container
 )
-复制代码
+
 ```
 
 生成的 fiber tree 如图：
@@ -547,7 +547,7 @@ function createDom (fiber) {
     // 返回 dom
     return dom
 }
-复制代码
+
 ```
 
 1. 在 render 中设置第一个工作单元为 fiber 根节点；
@@ -570,7 +570,7 @@ function render (element, container) {
         }
     }
 }
-复制代码
+
 ```
 
 1. 通过 requestIdleCallback 在浏览器空闲时，渲染 fiber；
@@ -599,7 +599,7 @@ function workLoop(deadline) {
 }
 // 通知浏览器，空闲时间应该执行 workLoop
 requestIdleCallback(workLoop)
-复制代码
+
 ```
 
 1. 渲染 fiber 的函数 performUnitOfWork；
@@ -615,7 +615,7 @@ function performUnitOfWork(fiber) {
   // TODO 新建 filber
   // TODO 返回下一个工作单元（fiber）
 }
-复制代码
+
 ```
 
 4.1 添加 dom 节点
@@ -632,7 +632,7 @@ function performUnitOfWork(fiber) {
         fiber.parent.dom.appendChild(fiber.dom)
     }
 }
-复制代码
+
 ```
 
 4.2 新建 filber
@@ -670,7 +670,7 @@ function performUnitOfWork(fiber) {
         index++
     }
 }
-复制代码
+
 ```
 
 4.3 返回下一个工作单元（fiber）
@@ -693,7 +693,7 @@ function performUnitOfWork(fiber) {
         nextFiber = nextFiber.parent
     }
 }
-复制代码
+
 ```
 
 以上我们实现了将 fiber 渲染到页面的功能，且渲染过程是可中断的。
@@ -712,7 +712,7 @@ const element = (
 )
 
 myReact.render(element, document.getElementById('container'))
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo7](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo7.html)
@@ -736,7 +736,7 @@ function performUnitOfWork(fiber) {
        fiber.parent.dom.appendChild(fiber.dom)
     }
 }
-复制代码
+
 ```
 
 1. 新增一个根节点变量，存储 fiber 根节点；
@@ -754,7 +754,7 @@ function render (element, container) {
     // 下一个工作单元是根节点
     nextUnitOfWork = wipRoot
 }
-复制代码
+
 ```
 
 1. 当所有 fiber 都工作完成时，nextUnitOfWork 为 undefined，这时再渲染真实 DOM；
@@ -767,7 +767,7 @@ function workLoop (deadline) {
     }
     // 省略
 }
-复制代码
+
 ```
 
 1. 新增 commitRoot 函数，执行渲染真实 DOM 操作，递归将 fiber tree 渲染为真实 DOM；
@@ -792,7 +792,7 @@ function commitWork (fiber) {
     // 渲染兄弟节点
     commitWork(fiber.sibling)
 }
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo8](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo8.html)
@@ -824,7 +824,7 @@ function commitRoot () {
     currentRoot = wipRoot
     wipRoot = null
 }
-复制代码
+
 ```
 
 ### 2. performUnitOfWork
@@ -870,7 +870,7 @@ function reconcileChildren (fiber, elements) {
         index++
     }
 }
-复制代码
+
 ```
 
 ### 3. reconcileChildren
@@ -912,7 +912,7 @@ function reconcileChildren (wipFiber, elements) {
     }
     // ～～省略～～
 }
-复制代码
+
 ```
 
 #### 3.2 当新旧 fiber 类型不同，且有新元素时
@@ -934,7 +934,7 @@ function reconcileChildren (wipFiber, elements) {
     }
     // ～～省略～～
 }
-复制代码
+
 ```
 
 #### 3.3 当新旧 fiber 类型不同，且有旧 fiber 时
@@ -950,7 +950,7 @@ function reconcileChildren (wipFiber, elements) {
     }
     // ～～省略～～
 }
-复制代码
+
 ```
 
 ### 4. deletions
@@ -969,7 +969,7 @@ function render (element, container) {
 function commitRoot () {
     deletions.forEach(commitWork)
 }
-复制代码
+
 ```
 
 ### 5. commitWork
@@ -987,7 +987,7 @@ if (
 ) {
     domParent.appendChild(fiber.dom)
 }
-复制代码
+
 ```
 
 #### 5.2 DELETION
@@ -998,7 +998,7 @@ if (
 else if (fiber.effectTag === "DELETION") {
     domParent.removeChild(fiber.dom)
 }
-复制代码
+
 ```
 
 #### 5.3 DELETION
@@ -1009,7 +1009,7 @@ else if (fiber.effectTag === "DELETION") {
 else if (fiber.effectTag === 'UPDATE' && fiber.dom != null) {
     updateDom(fiber.dom, fiber.alternate.props, fiber.props)
 }
-复制代码
+
 ```
 
 updateDom 函数根据不同的更新类型，对 props 属性进行更新。
@@ -1040,7 +1040,7 @@ function updateDom(dom, prevProps, nextProps) {
             dom[name] = nextProps[name]
         })
 }
-复制代码
+
 ```
 
 另外，为 updateDom 添加事件属性的更新、删除，便于追踪 fiber 事件的更新。
@@ -1082,7 +1082,7 @@ function updateDom(dom, prevProps, nextProps) {
     })
     // ～～省略～～
 }
-复制代码
+
 ```
 
 替换 creactDOM 中设置 props 的逻辑。
@@ -1096,7 +1096,7 @@ function createDom (fiber) {
     updateDom(dom, {}, fiber.props)
     return dom
 }
-复制代码
+
 ```
 
 新建一个包含输入表单项的例子，尝试更新 element，代码如下：
@@ -1120,7 +1120,7 @@ const rerender = value => {
 }
 
 rerender("World")
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo9](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo9.html)
@@ -1150,7 +1150,7 @@ const element = (
 )
 
 myReact.render(element, container)
-复制代码
+
 ```
 
 函数式组件和 html 标签组件相比，有以下两点不同：
@@ -1175,7 +1175,7 @@ function performUnitOfWork(fiber) {
     }
     // 省略
 }
-复制代码
+
 ```
 
 1. 定义 updateHostComponent 函数，执行非函数组件；
@@ -1189,7 +1189,7 @@ function updateHostComponent(fiber) {
     }
     reconcileChildren(fiber, fiber.props.children)
 }
-复制代码
+
 ```
 
 1. 定义 updateFunctionComponent 函数，执行函数组件；
@@ -1202,7 +1202,7 @@ function updateFunctionComponent(fiber) {
     const children = [fiber.type(fiber.props)]
     reconcileChildren(fiber, children)
 }
-复制代码
+
 ```
 
 1. 修改 commitWork 函数，兼容没有 dom 节点的 fiber；
@@ -1220,7 +1220,7 @@ function commitWork (fiber) {
     const domParent = domParentFiber.dom
     // 省略
 }
-复制代码
+
 ```
 
 4.2 修改删除节点的逻辑，当删除节点时，需要不断向下寻找，直到找到有 dom 节点的子 fiber；
@@ -1245,7 +1245,7 @@ function commitDeletion (fiber, domParent) {
         commitDeletion(fiber.child, domParent)
     }
 }
-复制代码
+
 ```
 
 下面试一下上面的例子，代码如下：
@@ -1265,7 +1265,7 @@ const element = (
 )
 
 myReact.render(element, container)
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo10](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo10.html)
@@ -1290,7 +1290,7 @@ function Counter() {
     )
 }
 const element = <Counter />
-复制代码
+
 ```
 
 已知需要一个 useState 方法用来获取、更新状态。
@@ -1310,7 +1310,7 @@ function updateFunctionComponent(fiber) {
     wipFiber.hook = []
     // 省略
 }
-复制代码
+
 ```
 
 1. 新增 useState 函数；
@@ -1355,7 +1355,7 @@ function useState (initial) {
     // 返回钩子的状态和设置钩子的函数
     return [hook.state, setState]
 }
-复制代码
+
 ```
 
 下面运行一下计数组件，代码如下：
@@ -1370,7 +1370,7 @@ function Counter() {
     )
 }
 const element = <Counter />
-复制代码
+
 ```
 
 > 本例完整源码见：[reactDemo11](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo11.html)

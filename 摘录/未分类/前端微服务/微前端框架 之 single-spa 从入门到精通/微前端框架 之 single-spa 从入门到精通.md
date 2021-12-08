@@ -33,7 +33,7 @@
 
 ```shell
 mkdir micro-frontend && cd micro-frontend
-复制代码
+
 ```
 
 示例代码都是通过`vue`来编写的，当然也可以采用其它的，比如`react`或者原生`JS`等
@@ -44,7 +44,7 @@ mkdir micro-frontend && cd micro-frontend
 
 ```shell
 vue create app1
-复制代码
+
 ```
 
 > 按图选择，去除一切项目不需要的干扰项，后面一路回车，等待应用创建完毕
@@ -80,14 +80,14 @@ module.exports = {
   }
 }
 
-复制代码
+
 ```
 
 #### 安装`single-spa-vue`
 
 ```shell
 npm i single-spa-vue -S
-复制代码
+
 ```
 
 `single-spa-vue`负责为`vue`应用生成通用的生命周期钩子，在子应用注册到`single-spa`的基座应用时需要用到
@@ -136,7 +136,7 @@ export function unmount (props) {
   return vueLifecycle.unmount(() => {})
 }
 
-复制代码
+
 ```
 
 #### 更改视图文件
@@ -149,14 +149,14 @@ export function unmount (props) {
   </div>
 </template>
 
-复制代码
+
 <!-- /views/About.vue -->
 <template>
   <div class="about">
     <h1>app1 about page</h1>
   </div>
 </template>
-复制代码
+
 ```
 
 ### 环境配置文件
@@ -168,7 +168,7 @@ export function unmount (props) {
 ```
 NODE_ENV=development
 VUE_APP_BASE_URL=/
-复制代码
+
 ```
 
 #### .env.micro
@@ -178,7 +178,7 @@ VUE_APP_BASE_URL=/
 ```
 NODE_ENV=development
 VUE_APP_BASE_URL=/app1
-复制代码
+
 ```
 
 #### .env.buildMicro
@@ -188,7 +188,7 @@ VUE_APP_BASE_URL=/app1
 ```
 NODE_ENV=development
 VUE_APP_BASE_URL=/app1
-复制代码
+
 ```
 
 #### 修改路由文件
@@ -204,7 +204,7 @@ const router = new VueRouter({
 })
 // ...
 
-复制代码
+
 ```
 
 #### 修改`package.json`中的`script`
@@ -224,7 +224,7 @@ const router = new VueRouter({
  	// ...
 }
 
-复制代码
+
 ```
 
 ### 启动应用
@@ -233,21 +233,21 @@ const router = new VueRouter({
 
 ```shell
 npm run serve
-复制代码
+
 ```
 
 当然下面的启动方式也可以，只不过会在`pathname`的开头加了`/app1`前缀
 
 ```shell
 npm run serve:micro
-复制代码
+
 ```
 
 #### 作为子应用运行
 
 ```shell
 npm run serve:micro
-复制代码
+
 ```
 
 #### 作为独立应用访问
@@ -277,7 +277,7 @@ npm run serve:micro
 
 ```shell
 create-react-app app3
-复制代码
+
 ```
 
 以下所有操作都在`/micro-frontend/app3`目录下进行
@@ -286,7 +286,7 @@ create-react-app app3
 
 ```shell
 npm i react-router-dom single-spa-react -S
-复制代码
+
 ```
 
 ### 打散配置
@@ -295,7 +295,7 @@ npm i react-router-dom single-spa-react -S
 
 ```shell
 npm run eject
-复制代码
+
 ```
 
 ### 更改 webpack 配置文件
@@ -321,7 +321,7 @@ npm run eject
   },
   ...
 }
-复制代码
+
 ```
 
 ### 项目入口文件改造
@@ -344,14 +344,14 @@ npm run eject
 body {
   text-align: center;
 }
-复制代码
+
 ```
 
 ### 启动子应用
 
 ```shell
 npm run start
-复制代码
+
 ```
 
 浏览器访问`localhost:3000`
@@ -366,7 +366,7 @@ npm run start
 
 ```shell
 npm i single-spa -S
-复制代码
+
 ```
 
 ### 改造基座项目
@@ -453,7 +453,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-复制代码
+
 ```
 
 #### App.vue
@@ -495,7 +495,7 @@ new Vue({
 }
 </style>
 
-复制代码
+
 ```
 
 #### 路由
@@ -516,14 +516,14 @@ const router = new VueRouter({
 
 export default router
 
-复制代码
+
 ```
 
 ### 启动基座应用
 
 ```shell
 npm run serve
-复制代码
+
 ```
 
 ### 浏览器访问基座应用
@@ -546,7 +546,7 @@ npm run serve
 
 ```shell
 npm run build
-复制代码
+
 ```
 
 ## 部署
@@ -562,14 +562,14 @@ npm run build
 
 ```shell
 npm i serve -g
-复制代码
+
 ```
 
 **在各个项目的根目录下启动 serve**
 
 ```shell
 serve ./dist -p port
-复制代码
+
 ```
 
 在浏览器访问基座应用的地址，发现得到和刚才一样的结果
@@ -669,7 +669,7 @@ export function registerApplication(
   }
 }
 
-复制代码
+
 ```
 
 ### sanitizeArguments 格式化用户传递的子应用配置参数
@@ -727,7 +727,7 @@ function sanitizeArguments(
   return registration;
 }
 
-复制代码
+
 ```
 
 ### validateRegisterWithConfig
@@ -817,7 +817,7 @@ export function validateRegisterWithConfig(config) {
     );
 }
 
-复制代码
+
 ```
 
 ### validateRegisterWithArguments
@@ -869,7 +869,7 @@ function validateRegisterWithArguments(
     );
 }
 
-复制代码
+
 ```
 
 ### sanitizeLoadApp
@@ -886,7 +886,7 @@ function sanitizeLoadApp(loadApp) {
   return loadApp;
 }
 
-复制代码
+
 ```
 
 ### sanitizeCustomProps
@@ -899,7 +899,7 @@ function sanitizeCustomProps(customProps) {
   return customProps ? customProps : {};
 }
 
-复制代码
+
 ```
 
 ### sanitizeActiveWhen
@@ -924,7 +924,7 @@ function sanitizeActiveWhen(activeWhen) {
     activeWhenArray.some((activeWhen) => activeWhen(location));
 }
 
-复制代码
+
 ```
 
 ### pathToActiveWhen
@@ -946,7 +946,7 @@ export function pathToActiveWhen(path) {
   };
 }
 
-复制代码
+
 ```
 
 ## reroute 更改app.status和执行生命周期函数
@@ -1121,7 +1121,7 @@ export function reroute(pendingPromises = [], eventArguments) {
   }
 }
 
-复制代码
+
 ```
 
 ### getAppChanges
@@ -1186,7 +1186,7 @@ export function getAppChanges() {
   return { appsToUnload, appsToUnmount, appsToLoad, appsToMount };
 }
 
-复制代码
+
 ```
 
 ### shouldBeActive
@@ -1204,7 +1204,7 @@ export function shouldBeActive(app) {
   }
 }
 
-复制代码
+
 ```
 
 ### toLoadPromise
@@ -1371,7 +1371,7 @@ export function toLoadPromise(app) {
   });
 }
 
-复制代码
+
 ```
 
 ### getProps
@@ -1429,7 +1429,7 @@ export function getProps(appOrParcel) {
   return result;
 }
 
-复制代码
+
 ```
 
 ### smellsLikeAPromise
@@ -1446,7 +1446,7 @@ export function smellsLikeAPromise(promise) {
   );
 }
 
-复制代码
+
 ```
 
 ### flattenFnArray
@@ -1497,7 +1497,7 @@ export function flattenFnArray(appOrParcel, lifecycle) {
   };
 }
 
-复制代码
+
 ```
 
 ### toUnloadPromise
@@ -1566,7 +1566,7 @@ export function toUnloadPromise(app) {
   });
 }
 
-复制代码
+
 ```
 
 ### finishUnloadingApp
@@ -1593,7 +1593,7 @@ function finishUnloadingApp(app, unloadInfo) {
   unloadInfo.resolve();
 }
 
-复制代码
+
 ```
 
 ### reasonableTime
@@ -1670,7 +1670,7 @@ export function reasonableTime(appOrParcel, lifecycle) {
   });
 }
 
-复制代码
+
 ```
 
 ### toUnmountPromise
@@ -1736,7 +1736,7 @@ export function toUnmountPromise(appOrParcel, hardFail) {
   });
 }
 
-复制代码
+
 ```
 
 ### tryToBootstrapAndMount
@@ -1767,7 +1767,7 @@ function tryToBootstrapAndMount(app, unmountAllPromise) {
   }
 }
 
-复制代码
+
 ```
 
 ### toBootstrapPromise
@@ -1800,7 +1800,7 @@ export function toBootstrapPromise(appOrParcel, hardFail) {
   });
 }
 
-复制代码
+
 ```
 
 ### toMountPromise
@@ -1854,7 +1854,7 @@ export function toMountPromise(appOrParcel, hardFail) {
   });
 }
 
-复制代码
+
 ```
 
 ## start(opts)
@@ -1897,7 +1897,7 @@ if (isInBrowser) {
   }, 5000);
 }
 
-复制代码
+
 ```
 
 ## 监听路由变化
@@ -1980,7 +1980,7 @@ if (isInBrowser) {
   }
 }
 
-复制代码
+
 ```
 
 ### patchedUpdateState
@@ -2012,7 +2012,7 @@ function patchedUpdateState(updateState, methodName) {
   };
 }
 
-复制代码
+
 ```
 
 ### createPopStateEvent
@@ -2039,7 +2039,7 @@ function createPopStateEvent(state, originalMethodName) {
   return evt;
 }
 
-复制代码
+
 ```
 
 ### urlReroute
@@ -2055,7 +2055,7 @@ function urlReroute() {
   reroute([], arguments);
 }
 
-复制代码
+
 ```
 
 ## 小结
@@ -2278,7 +2278,7 @@ function patchedUpdateState (updateState) {
   }
 }
 
-复制代码
+
 ```
 
 看着是不是很简单，加注释也才`200`行而已，当然，这只是一个简版的`single-spa`框架，没什么健壮性可言，但也正因为简单，所以更能说明`single-spa`框架的本质。
@@ -2483,7 +2483,7 @@ function unmount(opts, mountedInstances, props) {
   });
 }
 
-复制代码
+
 ```
 
 # 结语

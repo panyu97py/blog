@@ -49,7 +49,7 @@ module.exports = function (content) {
 	// content 就是传入的源内容字符串
   return content
 }
-复制代码
+
 ```
 
 当一个 loader 被使用的时候，他只可以接收一个入参，这个参数是一个包含包含资源文件内容的字符串。 是的，到这里为止，一个最简单 loader 就已经完成了！接下来我们来看看怎么给他加上丰富的功能。
@@ -73,7 +73,7 @@ module.exports = function (content) {
   const res = dosth(content)
   return res
 }
-复制代码
+
 ```
 
 也可以直接使用 `this.callback()` 这个 api，然后在最后直接 **return undefined **的方式告诉 webpack 去 `this.callback()` 寻找他要的结果，这个 api 接受这些参数：
@@ -85,7 +85,7 @@ this.callback(
   sourceMap?: SourceMap, // 可选 可以是一个被正常解析的 source map
   meta?: any // 可选 可以是任何东西，比如一个公用的 AST 语法树
 );
-复制代码
+
 ```
 
 接下来举个例子： ![image.png](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/c53097bf54a34dc18d97fbcf5e1fa49c~tplv-k3u1fbpfcp-zoom-1.image) 这里注意`[this.getOptions()](https://webpack.docschina.org/api/loaders/#thisgetoptionsschema)` 可以用来获取配置的参数
@@ -101,7 +101,7 @@ module.exports = function (content) {
   // 注意这里由于使用了 this.callback 直接 return 就行
   return
 }
-复制代码
+
 ```
 
 这样一个同步的 loader 就完成了！
@@ -116,7 +116,7 @@ module.exports = function (content) {
     callback(null, result, sourceMaps, meta)
   })
 }
-复制代码
+
 ```
 
 #### ② "Raw" loader
@@ -130,7 +130,7 @@ module.exports = function (content) {
 }
 // 划重点↓
 module.exports.raw = true;
-复制代码
+
 ```
 
 #### ③ Pitching loader
@@ -151,7 +151,7 @@ module.exports = function (content) {
 module.exports.pitch = function (remainingRequest, precedingRequest, data) {
   data.value = 42;
 };
-复制代码
+
 ```
 
 **注意！** 如果某一个 loader 的 pitch 方法中返回了值，那么他会直接“**往回走**”，跳过后续的步骤，来举个例子： ![img](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/87a8e7cf0c45420db167cfb20f3f90ce~tplv-k3u1fbpfcp-zoom-1.image) 假设我们现在是这样：`use: ['a-loader', 'b-loader', 'c-loader'],` 那么正常的调用顺序是这样： ![image.png](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/c555dbbe6b1046b8958a4b042fc3c8fe~tplv-k3u1fbpfcp-zoom-1.image) 现在 b-loader 的 pitch 改为了有返回值：
@@ -165,7 +165,7 @@ module.exports = function (content) {
 module.exports.pitch = function (remainingRequest, precedingRequest, data) {
   return "诶，我直接返回，就是玩儿~"
 };
-复制代码
+
 ```
 
 那么现在的调用就会变成这样，直接“回头”，跳过了原来的其他三个步骤： ![image.png](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/4a693869c5f2413ba50d1ac0fd696fd5~tplv-k3u1fbpfcp-zoom-1.image)
@@ -204,7 +204,7 @@ module.exports = function (source) {
 function addSign(content, sign) {
   return `/** ${sign} */\n${content}`
 }
-复制代码
+
 ```
 
 **console-loader.js**
@@ -217,7 +217,7 @@ module.exports = function (content) {
 function handleConsole(content) {
   return content.replace(/console.log\(['|"](.*?)['|"]\)/, '')
 }
-复制代码
+
 ```
 
 #### 调用测试方式
@@ -238,7 +238,7 @@ function handleConsole(content) {
     }
   ]
 }
-复制代码
+
 ```
 
 1. 匹配(test)多个 loaders，你可以使用 resolveLoader.modules 配置，webpack 将会从这些目录中搜索这些 loaders。例如，如果你的项目中有一个 /loaders 本地目录：
@@ -253,7 +253,7 @@ resolveLoader: {
     path.resolve(__dirname, 'loaders')
   ]
 }
-复制代码
+
 ```
 
 #### 配置使用
@@ -277,7 +277,7 @@ module: {
       },
     ],
   },
-复制代码
+
 ```
 
 **项目中的 index.js**：
@@ -287,7 +287,7 @@ function fn() {
   console.log("this is a message")
   return "1234"
 }
-复制代码
+
 ```
 
 **执行编译后的 bundle.js**： 可以看到，两个 loader 的功能都体现到了编译后的文件内。
@@ -305,7 +305,7 @@ function fn() {
 }
 /******/ })()
 ;
-复制代码
+
 ```
 
 ## 二、Plugin
@@ -332,7 +332,7 @@ class HelloPlugin{
   }
 }
 module.exports = HelloPlugin
-复制代码
+
 ```
 
 ### Compiler and Compilation
@@ -351,7 +351,7 @@ Compiler 和 Compilation 提供了非常多的钩子供我们使用，这些方�
 
 ```javascript
 compiler/compilation.hooks.<hookName>.tap/tapAsync/tapPromise(pluginName,(xxx)=>{/**dosth*/})
-复制代码
+
 ```
 
 > **Tip**： 以前的写法是 `compiler.plugin` ，但是在最新的 webpack@5 可能会引起问题，参见 [webpack-4-migration-notes](https://medium.com/@sheng_di/webpack-4-migration-notes-65f2f4b79b8f)
@@ -376,7 +376,7 @@ class HelloPlugin {
   }
 }
 module.exports = HelloPlugin
-复制代码
+
 ```
 
 #### tapPromise
@@ -397,7 +397,7 @@ class HelloPlugin {
   }
 }
 module.exports = HelloPlugin
-复制代码
+
 ```
 
 ### 做个实践
@@ -445,7 +445,7 @@ class OutLogPlugin {
   }
 }
 module.exports = OutLogPlugin
-复制代码
+
 ```
 
 对插件进行配置： **webpack.config.js**
@@ -458,7 +458,7 @@ module.exports = {
     new OutLogPlugin({outFileName:"buildInfo"})
   ],
 }
-复制代码
+
 ```
 
 打包后的目录结构：
@@ -468,7 +468,7 @@ dist
 ├─ buildInfo.md
 ├─ bundle.js
 └─ bundle.js.map
-复制代码
+
 ```
 
 **buildInfo.md** ![image.png](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/7bfcb68813454ac0bb08105d2efb0d3c~tplv-k3u1fbpfcp-zoom-1.image) 可以看到按照我们希望的格式准确输出了内容，这样一个简单的功能插件就完成了！

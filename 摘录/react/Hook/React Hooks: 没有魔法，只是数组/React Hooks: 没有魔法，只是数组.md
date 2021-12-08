@@ -32,7 +32,7 @@ function RenderFunctionComponent() {
     <Button onClick={() => setFirstName("Fred")}>Fred</Button>
   );
 }
-复制代码
+
 ```
 
 useState 实现的功能是，你能通过这个hook返回的 数组 中第二个元素，作为修改这个state的一个setter方法。
@@ -140,7 +140,7 @@ console.log(state); // Subsequent-render: ['Rudi', 'Yardley']
 // click the 'Fred' button
 
 console.log(state); // After-click: ['Fred', 'Yardley']
-复制代码
+
 ```
 
 ### 为什么hooks的调用顺序不能变呢？
@@ -166,7 +166,7 @@ function RenderFunctionComponent() {
     <Button onClick={() => setFirstName("Fred")}>Fred</Button>
   );
 }
-复制代码
+
 ```
 
 上面代码里，我们第一个 useState 是在一个 条件分支里。我们来看看这样引入的bug。

@@ -15,7 +15,7 @@ connect用法介绍
 connect方法声明：
 
 ```
-connect([mapStateToProps], [mapDispatchToProps], [mergeProps],[options])复制代码
+connect([mapStateToProps], [mapDispatchToProps], [mergeProps],[options])
 ```
 
 作用：连接React组件与 Redux store。
@@ -23,7 +23,7 @@ connect([mapStateToProps], [mapDispatchToProps], [mergeProps],[options])复制�
 参数说明：
 
 ```
-mapStateToProps(state, ownProps) : stateProps复制代码
+mapStateToProps(state, ownProps) : stateProps
 ```
 
 这个函数允许我们将 store 中的数据作为 props 绑定到组件上。
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
   return {
     count: state.count
   }
-}复制代码
+}
 ```
 
 （1）这个函数的第一个参数就是 Redux 的 store，我们从中摘取了 count 属性。你不必将 state 中的数据原封不动地传入组件，可以根据 state 中的数据，动态地输出组件需要的（最小）属性。
@@ -43,13 +43,13 @@ const mapStateToProps = (state) => {
 当 state 变化，或者 ownProps 变化的时候，mapStateToProps 都会被调用，计算出一个新的 stateProps，（在与 ownProps merge 后）更新给组件。
 
 ```
-mapDispatchToProps(dispatch, ownProps): dispatchProps复制代码
+mapDispatchToProps(dispatch, ownProps): dispatchProps
 ```
 
 connect 的第二个参数是 mapDispatchToProps，它的功能是，将 action 作为 props 绑定到组件上，也会成为 MyComp 的 props。
 
 ```
-[mergeProps],[options]复制代码
+[mergeProps],[options]
 ```
 
 不管是 stateProps 还是 dispatchProps，都需要和 ownProps merge 之后才会被赋给组件。connect 的第三个参数就是用来做这件事。通常情况下，你可以不传这个参数，connect 就会使用 Object.assign 替代该方法。
@@ -119,7 +119,7 @@ export default function connect(mapStateToProps, mapDispatchToProps, mergeProps,
       }
       return Connect;
     }
-  }复制代码
+  }
 ```
 
 connect使用实例
@@ -149,7 +149,7 @@ class Counter extends Component {
     }
 }
 
-export default Counter;复制代码
+export default Counter;
 ```
 
 Container/App.js
@@ -174,7 +174,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 //通过react-redux提供的connect方法将我们需要的state中的数据和actions中的方法绑定到props上
-export default connect(mapStateToProps, mapDispatchToProps)(Counter)复制代码
+export default connect(mapStateToProps, mapDispatchToProps)(Counter)
 ```
 
 
@@ -192,7 +192,7 @@ connect([mapStateToProps], [mapDispatchToProps], [mergeProps],[options])
 
 返回值
 根据配置信息，返回一个注入了 state 和 action creator 的 React 组件。
-复制代码
+
 ```
 
 
@@ -276,7 +276,7 @@ store.subscribe(() =>
 store.dispatch(actions.increase()) // {count: 1}
 store.dispatch(actions.increase()) // {count: 2}
 store.dispatch(actions.increase()) // {count: 3}
-复制代码
+
 ```
 
 通过 `reducer` 创建一个 `store` ，每当我们在 `store` 上 `dispatch` 一个 `action` ， `store` 内的数据就会相应地发生变化。
@@ -297,7 +297,7 @@ class App extends Component{
     />
   }
 }
-复制代码
+
 ```
 
 但这并不是最佳的方式。最佳的方式是使用 react-redux 提供的 `Provider` 和 `connect` 方法。
@@ -314,7 +314,7 @@ const App = () => {
     </Provider>
   )
 };
-复制代码
+
 ```
 
 `Provider` 内的任何一个组件（比如这里的 `Comp` ），如果需要使用 `state` 中的数据，就必须是「被 connect 过的」组件——使用 `connect` 方法对「你编写的组件（ `MyComp` ）」进行包装后的产物。
@@ -325,7 +325,7 @@ class MyComp extends Component {
 }
 
 const Comp = connect(...args)(MyComp);
-复制代码
+
 ```
 
 可见， `connect` 方法是重中之重。
@@ -352,7 +352,7 @@ const mapStateToProps = (state) => {
     count: state.count
   }
 }
-复制代码
+
 ```
 
 这个函数的第一个参数就是 Redux 的 `store` ，我们从中摘取了 `count` 属性。因为返回了具有 `count` 属性的对象，所以 `MyComp` 会有名为 `count` 的 `props` 字段。
@@ -365,7 +365,7 @@ class MyComp extends Component {
 }
 
 const Comp = connect(...args)(MyComp);
-复制代码
+
 ```
 
 当然，你不必将 `state` 中的数据原封不动地传入组件，可以根据 `state` 中的数据，动态地输出组件需要的（最小）属性。
@@ -376,7 +376,7 @@ const mapStateToProps = (state) => {
     greaterThanFive: state.count > 5
   }
 }
-复制代码
+
 ```
 
 函数的第二个参数 `ownProps` ，是 `MyComp` 自己的 `props` 。有的时候， `ownProps` 也会对其产生影响。比如，当你在 `store` 中维护了一个用户列表，而你的组件 `MyComp` 只关心一个用户（通过 `props` 中的 `userId` 体现）。
@@ -402,7 +402,7 @@ class MyComp extends Component {
 }
 
 const Comp = connect(mapStateToProps)(MyComp);
-复制代码
+
 ```
 
 当 `state` 变化，或者 `ownProps` 变化的时候， `mapStateToProps` 都会被调用，计算出一个新的 `stateProps` ，（在与 `ownProps` merge 后）更新给 `MyComp` 。
@@ -435,7 +435,7 @@ class MyComp extends Component {
 }
 
 const Comp = connect(mapStateToProps， mapDispatchToProps)(MyComp);
-复制代码
+
 ```
 
 由于 `mapDispatchToProps` 方法返回了具有 `increase` 属性和 `decrease` 属性的对象，这两个属性也会成为 `MyComp` 的 `props` 。
@@ -453,7 +453,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     decrease: action.decrease
   });
 }
-复制代码
+
 ```
 
 同样，当 `ownProps` 变化的时候，该函数也会被调用，生成一个新的 `dispatchProps` ，（在与 `statePrope` 和 `ownProps` merge 后）更新给 `MyComp` 。注意， `action` 的变化不会引起上述过程，默认 `action` 在组件的生命周期中是固定的。
@@ -522,7 +522,7 @@ var action3 = { type: 'sub' };
 // 改变store里面的方法
 store.dispatch(action1); // 'the year is: 2016
 store.dispatch(action2); // 'the year is: 2017
-store.dispatch(action3); // 'the year is: 2016复制代码
+store.dispatch(action3); // 'the year is: 2016
 ```
 
 2.2 挖掘createStore实现
@@ -540,7 +540,7 @@ export default function createStore(reducer, initialState) {
     getState,
     replaceReducer
   }
-}复制代码
+}
 ```
 
 每个属性的含义是: - dispatch: 用于action的分发，改变store里面的state - subscribe: 注册listener，store里面state发生改变后，执行该listener - getState: 读取store里面的state - replaceReducer: 替换reducer，改变state修改的逻辑
@@ -594,7 +594,7 @@ export default function createStore(reducer, initialState) {
   }
   // 初始化时，执行内部一个dispatch，得到初始state
   dispatch({ type: ActionTypes.INIT })
-}复制代码
+}
 ```
 
 如果还按照2.1的方式进行开发，那跟flux没有什么大的区别，需要手动解决很多问题，那redux如何将整个流程模板化(Boilerplate)呢?
@@ -626,7 +626,7 @@ console.log(util.inspect(store));
 //   subscribe: [Function: subscribe],
 //   getState: [Function: getState],
 //   replaceReducer: [Function: replaceReducer]
-// }复制代码
+// }
 ```
 
 3.2 源码解析combineReducers
@@ -650,7 +650,7 @@ export default function combineReducers(reducers) {
     return hasChanged ? finalState : state
   }
   
-}复制代码
+}
 ```
 
 ## 4. 自动实现dispatch
@@ -661,7 +661,7 @@ export default function combineReducers(reducers) {
 
 ```
 var action = { type: '***', payload: '***'};
-dispatch(action);复制代码
+dispatch(action);
 ```
 
 手动dispatch就显得啰嗦了，那么如何自动完成呢?
@@ -669,7 +669,7 @@ dispatch(action);复制代码
 ```
 var bindActionCreators = require('redux').bindActionCreators;
 // 可以在具体的应用框架隐式进行该过程(例如react-redux的connect组件中)
-bindActionCreators(action)复制代码
+bindActionCreators(action)
 ```
 
 4.2 源码解析
@@ -687,7 +687,7 @@ export default function bindActionCreators(actionCreators, dispatch) {
   return mapValues(actionCreators, actionCreator =>
     bindAQctionCreator(actionCreator, dispatch)
   )
-}复制代码
+}
 ```
 
 ## 5. 支持插件 - 对dispatch的改造
@@ -713,7 +713,7 @@ function fetchDataAsync() {
       }
     })
   }
-}复制代码
+}
 ```
 
 下面的问题就变成了，如何根据实际情况实现不同的dispatch方法，也即是根据需要实现不同的moddleware:
@@ -729,7 +729,7 @@ var applyMiddleware = require('redux').applyMiddleware;
 var thunk = requre('redux-thunk');
 var store = applyMiddleware([thunk])(createStore);
 // 经过处理的dispatch方法
-console.log(store.dispatch);复制代码
+console.log(store.dispatch);
 ```
 
 5.2 源码解析
@@ -767,7 +767,7 @@ function thunkMiddleware({ dispatch, getState }) {
     typeof action === 'function' ?
       action(dispatch, getState) :
       next(action);
- }复制代码
+ }
 ```
 
 ## 6. 与react框架的结合
@@ -802,7 +802,7 @@ function select(state) {
     count: state.count
   }
 }
-export default connect(select, actionCreators)(MyComponent)复制代码
+export default connect(select, actionCreators)(MyComponent)
 ```
 
 6.2 Provider – 提供store
@@ -833,7 +833,7 @@ export default class Provider extends Component {
     let { children } = this.props
     return Children.only(children)
   }
-}复制代码
+}
 ```
 
 6.3 connect – 获得store及dispatch(actionCreator)
@@ -889,7 +889,7 @@ export default function connect(mapStateToProps, mapDispatchToProps, mergeProps,
       }
       return Connect;
     }
-  }复制代码
+  }
 ```
 
 ## 7. redux与react-redux关系图

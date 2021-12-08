@@ -80,7 +80,7 @@
     </style>
   </body>
 </html>
-复制代码
+
 ```
 
 1. 子项目和公共文件url的配置文件`config/importmap.json`:
@@ -95,7 +95,7 @@
     "vue-router": "https://cdn.jsdelivr.net/npm/vue-router@3.0.7/dist/vue-router.min.js"
   }
 }
-复制代码
+
 ```
 
 ## 子项目改造
@@ -110,18 +110,18 @@
 
 ```
 npm install systemjs-webpack-interop -S
-复制代码
+
 npm install single-spa-vue -S
-复制代码
+
 npm install vue-cli-plugin-single-spa -D
-复制代码
+
 ```
 
 如果是新项目，则可以使用以下命令：
 
 ```
 vue add single-spa
-复制代码
+
 ```
 
 > 注意：该命令会改写你的 main.js，老项目不要用这个命令
@@ -142,7 +142,7 @@ vue add single-spa
 ```
 NODE_ENV = development
 VUE_APP__ENV = singleSpa
-复制代码
+
 ```
 
 `.env.singleSpa`文件(区分正常打包和`single-spa`模式打包)：
@@ -150,7 +150,7 @@ VUE_APP__ENV = singleSpa
 ```
 NODE_ENV = production
 VUE_APP__ENV = singleSpa
-复制代码
+
 ```
 
 #### 3. 修改入口文件
@@ -174,7 +174,7 @@ const appOptions = {
 Vue.config.productionTip = false;
 
 export default appOptions;
-复制代码
+
 ```
 
 新增`index.js`（正常模式入口文件） :
@@ -185,7 +185,7 @@ import './main';
 import Vue from 'vue';
 
 new Vue(appOptions).$mount('#app');
-复制代码
+
 ```
 
 新增`index.spa.js`（`single-spa`模式入口文件） :
@@ -205,7 +205,7 @@ const vueLifecycles = singleSpaVue({
 const { bootstrap, mount, unmount } = vueLifecycles;
 
 export { bootstrap, mount, unmount };
-复制代码
+
 ```
 
 其中`index.spa.js`里面的`set-public-path.js`:
@@ -214,7 +214,7 @@ export { bootstrap, mount, unmount };
 import { setPublicPath } from 'systemjs-webpack-interop'
 //模块的名称必须和system.js的配置文件(importmap.json)中的模块名称保持一致
 setPublicPath('appVueHash')
-复制代码
+
 ```
 
 #### 4. 修改打包配置（`vue.config.js`）
@@ -278,7 +278,7 @@ if(env === 'singleSpa'){
 }
 
 module.exports = config;
-复制代码
+
 ```
 
 打包后的文件效果：
@@ -304,7 +304,7 @@ module.exports = config;
     "build": "npm run spa-build && npm run usual-build",
     "lint": "vue-cli-service lint"
 },
-复制代码
+
 ```
 
 `single-spa`开发使用`npm run spa-serve`，正常开发不变。
@@ -321,7 +321,7 @@ const router = new VueRouter({
   base: '/',//默认是base
   routes,
 });
-复制代码
+
 ```
 
 办法也很简单，判断下环境变量，`single-spa`模式下`base`属性是`/app-vue-history`，正常模式则不变。
@@ -336,7 +336,7 @@ const router = base => new VueRouter({
   base,
   routes,
 });
-复制代码
+
 ```
 
 并且`main.js`不再引入路由文件，改成在入口文件分别引入。
@@ -348,7 +348,7 @@ import router from './router';
 
 const baseUrl = '/';
 appOptions.router = router(baseUrl);
-复制代码
+
 ```
 
 `single-spa`模式的入口文件`index.spa.js`:
@@ -358,7 +358,7 @@ import router from './router';
 
 const baseUrl = '/app-vue-history';
 appOptions.router = router(baseUrl);
-复制代码
+
 ```
 
 ## 部分原理浅析
@@ -457,7 +457,7 @@ module.exports = (api, options) => {
     webpackConfig.set('devtool', 'sourcemap')
   })
 }
-复制代码
+
 ```
 
 回到最初的起点，我们实现`single-spa`最重要的事：动态引入子项目的`js/css`，但是你发现没有，全程都只看到`js`的引入，丝毫没有提及`css`，那么`css`文件咋办？答案就是`options.css.extract = false`。
@@ -484,7 +484,7 @@ module.exports = (api, options) => {
 
 ```
 appOptions.store.commit('setSingleSpa',true);
-复制代码
+
 ```
 
 1. 子项目开发最好设置固定端口
@@ -511,7 +511,7 @@ appOptions.store.commit('setSingleSpa',true);
 
 ```
 <script type="systemjs-importmap" src="/config/importmap.json"></script>
-复制代码
+
 ```
 
 1. 如何实现“keep-alive”
@@ -533,7 +533,7 @@ function unmount(opts, mountedInstances) {
       }
     })
 }
-复制代码
+
 ```
 
 1. 如何避免css污染
@@ -571,7 +571,7 @@ window.addEventListener("custom",function(e){
 })
 //3、子组件A触发事件
 window.dispatchEvent(myCustom);
-复制代码
+
 ```
 
 1. 如何控制子系统的权限
@@ -601,7 +601,7 @@ const devDependencies = {
   }
 }
 insertNewImportMap(devDependencies);
-复制代码
+
 ```
 
 ## 总结

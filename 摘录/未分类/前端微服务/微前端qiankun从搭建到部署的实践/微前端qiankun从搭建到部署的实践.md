@@ -31,7 +31,7 @@
 ├── main       // 基座
 ├── sub-react  // react子应用
 └── sub-vue    // vue子应用
-复制代码
+
 ```
 
 基座是用`vue`搭建，子应用有`react`和`vue`。
@@ -66,7 +66,7 @@ const microApps = [
 
 export default microApps
 
-复制代码
+
 ```
 
 然后在`src/main.js`中引入
@@ -106,7 +106,7 @@ registerMicroApps(microApps, {
 });
 
 start();
-复制代码
+
 ```
 
 在`App.vue`中，需要声明`micro-app.js`配置的子应用挂载div（注意id一定要一致），以及基座布局相关的，大概这样：
@@ -119,7 +119,7 @@ start();
   </div>
 </template>
 
-复制代码
+
 ```
 
 这样，基座就算配置完成了。项目启动后，子应用将会挂载到`<div id="subapp-viewport"></div>`中。
@@ -151,7 +151,7 @@ module.exports = {
     }
   }
 }
-复制代码
+
 ```
 
 1. 新增`src/public-path.js`
@@ -168,7 +168,7 @@ module.exports = {
     __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
   }
 })();
-复制代码
+
 ```
 
 1. `src/router/index.js`改为只暴露routes，`new Router`改到`main.js`中声明。
@@ -218,7 +218,7 @@ export async function unmount () {
   instance.$el.innerHTML = ''
   instance = null
 }
-复制代码
+
 ```
 
 至此，基础版本的vue子应用配置好了，如果`router`和`vuex`不需用到，可以去掉。
@@ -259,7 +259,7 @@ module.exports = {
     };
   },
 };
-复制代码
+
 ```
 
 1. 新增`src/public-path.js`。
@@ -269,7 +269,7 @@ if (window.__POWERED_BY_QIANKUN__) {
   // eslint-disable-next-line
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
 }
-复制代码
+
 ```
 
 1. 改造`index.js`,引入`public-path.js`，添加生命周期函数等。
@@ -321,7 +321,7 @@ export async function update(props) {
 }
 
 serviceWorker.unregister();
-复制代码
+
 ```
 
 至此，基础版本的react子应用配置好了。
@@ -348,7 +348,7 @@ actions.onGlobalStateChange((state, prev) => {
 });
 actions.setGlobalState(state);
 actions.offGlobalStateChange();
-复制代码
+
 ```
 
 子应用：
@@ -362,7 +362,7 @@ export function mount(props) {
   });
   props.setGlobalState(state);
 }
-复制代码
+
 ```
 
 这两段代码不难理解，父子应用通过`onGlobalStateChange`这个方法进行通信，这其实是一个发布-订阅的设计模式。
@@ -419,7 +419,7 @@ actions.getGlobalState = (key) => {
 }
 
 export default actions;
-复制代码
+
 ```
 
 这里有两个注意的地方：
@@ -460,7 +460,7 @@ const apps = microApps.map(item => {
 })
 
 export default microApps
-复制代码
+
 ```
 
 ### vue子应用的状态封装
@@ -523,7 +523,7 @@ function registerGlobalModule(store, props = {}) {
 };
 
 export default registerGlobalModule;
-复制代码
+
 ```
 
 `main.js`中添加global-module的使用：
@@ -536,7 +536,7 @@ export async function mount(props) {
   globalRegister(store, props)
   render(props)
 }
-复制代码
+
 ```
 
 可以看到，该vuex模块在子应用mount时，会调用`initGlobalState`将父应用下发的state初始化一遍，同时提供了`setGlobalState`方法供外部调用，内部自动通知同步到父应用。子应用在vue页面使用时如下：
@@ -555,7 +555,7 @@ export default {
     }
   },
 };
-复制代码
+
 ```
 
 这样就达到了一个效果：子应用不用知道qiankun的存在，它只知道有这么一个global module可以存储信息，父子之间的通信都封装在方法本身了，它只关心本身的信息存储就可以了。
@@ -575,7 +575,7 @@ export default {
 
 ```
 npm install --save nprogress
-复制代码
+
 ```
 
 接下来是想办法如何把loading状态传给主应用的`App.vue`。经过笔者试验发现，`new Vue`方法返回的vue实例可以通过`instance.$children[0]`来改变`App.vue`的数据，所以改造一下`main.js`：
@@ -608,7 +608,7 @@ let apps = microApps.map(item => {
 registerMicroApps(apps);
 
 start();
-复制代码
+
 ```
 
 > PS: qiankun的registerMicroApps方法也监听到子应用的beforeLoad、afterMount等生命周期，因此也可以使用这些方法记录loading状态，但更好的用法肯定是通过loader参数传递。
@@ -649,7 +649,7 @@ export default {
   }
 }
 </script>
-复制代码
+
 ```
 
 至此，loading效果就实现了。虽然`instance.$children[0].isLoading`的操作看起来比较骚，但确实比官方的提供的例子成本小很多(体积增加几乎为0)，若有更好的办法，欢迎大家评论区分享。
@@ -674,7 +674,7 @@ export default {
 module.exports = {
   transpileDependencies: ['common'],
 }
-复制代码
+
 ```
 
 ### 子应用支持独立开发
@@ -714,7 +714,7 @@ export async function mount (props) {
   render(props)
 }
 // ...
-复制代码
+
 ```
 
 `!window.__POWERED_BY_QIANKUN__`表示子应用处于非`qiankun`内的环境，即独立运行时。此时我们依然要注册一个名为`global`的vuex module，子应用内部同样可以从global module中获取用户的信息，从而做到抹平qiankun和独立运行时的环境差异。
@@ -760,7 +760,7 @@ git clone git@xxx1.git
 
 # 子仓库二
 git clone git@xxx2.git
-复制代码
+
 ```
 
 然后在聚合库也初始化一个`package.json`，scripts加上:
@@ -769,7 +769,7 @@ git clone git@xxx2.git
   "scripts": {
     "clone:all": "bash ./scripts/clone-all.sh",
   },
-复制代码
+
 ```
 
 这样，git clone聚合库下来后，再`npm run clone:all`就可以做到一键clone所有子仓库了。
@@ -791,7 +791,7 @@ git clone git@xxx2.git
     "start:sub-vue": "cd sub-vue && npm start",
     "start:main": "cd main && npm start"
   },
-复制代码
+
 ```
 
 > `npm-run-all`的`--serial`表示有顺序地一个个执行，`--parallel`表示同时并行地运行。
@@ -822,7 +822,7 @@ git clone git@xxx2.git
   },
 }
 
-复制代码
+
 ```
 
 ### 子应用互相跳转
@@ -872,7 +872,7 @@ export default {
     this.listenRouterChange()
   }
 }
-复制代码
+
 ```
 
 ## 性能优化
@@ -907,7 +907,7 @@ export default {
     │   └── index.html
     └── sub-vue
         └── index.html
-复制代码
+
 ```
 
 1. 配置nginx，预期是`xx.com`根路径指向主应用，`xx.com/subapp`指向子应用,子应用的配置只需写一份，以后新增子应用也不需要改nginx配置，以下应该是微应用部署的最简洁的一份nginx配置了。
@@ -927,7 +927,7 @@ server {
     }
 
 }
-复制代码
+
 ```
 
 `nginx -s reload`后就可以了。
@@ -958,7 +958,7 @@ module.exports = {
     return config;
   }
 };
-复制代码
+
 ```
 
 ### 二、Uncaught Error: application 'xx' died in status SKIP_BECAUSE_BROKEN: [qiankun] Target container with #subapp-viewport not existed while xx mounting!
@@ -976,7 +976,7 @@ new Vue({
     renderMicroApps();
   },
 }).$mount('#root-app');
-复制代码
+
 ```
 
 但该办法不行，甚至setTimeout都用上了也不行，需另想办法。
