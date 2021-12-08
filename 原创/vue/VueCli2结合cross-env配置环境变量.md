@@ -11,7 +11,7 @@ npm install cross-env --save
 
 #### config/dev.env.js
 
-```js
+```javascript
 'use strict'
 const merge = require('webpack-merge')
 const prodEnv = require('./prod.env')
@@ -24,7 +24,7 @@ module.exports = merge(prodEnv, {
 
 #### config/prod.env.js
 
-```js
+```javascript
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
@@ -59,7 +59,7 @@ module.exports = {
 
 ### 项目中使用
 
-```js
+```javascript
 process.env.API_ENV
 ```
 
