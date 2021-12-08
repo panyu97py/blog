@@ -10,7 +10,7 @@
 
 那么vue呢？在[astexplore](https://astexplorer.net/)网站中我们选择编译的文件类型是vue就可以看到vue单文件编译成的ast语法树结构。
 
-![alt](手把手写一个检测vue单文件template是否有合并冲突的webpack插件.assets/FtURcAcmgB-yBQLFQG_wxudRIhgH.png)
+![alt](assets/手把手写一个检测vue单文件template是否有合并冲突的webpack插件.assets/FtURcAcmgB-yBQLFQG_wxudRIhgH.png)
 
 那么我们也可以利用这种形式来编写一个babel插件的形式来对vue中的template进行ast语法树的分析？事实上并不行，经由webpack进行打包的vue项目类似于`vue-cli`，webpack并不能识别.vue文件结尾的单文件。所以vue中的.vue单文件首先要经过`vue-loader`进行处理，在`vue-loader`中，会通过官方的`vue-template-compilre`进行编译静态分析优化等操作。其中的script代码任然会交给babel进行处理编译，**但是template渲染模板会由vue-template-compilre进行编译优化生成成最终的字符串模板**。
 
@@ -67,7 +67,7 @@ class CheckVueConflictPlugin {
 
 看一下webpack打包的template渲染函数模块：
 
-![alt](手把手写一个检测vue单文件template是否有合并冲突的webpack插件.assets/Fqw9u2ic63MGSu9qDRHNOabVvGhi.png)
+![alt](assets/手把手写一个检测vue单文件template是否有合并冲突的webpack插件.assets/Fqw9u2ic63MGSu9qDRHNOabVvGhi.png)
 
 不难写出筛选出template渲染函数的代码:
 
@@ -189,7 +189,7 @@ export {render, staticRenderFns}
 
 不难看出，为了检验模板中是否有遗留的合并冲突代码，我们只需要`_vm._v`中的字符串是进行正则匹配即可。我们把这段代码丢到[astexplore](https://astexplorer.net/)中。
 
-![alt](手把手写一个检测vue单文件template是否有合并冲突的webpack插件.assets/Fv1Cd1mDFOLO6t0jYNH3YQmSIcL4.png)
+![alt](assets/手把手写一个检测vue单文件template是否有合并冲突的webpack插件.assets/Fv1Cd1mDFOLO6t0jYNH3YQmSIcL4.png)
 
 获取到相对应的ast语法树之后，通过babel插件把上面获取到的模板源文件转为为ast语法树，通过访问者模式判断特定的节点即可。
 
@@ -497,4 +497,4 @@ export function checkVue3IsConflict(module: VueTemplateModule) {
 
 ## 效果
 
-![alt](手把手写一个检测vue单文件template是否有合并冲突的webpack插件.assets/FhZWmhaYI56_U_gtF2CJSB6N8HwQ.png)
+![alt](assets/手把手写一个检测vue单文件template是否有合并冲突的webpack插件.assets/FhZWmhaYI56_U_gtF2CJSB6N8HwQ.png)

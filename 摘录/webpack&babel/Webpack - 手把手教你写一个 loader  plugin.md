@@ -88,7 +88,7 @@ this.callback(
 复制代码
 ```
 
-接下来举个例子： ![image.png](Webpack - 手把手教你写一个 loader  plugin.assets/c53097bf54a34dc18d97fbcf5e1fa49c~tplv-k3u1fbpfcp-zoom-1.image) 这里注意`[this.getOptions()](https://webpack.docschina.org/api/loaders/#thisgetoptionsschema)` 可以用来获取配置的参数
+接下来举个例子： ![image.png](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/c53097bf54a34dc18d97fbcf5e1fa49c~tplv-k3u1fbpfcp-zoom-1.image) 这里注意`[this.getOptions()](https://webpack.docschina.org/api/loaders/#thisgetoptionsschema)` 可以用来获取配置的参数
 
 > 从 webpack 5 开始，this.getOptions 可以获取到 loader 上下文对象。它用来替代来自[loader-utils](https://github.com/webpack/loader-utils#getoptions)中的 getOptions 方法。
 
@@ -154,7 +154,7 @@ module.exports.pitch = function (remainingRequest, precedingRequest, data) {
 复制代码
 ```
 
-**注意！** 如果某一个 loader 的 pitch 方法中返回了值，那么他会直接“**往回走**”，跳过后续的步骤，来举个例子： ![img](Webpack - 手把手教你写一个 loader  plugin.assets/87a8e7cf0c45420db167cfb20f3f90ce~tplv-k3u1fbpfcp-zoom-1.image) 假设我们现在是这样：`use: ['a-loader', 'b-loader', 'c-loader'],` 那么正常的调用顺序是这样： ![image.png](Webpack - 手把手教你写一个 loader  plugin.assets/c555dbbe6b1046b8958a4b042fc3c8fe~tplv-k3u1fbpfcp-zoom-1.image) 现在 b-loader 的 pitch 改为了有返回值：
+**注意！** 如果某一个 loader 的 pitch 方法中返回了值，那么他会直接“**往回走**”，跳过后续的步骤，来举个例子： ![img](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/87a8e7cf0c45420db167cfb20f3f90ce~tplv-k3u1fbpfcp-zoom-1.image) 假设我们现在是这样：`use: ['a-loader', 'b-loader', 'c-loader'],` 那么正常的调用顺序是这样： ![image.png](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/c555dbbe6b1046b8958a4b042fc3c8fe~tplv-k3u1fbpfcp-zoom-1.image) 现在 b-loader 的 pitch 改为了有返回值：
 
 ```javascript
 // b-loader.js
@@ -168,7 +168,7 @@ module.exports.pitch = function (remainingRequest, precedingRequest, data) {
 复制代码
 ```
 
-那么现在的调用就会变成这样，直接“回头”，跳过了原来的其他三个步骤： ![image.png](Webpack - 手把手教你写一个 loader  plugin.assets/4a693869c5f2413ba50d1ac0fd696fd5~tplv-k3u1fbpfcp-zoom-1.image)
+那么现在的调用就会变成这样，直接“回头”，跳过了原来的其他三个步骤： ![image.png](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/4a693869c5f2413ba50d1ac0fd696fd5~tplv-k3u1fbpfcp-zoom-1.image)
 
 ### 1.5 其他 API
 
@@ -471,7 +471,7 @@ dist
 复制代码
 ```
 
-**buildInfo.md** ![image.png](Webpack - 手把手教你写一个 loader  plugin.assets/7bfcb68813454ac0bb08105d2efb0d3c~tplv-k3u1fbpfcp-zoom-1.image) 可以看到按照我们希望的格式准确输出了内容，这样一个简单的功能插件就完成了！
+**buildInfo.md** ![image.png](assets/Webpack%20-%20手把手教你写一个%20loader%20%20plugin.assets/7bfcb68813454ac0bb08105d2efb0d3c~tplv-k3u1fbpfcp-zoom-1.image) 可以看到按照我们希望的格式准确输出了内容，这样一个简单的功能插件就完成了！
 
 
 作者：微医前端团队

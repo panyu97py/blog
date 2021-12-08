@@ -20,13 +20,13 @@
 
 以react项目为例子分析，对于js中的代码来说出现`============`, `>>>>>>>>>>>`混入这种分支合并冲突的代码必定会打包失败，因为js语法不通过，所以我们并不需要检测项目中的js逻辑代码。
 
-![alt](使用babel插件监控是否遗留合并冲突代码.assets/FkpVsZfiohRLa3V8b2LWQkx16d6e.png)
+![alt](assets/使用babel插件监控是否遗留合并冲突代码.assets/FkpVsZfiohRLa3V8b2LWQkx16d6e.png)
 
 #### 模板混杂合并冲突代码
 
 但是react或者vue模板(template以及render)中的合并冲突代码类似于下面的代码，会直接认为是html模板字符串所以打包编译是可以进行通过的。事实上上面生成出现合并冲突代码就是发生在渲染模板中。**所以本质上我们只需要检测渲染模板中的合并冲突代码即可**
 
-![alt](使用babel插件监控是否遗留合并冲突代码.assets/FhRHIjWR2Smqy-tOP5IAA9tQXq22.png)
+![alt](assets/使用babel插件监控是否遗留合并冲突代码.assets/FhRHIjWR2Smqy-tOP5IAA9tQXq22.png)
 
 ### 如何进行检测
 
@@ -83,7 +83,7 @@ function App() {
 
 那么这段js代码会生成什么样子的ast代码呢，我们把这段代贴到`https://astexplorer.net/`上:
 
-![alt](使用babel插件监控是否遗留合并冲突代码.assets/Fo5gHVISjAlWXwB6dVsFMrt7Zp7s.png)
+![alt](assets/使用babel插件监控是否遗留合并冲突代码.assets/Fo5gHVISjAlWXwB6dVsFMrt7Zp7s.png)
 
 ### 具体思路
 
@@ -243,10 +243,10 @@ module.exports = {
 };
 ```
 
-![alt](使用babel插件监控是否遗留合并冲突代码.assets/FsoEYydEaTRD4mi1afQAvNmdWbG9.png)
+![alt](assets/使用babel插件监控是否遗留合并冲突代码.assets/FsoEYydEaTRD4mi1afQAvNmdWbG9.png)
 
 ### vue项目咋做检测
 
 其实思路一样，本质上都是要获取.vue文件会被编译成咋样的ast语法树，astexplorer官网能够直接查看vue文件编译成的ast语法树
 
-![alt](使用babel插件监控是否遗留合并冲突代码.assets/Fs3cY-nEPVZ1SYwBo2KC_T_mOygg.png)
+![alt](assets/使用babel插件监控是否遗留合并冲突代码.assets/Fs3cY-nEPVZ1SYwBo2KC_T_mOygg.png)

@@ -48,7 +48,7 @@ ReactDOM.render(element, container);
 
 在浏览器中打开 reactDemo.html，展示如下：
 
-![image.png](手写系列-实现一个铂金段位的 React.assets/e67cf968275e441db891b5530da0171e~tplv-k3u1fbpfcp-watermark.image)
+![image.png](assets/手写系列-实现一个铂金段位的%20React.assets/e67cf968275e441db891b5530da0171e~tplv-k3u1fbpfcp-watermark.image)
 
 我们需要实现自己的 React，那么就需要知道上面的代码到底做了什么。
 
@@ -62,7 +62,7 @@ ReactDOM.render(element, container);
 
 通过 [babel 在线编译](https://link.juejin.cn/?target=https%3A%2F%2Fwww.babeljs.cn%2Frepl) `const element = <div>123</div>` 。
 
-![image.png](手写系列-实现一个铂金段位的 React.assets/006372da0fb7468e9155bc8d69448b48~tplv-k3u1fbpfcp-watermark.image)
+![image.png](assets/手写系列-实现一个铂金段位的%20React.assets/006372da0fb7468e9155bc8d69448b48~tplv-k3u1fbpfcp-watermark.image)
 
 可知 `const element = <div>123</div>` 经过编译后的实际代码如下：
 
@@ -87,7 +87,7 @@ ReactDOM.render(element, container);
 
 可以看到输出的 element 如下：
 
-![image.png](手写系列-实现一个铂金段位的 React.assets/7b0e14c7e8734456891b2264cd160476~tplv-k3u1fbpfcp-watermark.image)
+![image.png](assets/手写系列-实现一个铂金段位的%20React.assets/7b0e14c7e8734456891b2264cd160476~tplv-k3u1fbpfcp-watermark.image)
 
 简化一下 element：
 
@@ -159,7 +159,7 @@ container.appendChild(node)
 
 运行源码，结果如下，和引入 React 的结果一致：
 
-![image.png](手写系列-实现一个铂金段位的 React.assets/8033485bbe0a46e6b8f32c5f69315429~tplv-k3u1fbpfcp-watermark.image)
+![image.png](assets/手写系列-实现一个铂金段位的%20React.assets/8033485bbe0a46e6b8f32c5f69315429~tplv-k3u1fbpfcp-watermark.image)
 
 # 三、开始
 
@@ -394,7 +394,7 @@ myReact.render(element, document.getElementById('container'))
 
 结果如图，成功输出：
 
-![image.png](手写系列-实现一个铂金段位的 React.assets/fe4fe623e02e41d2bd81957c0019f12b~tplv-k3u1fbpfcp-watermark.image)
+![image.png](assets/手写系列-实现一个铂金段位的%20React.assets/fe4fe623e02e41d2bd81957c0019f12b~tplv-k3u1fbpfcp-watermark.image)
 
 ## 3. 并发模式（requestIdleCallback）
 
@@ -504,7 +504,7 @@ myReact.render(
 
 橙色代表子节点，黄色代表父节点，蓝色代表兄弟节点。
 
-![image.png](手写系列-实现一个铂金段位的 React.assets/a92a6b184ca4456aab76a73cff2ca4a3~tplv-k3u1fbpfcp-watermark.image)
+![image.png](assets/手写系列-实现一个铂金段位的%20React.assets/a92a6b184ca4456aab76a73cff2ca4a3~tplv-k3u1fbpfcp-watermark.image)
 
 每个 fiber 都有一个链接指向它的第一个子节点、下一个兄弟节点和它的父节点。这种数据结构可以让我们更方便的查找下一个工作单元。
 
@@ -719,7 +719,7 @@ myReact.render(element, document.getElementById('container'))
 
 如预期输出 dom，如图：
 
-![image.png](手写系列-实现一个铂金段位的 React.assets/18c3cea8e3b042ebbf2f10eaffd9a18b~tplv-k3u1fbpfcp-watermark.image)
+![image.png](assets/手写系列-实现一个铂金段位的%20React.assets/18c3cea8e3b042ebbf2f10eaffd9a18b~tplv-k3u1fbpfcp-watermark.image)
 
 ## 5. 渲染提交阶段
 
@@ -799,7 +799,7 @@ function commitWork (fiber) {
 
 源码运行结果如图：
 
-![image.png](手写系列-实现一个铂金段位的 React.assets/cccbab6b83a24ca3a9c45470ff9b37a0~tplv-k3u1fbpfcp-watermark.image)
+![image.png](assets/手写系列-实现一个铂金段位的%20React.assets/cccbab6b83a24ca3a9c45470ff9b37a0~tplv-k3u1fbpfcp-watermark.image)
 
 ## 6. 协调（diff 算法）
 
@@ -1127,7 +1127,7 @@ rerender("World")
 
 输出结果如图：
 
-![12.gif](手写系列-实现一个铂金段位的 React.assets/e615196850b244c3930771375d93ba3c~tplv-k3u1fbpfcp-watermark.image)
+![12.gif](assets/手写系列-实现一个铂金段位的%20React.assets/e615196850b244c3930771375d93ba3c~tplv-k3u1fbpfcp-watermark.image)
 
 ## 7. 函数式组件
 
@@ -1272,7 +1272,7 @@ myReact.render(element, container)
 
 运行结果如图：
 
-![image.png](手写系列-实现一个铂金段位的 React.assets/a920eb5c41974c15b2db269dc95cb7f9~tplv-k3u1fbpfcp-watermark.image)
+![image.png](assets/手写系列-实现一个铂金段位的%20React.assets/a920eb5c41974c15b2db269dc95cb7f9~tplv-k3u1fbpfcp-watermark.image)
 
 ## 8. hooks
 
@@ -1375,7 +1375,7 @@ const element = <Counter />
 
 > 本例完整源码见：[reactDemo11](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fjiaozitang%2Fweb-learn-note%2Fblob%2Fmain%2Fsrc%2F%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%2FReact%2FreactDemo11.html)
 
-运行结果如图： ![123.gif](手写系列-实现一个铂金段位的 React.assets/2940b3bb0bb34940891cc1903067b2b3~tplv-k3u1fbpfcp-watermark.image)
+运行结果如图： ![123.gif](assets/手写系列-实现一个铂金段位的%20React.assets/2940b3bb0bb34940891cc1903067b2b3~tplv-k3u1fbpfcp-watermark.image)
 
 本章节简单实现了 myReact 的 hooks 功能。
 

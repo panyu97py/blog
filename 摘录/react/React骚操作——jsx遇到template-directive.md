@@ -4,7 +4,7 @@
 
  先来看看结果吧，以前要根据不同状态来控制模块是否显示，我们大概要写这样的代码：
 
-```
+```jsx
 render(){
     const visible = true
     return(
@@ -20,7 +20,7 @@ render(){
 
  现在可以这么玩：
 
-```
+```jsx
 render(){
     const visible = true
     return(
@@ -33,7 +33,7 @@ render(){
 
  另一种常见的场景就是根据一个数组来渲染出一个列表，一般是这么写：
 
-```
+```jsx
 render(){
     const list = [1, 2, 3, 4, 5]
     return(
@@ -50,7 +50,7 @@ render(){
 
  现在可以更简洁：
 
-```
+```jsx
 render(){
     const list = [1, 2, 3, 4, 5]
     return(
@@ -63,7 +63,7 @@ render(){
 
  以上代码会自动设置key，值为当前元素的索引。如果你想要自定义key，也可以加上，改成
 
-```
+```html
 <div r-for = {(item,index) in list} key = {index+1}>{item}</div>
 ```
 
@@ -75,13 +75,13 @@ render(){
 
  比如对于以下jsx：
 
-```
+```html
 <div r-if = { visible }>{content}</div>
 ```
 
  转换成的ast结构大概是：
 
-```
+```json
 {
    	type: 'CallExpression',
     callee: {},
@@ -93,7 +93,7 @@ render(){
 
  目标代码为：
 
-```
+```javascript
 React.createElement(
     'div',
     {'r-if': visible},
@@ -103,7 +103,7 @@ React.createElement(
 
  React.createElement()方法调用对应ast中的CallExpression, React和createElement在callee中可以找到，可以以此来找出createElement(), r-if 等属性以及第三个参数content在arguments的properties数组中能找到。有了这些信息，我们就可以遍历ast，找到那些callee为React.createElement的CallExpression, 然后判断arguments中如果出现了r-if, 就对ast做以下修改：首先移除r-if属性，避免死循环；然后在CallExpression对应的节点外面再套一层ifStatement,  如此一来，转换后的ast生成的目标代码大致如下：
 
-```
+```javascript
 if(visible){
     React.createElement(
         'div',
@@ -117,7 +117,7 @@ if(visible){
 
  最后再说一下babel-plugin的写法，其实也就是一个方法:
 
-```
+```javascript
 module.exports = function ({ types: t }) {
   return {
     visitor: {
@@ -136,13 +136,13 @@ module.exports = function ({ types: t }) {
 
  本文中提到的r-if 和 r-for 已经写成了一个插件，可以在[github仓库](https://github.com/panyu97py/babel-plugin-react-directive)中找到,同时也发布到了npm仓库，可以直接安装：
 
-```
+```bash
 yarn add --dev babel-plugin-react-directive
 ```
 
  然后在.babelrc中配置即可：
 
-```
+```json
 {
     "plugins": [
         "react-directive"

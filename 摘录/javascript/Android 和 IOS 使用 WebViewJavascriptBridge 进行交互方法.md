@@ -10,7 +10,7 @@
 
 
 
-```js
+```javascript
 /*这段代码是固定的，必须要放到js中*/
 function setupWebViewJavascriptBridge(callback) {
 
@@ -46,7 +46,7 @@ function setupWebViewJavascriptBridge(callback) {
 
 
 
-```jsx
+```javascript
 //在改function 中添加原生调起js方法
 setupWebViewJavascriptBridge(function(bridge) {
     bridges = bridge;
@@ -69,7 +69,7 @@ setupWebViewJavascriptBridge(function(bridge) {
 
 
 
-```jsx
+```javascript
 document.getElementById('enter3').onclick = function (e) {
 var data = "good hello"
 //参数1： pay 注册flag 供原生使用，要和原生统一
@@ -85,7 +85,7 @@ bridge.callHandler('getBlogNameFromObjC',data,function(resp){
 
 
 
-```xml
+```html
 <html>
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="content-type">

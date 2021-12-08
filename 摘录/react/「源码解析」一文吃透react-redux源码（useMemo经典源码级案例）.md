@@ -11,7 +11,7 @@
  **5 `connect` 是怎么通过第一个参数，来订阅与之对应的 `state` 的呢？**
  **6  `connect` 怎么样将 `props`，和 `redux`的 `state` 合并的?**
 
-![img](「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）.assets/8089f33462be4c5c9bad97b66dc8a3fa~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）.assets/8089f33462be4c5c9bad97b66dc8a3fa~tplv-k3u1fbpfcp-watermark.awebp)
 
 带着这些疑问我们不妨先看一下 `Provider` 究竟做了什么?
 
@@ -947,7 +947,7 @@ function subscribeUpdates(
 
 到这里我们明白了，**`react-redux` 通过 `subscription` 进行层层订阅。对于一层层的组件结构，整体模型图如下：**。
 
-![img](「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）.assets/bd432743cd93439ba901b36126a0b6b0~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）.assets/bd432743cd93439ba901b36126a0b6b0~tplv-k3u1fbpfcp-watermark.awebp)
 
 接下来我们看一下`checkForUpdates`
 
@@ -993,7 +993,7 @@ function subscribeUpdates(
 
 **对于层层订阅的结构，整个更新模型图如下：**
 
-![img](「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）.assets/481a9a687369421fbdb2665fc3af44d0~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/「源码解析」一文吃透react-redux源码（useMemo经典源码级案例）.assets/481a9a687369421fbdb2665fc3af44d0~tplv-k3u1fbpfcp-watermark.awebp)
 
 ## 总结
 

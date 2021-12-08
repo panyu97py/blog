@@ -4,7 +4,7 @@ React 生命周期图解
 
 我已经把这张图印在脑子里面了，没事就自己画画，中间发散一些自己的思考。u1s1，不知道 react 的生命周期命名为什么要怎么长~~~， 小程序，vue 的都比较短。毕竟使用的频率还是很高的，Hooks 除外。
 
-![图片](一名 vueCoder 总结的 React 基础.assets/640-20210618162744677.png)image.png
+![图片](assets/一名%20vueCoder%20总结的%20React%20基础.assets/640-20210618162744677.png)image.png
 
 ### 1、constructor
 
@@ -214,7 +214,7 @@ class App extends Component {
 
 代码对应页面预览
 
-![图片](一名 vueCoder 总结的 React 基础.assets/640-20210618162744821.png)image.png
+![图片](assets/一名%20vueCoder%20总结的%20React%20基础.assets/640-20210618162744821.png)image.png
 
 ```
 render() {
