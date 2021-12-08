@@ -6,7 +6,7 @@
 
 package.json
 
-```js
+```javascript
 {
     ...
     "scripts":{
@@ -24,7 +24,7 @@ package.json
 
 .env
 
-```js
+```javascript
 VUE_APP_API_ENV=${API_ENV}
 ```
 
@@ -40,7 +40,7 @@ vue cli3 中 [环境变量和模式](https://cli.vuejs.org/zh/guide/mode-and-env
 
 比如：
 
-```js
+```javascript
 VUE_APP_TITLE=TITLE
 ```
 
@@ -52,7 +52,7 @@ VUE_APP_TITLE=TITLE
 
 > 引入方法`resolveClientEnv.js`,通过 [`webpack-chain`](https://github.com/neutrinojs/webpack-chain), 链式配置了`DefinePlugin`使变量静态嵌入到客户端侧的包中。
 
-```js
+```javascript
  const resolveClientEnv = require('../util/resolveClientEnv')
     webpackConfig
       .plugin('define')
@@ -65,7 +65,7 @@ VUE_APP_TITLE=TITLE
 
 > 就是这个方法定义了环境变量必须为`VUE_APP_`开始的规则，那么问题来了`process.env`里的值是哪里来的，为什么我们定义在配置文件中的值会被写入到`process.env`里接着往下看。
 
-```js
+```javascript
 // 正则匹配以 VUE_APP_ 开头的 key
 const prefixRE = /^VUE_APP_/
 
@@ -107,7 +107,7 @@ module.exports = function resolveClientEnv (options, raw) {
 >
 > 具体的代码我就不放了想看可以点上面的链接自己看。
 
-```js
+```javascript
 const dotenv = require('dotenv')
 const dotenvExpand = require('dotenv-expand')
 ...
@@ -168,7 +168,7 @@ module.exports = class Service {
 
 package.json
 
-```js
+```json
 {
     ...
     "scripts":{
@@ -186,13 +186,13 @@ package.json
 
 .env
 
-```js
+```javascript
 VUE_APP_API_ENV=${API_ENV}
 ```
 
 项目中取用
 
-```js
+```javascript
 console.log(process.env.VUE_APP_API_ENV)
 ```
 
