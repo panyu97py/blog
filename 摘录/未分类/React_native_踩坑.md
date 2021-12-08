@@ -1,6 +1,0 @@
-# React native 踩坑
-
-* View 的内容超出 View 的大小导致 View 的背景色消失
-* View 套在 ScrollView 中出现
-
-*%20View%20%E7%9A%84%E5%86%85%E5%AE%B9%E8%B6%85%E5%87%BA%20View%20%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%AF%BC%E8%87%B4%20View%20%E7%9A%84%E8%83%8C%E6%99%AF%E8%89%B2%E6%B6%88%E5%A4%B1%0A*%20View%20%E5%A5%97%E5%9C%A8%20ScrollView%20%E4%B8%AD%E5%87%BA%E7%8E%B0%20View%20%E7%9A%84%E8%83%8C%E6%99%AF%E8%89%B2%E6%B6%88%E5%A4%B1
