@@ -1,6 +1,6 @@
 ## 预备知识
 
-上一篇文章：[从0实现一个single-spa的前端微服务（上）](./从0实现一个single-spa的前端微服务（上）.md)中讲到，`single-spa`的原理就是，将子项目中的`link/script`标签和`<div id="app"></div>`插入到主项目，而这个操作的核心就是动态加载`js`和`css`。
+上一篇文章：[从0实现一个single-spa的前端微服务（上）](从0实现一个single-spa的前端微服务（上）.md)中讲到，`single-spa`的原理就是，将子项目中的`link/script`标签和`<div id="app"></div>`插入到主项目，而这个操作的核心就是动态加载`js`和`css`。
 
 动态加载`js`我们使用的是`system.js`,借助这个插件，我们只需要将子项目的`app.js`暴露给它即可。
 
@@ -293,15 +293,16 @@ module.exports = config;
 `single-spa`模式下开发/打包都需要改动环境变量，将正常的`build`命令修改成：按顺序打包两次，就可以实现和原来一样打包部署流程。
 
 ```json
-"scripts": {
-    "spa-serve": "vue-cli-service serve --mode devSingleSpa",
-    "serve": "vue-cli-service serve",
-    "spa-build": "vue-cli-service build --mode singleSpa",
-    "usual-build": "vue-cli-service build",
-    "build": "npm run spa-build && npm run usual-build",
-    "lint": "vue-cli-service lint"
-},
-
+{
+   "scripts": {
+      "spa-serve": "vue-cli-service serve --mode devSingleSpa",
+      "serve": "vue-cli-service serve",
+      "spa-build": "vue-cli-service build --mode singleSpa",
+      "usual-build": "vue-cli-service build",
+      "build": "npm run spa-build && npm run usual-build",
+      "lint": "vue-cli-service lint"
+   }  
+}
 ```
 
 `single-spa`开发使用`npm run spa-serve`，正常开发不变。
@@ -617,4 +618,4 @@ insertNewImportMap(devDependencies);
 
 最后，感谢大家阅读，祝大家新年快乐！
 
-有什么问题欢迎指出，下一篇文章已更新：[从0实现一个single-spa的前端微服务（下）](./从0实现一个single-spa的前端微服务（下）.md)
+有什么问题欢迎指出，下一篇文章已更新：[从0实现一个single-spa的前端微服务（下）](从0实现一个single-spa的前端微服务（下）.md)
