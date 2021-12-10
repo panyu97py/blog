@@ -1,5 +1,5 @@
 # 微前端框架 之 single-spa 从入门到精通
-
+> 本文转自[掘金](https://juejin.cn/post/6862661545592111111)
 # 前序
 
 **目的**
@@ -23,9 +23,9 @@
 
 # 提示
 
-- 先熟悉基本使用，熟悉常用的API，可通过示例项目 + [官网](https://link.juejin.cn/?target=https%3A%2F%2Fzh-hans.single-spa.js.org%2Fdocs%2Fconfiguration)相结合来达成
+- 先熟悉基本使用，熟悉常用的API，可通过示例项目 + [官网](https://zh-hans.single-spa.js.org/docs/configuration) 相结合来达成
 - 如果基础比较好，可以先读后面的`手写 single-spa 框架`部分，再回来阅读源码，效果可能会更好
-- 文章中涉及到的所有代码都在 [github](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fliyongning%2Fmicro-frontend.git)（示例项目 + `single-spa`源码分析 + 手写`single-spa`框架 + `single-spa-vue`源码分析）
+- 文章中涉及到的所有代码都在 [github](https://github.com/panyu97py/micro-frontend) （示例项目 + `single-spa`源码分析 + 手写`single-spa`框架 + `single-spa-vue`源码分析）
 
 # 示例项目
 
@@ -264,12 +264,12 @@ npm run serve:micro
 
 ## 子应用 app3（react）
 
-> 这部分内容于`2020/08/30`添加，为什么后来添加这部分内容呢？是因为有同学希望增加一个`react`项目的示例，他们在集成`react`项目时遇到了一些困难，于是找时间就加了这部分内容；发现网上`single-spa`集成`react`的示例非常少，仅有的几个看了下也是对[官网示例](https://link.juejin.cn/?target=https%3A%2F%2Fsingle-spa.js.org%2Fdocs%2Fecosystem-react)的抄写。
+> 这部分内容于`2020/08/30`添加，为什么后来添加这部分内容呢？是因为有同学希望增加一个`react`项目的示例，他们在集成`react`项目时遇到了一些困难，于是找时间就加了这部分内容；发现网上`single-spa`集成`react`的示例非常少，仅有的几个看了下也是对[官网示例](https://single-spa.js.org/docs/ecosystem-react) 的抄写。
 
 示例项目是基于`react`脚手架`cra`创建的，整个集成的过程中难点有两个：
 
-- `webpack`的配置，这部分内容[官网](https://link.juejin.cn/?target=https%3A%2F%2Fsingle-spa.js.org%2Fdocs%2Ffaq%2F%23create-react-app)有提供
-- 子应用入口的配置，单纯看[官方文档的示例](https://link.juejin.cn/?target=https%3A%2F%2Fsingle-spa.js.org%2Fdocs%2Fecosystem-react)项目根本跑不起来，或者即使跑起来也有问题，`react`和`vue`的集成还不一样，`react`需要在主项目的配置中也加一点东西，这部分官网配置没说，是通过`single-spa-react`源码看出来的
+- `webpack`的配置，这部分内容[官网](https://single-spa.js.org/docs/faq/#create-react-app) 有提供
+- 子应用入口的配置，单纯看[官方文档的示例](https://single-spa.js.org/docs/ecosystem-react) 项目根本跑不起来，或者即使跑起来也有问题，`react`和`vue`的集成还不一样，`react`需要在主项目的配置中也加一点东西，这部分官网配置没说，是通过`single-spa-react`源码看出来的
 
 接下来就开始吧，在`/micro-frontend`目录下通过`cra`脚手架新建子应用`app3`
 
@@ -300,7 +300,7 @@ npm run eject
 
 ### 更改 webpack 配置文件
 
-#### /config/webpack.config.js，[官网](https://link.juejin.cn/?target=https%3A%2F%2Fsingle-spa.js.org%2Fdocs%2Ffaq%2F%23create-react-app)
+#### /config/webpack.config.js，[官网](https://single-spa.js.org/docs/faq/#create-react-app)
 
 - 删掉`optimization`部分，这部分配置和`chunk`有关，有动态生成的异步`chunk`存在，会导致主应用无法配置，因为`chunk`的名字会变，其实这也是`single-spa`的缺陷，或者说采用`JS entry`的缺陷，`JS entry`建议将所有内容都打成一个`bundle` - `app.js`
 - 更改`entry`和`output`部分
@@ -330,7 +330,7 @@ npm run eject
 
 #### /src/index.js
 
-> 由于文章内容太多，字数超出限制，这部分代码就通过图片的形式来展示了，如果需要拷贝可去 [github](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fliyongning%2Fmicro-frontend.git)
+> 由于文章内容太多，字数超出限制，这部分代码就通过图片的形式来展示了，如果需要拷贝可去 [github](https://github.com/panyu97py/micro-frontend)
 
 ![img](微前端框架 之 single-spa 从入门到精通.assets/294f4c6828574294a8eebef06a3aa346~tplv-k3u1fbpfcp-watermark.awebp)
 
@@ -578,7 +578,7 @@ serve ./dist -p port
 
 > 整个阅读过程以示例项目为例，阅读源码时一定要多动手写注释、做笔记，遇到不理解的地方编写示例代码 + `console.log` + 单步调试，*切记不要只看不动手*。
 
-[single-spa 源码阅读思维导图](https://link.juejin.cn/?target=https%3A%2F%2Fwww.processon.com%2Fview%2Flink%2F5f3b53d57d9c0806d41e1a72%23map)
+[single-spa 源码阅读思维导图](https://www.processon.com/view/link/5f3b53d57d9c0806d41e1a72#map)
 
 ![img](微前端框架 之 single-spa 从入门到精通.assets/3a55c39884644a36bdf2cc31520ce91a~tplv-k3u1fbpfcp-watermark.awebp)
 

@@ -101,7 +101,7 @@
 
 ## 框架目录结构
 
-从 [github](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fliyongning%2Fqiankun.git) 克隆项目以后，执行一下命令：
+从 [github](https://github.com/panyu97py/qiankun) 克隆项目以后，执行一下命令：
 
 - 安装 `qiankun` 框架所需的包
 
@@ -123,11 +123,11 @@
 
 ### 有料的 package.json
 
-- [npm-run-all](https://link.juejin.cn/?target=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fnpm-run-all)
+- [npm-run-all](https://www.npmjs.com/package/npm-run-all)
 
   > 一个 CLI 工具，用于并行或顺序执行多个 npm 脚本
 
-- [father-build](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fumijs%2Ffather)
+- [father-build](https://github.com/umijs/father)
 
   > 基于 rollup 的库构建工具，father 更加强大
 
@@ -1378,7 +1378,7 @@ export async function loadApp<T extends object>(
 
 #### 严格样式隔离
 
-在 `qiankun` 中的严格样式隔离，就是在这个 `createElement` 方法中做的，通过 `shadow dom` 来实现， `shadow dom` 是浏览器原生提供的一种能力，在过去的很长一段时间里，浏览器用它来封装一些元素的内部结构。以一个有着默认播放控制按钮的 `<video>` 元素为例，实际上，在它的 Shadow DOM 中，包含来一系列的按钮和其他控制器。Shadow DOM 标准允许你为你自己的元素（custom element）维护一组 Shadow DOM。具体内容可查看 [shadow DOM](https://link.juejin.cn/?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fzh-CN%2Fdocs%2FWeb%2FWeb_Components%2FUsing_shadow_DOM)
+在 `qiankun` 中的严格样式隔离，就是在这个 `createElement` 方法中做的，通过 `shadow dom` 来实现， `shadow dom` 是浏览器原生提供的一种能力，在过去的很长一段时间里，浏览器用它来封装一些元素的内部结构。以一个有着默认播放控制按钮的 `<video>` 元素为例，实际上，在它的 Shadow DOM 中，包含来一系列的按钮和其他控制器。Shadow DOM 标准允许你为你自己的元素（custom element）维护一组 Shadow DOM。具体内容可查看 [shadow DOM](https://developer.mozilla.org/zh-CN/docs/Web/Web_Components/Using_shadow_DOM)
 
 ```typescript
 /**
@@ -1769,6 +1769,6 @@ export class ScopedCSS {
 
 # 结语
 
-以上内容就是对 qiankun 框架的完整解读了，相信你在阅读完这篇文章以后会有不错的收获，源码在 [github](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fliyongning%2Fqiankun.git)
+以上内容就是对 qiankun 框架的完整解读了，相信你在阅读完这篇文章以后会有不错的收获，源码在 [github](https://github.com/liyongning/import-html-entry)
 
 阅读 qiankun 时的感受就是 `书读百变其义自现`，qiankun 框架有些地方实现还是比较难理解的，相信大家阅读源码时也会有这个感受，那就多读几遍吧，当然也可以来评论区交流，共同学习，共同进步！！

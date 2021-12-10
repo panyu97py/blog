@@ -655,11 +655,3 @@ export function execScripts(entry, scripts, proxy = window, opts = {}) {
 # 结语
 
 以上就是 `HTML Entry` 的全部内容，也是深入理解 `微前端`、`single-spa`、`qiankun` 不可或缺的一部分，源码在 [github](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fliyongning%2Fimport-html-entry)
-
-阅读到这里如果你想继续深入理解 `微前端`、`single-spa`、`qiankun` 等，推荐阅读如下内容
-
-- [微前端框架 之 single-spa 从入门到精通](https://juejin.cn/post/6862661545592111111)
-- [微前端框架 之 qiankun 从入门到源码分析](https://juejin.cn/post/6885211340999229454)
-- [qiankun 2.x 运行时沙箱 源码分析](https://juejin.cn/post/6885214342552223757)
-- [single-spa 官网](https://link.juejin.cn/?target=https%3A%2F%2Fsingle-spa.js.org%2Fdocs%2Fgetting-started-overview)
-- [qiankun 官网](https://link.juejin.cn/?target=https%3A%2F%2Fqiankun.umijs.org%2Fzh%2Fguide)

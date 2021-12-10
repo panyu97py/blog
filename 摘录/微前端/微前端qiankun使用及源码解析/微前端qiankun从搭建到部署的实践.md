@@ -999,9 +999,3 @@ new Vue({
 - [subapp/sub-react](https://link.juejin.cn?target=http%3A%2F%2Fqiankun.fengxianqi.com%2Fsubapp%2Fsub-react%2F)
 
 最后的最后，喜欢本文的同学还请能顺手给个赞和小星星鼓励一下，非常感谢看到这里。
-
-
-作者：fengxianqi
-链接：https://juejin.cn/post/6875462470593904653
-来源：掘金
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
