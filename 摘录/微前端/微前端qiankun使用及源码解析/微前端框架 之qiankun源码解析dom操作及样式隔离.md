@@ -1,12 +1,12 @@
-### 封装`dom`操作的原因
+## 封装`dom`操作的原因
 
 ​		考虑一个场景，多例模式下由于沙盒的设置，微应用加载后执行微应用中的脚本所访问全局变量`window`是以`proxy`的方式进行。但是过生成`script`标签访问远程脚本时访问的就是真正的`window`。通过js生成`<style>`内容(无论内联还是远程)的时候样式文件的scoped并未绑定对应微应用，这会导致样式与脚本变量会影响到全局，
 
 ​		所以为了解决这一问题需要对远程加载的`script`、`link`、`style`标签做特殊处理，也就是对操作`dom`的方法`createElement`、`apend`、`insertBefore`进行封装。
 
-### 源码解析
+## 源码解析
 
-#### 单例模式
+### 单例模式
 
 单例模式中使用较为简单的`patchLooseSandbox`，其中与多例模式中最大的不同就是`patchHTMLDynamicAppendPrototypeFunctions`函数的入参。
 
@@ -41,9 +41,7 @@ export function patchLooseSandbox(
 }
 ```
 
-
-
-#### 多例模式
+### 多例模式
 
 多例模式较为复杂劫持了`document.createElement`方法，用于收集各子应用的`script`、`link`、`style`标签及对应子应用的映射关系。
 
@@ -201,7 +199,7 @@ export function patchHTMLDynamicAppendPrototypeFunctions(
 
 
 
-#### `script`、`link`、`style`标签的核心处理逻辑
+### `script`、`link`、`style`标签的核心处理逻辑
 
 `getOverwrittenAppendChildOrInsertBefore` 封装原生`apendChild`，`insertBefore`方法，在此过程中，
  若增加或插入的元素绑定了微应用，且绑定的应用是激活状态则
