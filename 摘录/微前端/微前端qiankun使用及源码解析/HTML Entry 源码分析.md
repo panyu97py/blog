@@ -1,4 +1,5 @@
 # HTML Entry 源码分析
+> 本文转自[掘金](https://juejin.cn/post/6885212507837825038)
 
 # 序言
 
@@ -31,11 +32,11 @@
 
 不说其它的，就现在这个改动就存在很大的问题，将整个微应用打包成一个 `JS` 文件，常见的打包优化基本上都没了，比如：按需加载、首屏资源加载优化、css 独立打包等优化措施。
 
-项目发布以后出现了 `bug` ，修复之后需要更新上线，为了清除浏览器缓存带来的应用，一般文件名会带上 `chunkcontent`，微应用发布之后文件名都会发生变化，这时候还需要更新主应用中微应用配置，然后重新编译主应用然后发布，这套操作简直是不能忍受的，这也是 [微前端框架 之 single-spa 从入门到精通](https://juejin.cn/post/6862661545592111111) 这篇文章中示例项目中微应用发布时的环境配置选择 `development` 的原因。
+项目发布以后出现了 `bug` ，修复之后需要更新上线，为了清除浏览器缓存带来的应用，一般文件名会带上 `chunkcontent`，微应用发布之后文件名都会发生变化，这时候还需要更新主应用中微应用配置，然后重新编译主应用然后发布，这套操作简直是不能忍受的，这也是 [微前端框架 之 single-spa 从入门到精通](微前端框架%20之%20single-spa%20从入门到精通.md) 这篇文章中示例项目中微应用发布时的环境配置选择 `development` 的原因。
 
 `qiankun` 框架为了解决 `JS Entry` 的问题，于是采用了 `HTML Entry` 的方式，让用户接入微应用就像使用 `iframe` 一样简单。
 
-如果以上内容没有看懂，则说明这篇文章不太适合你阅读，建议阅读 [微前端框架 之 single-spa 从入门到精通](https://juejin.cn/post/6862661545592111111)，这篇文章详细讲述了 `single-spa` 的基础使用和源码原理，阅读完以后再回来读这篇文章会有事半功倍的效果，请读者切勿强行阅读，否则可能出现头昏脑胀的现象。
+如果以上内容没有看懂，则说明这篇文章不太适合你阅读，建议阅读 [微前端框架 之 single-spa 从入门到精通](微前端框架%20之%20single-spa%20从入门到精通.md)，这篇文章详细讲述了 `single-spa` 的基础使用和源码原理，阅读完以后再回来读这篇文章会有事半功倍的效果，请读者切勿强行阅读，否则可能出现头昏脑胀的现象。
 
 # HTML Entry
 
@@ -83,7 +84,7 @@ HTML Entry` 是由 `import-html-entry` 库实现的，通过 `http` 请求加载
 
 通过上面的阅读知道了 `HTML Entry` 最终会返回一个 `Promise` 对象，`qiankun` 就用了这个对象中的 `template`、`assetPublicPath` 和 `execScripts` 三项，将 `template` 通过 `DOM` 操作添加到主应用中，执行 `execScripts` 方法得到微应用导出的生命周期方法，并且还顺便解决了 `JS` 全局污染的问题，因为执行 `execScripts` 方法的时候可以通过 `proxy` 参数指定 `JS` 的执行上下文。
 
-更加具体的内容可阅读 [微前端框架 之 qiankun 从入门到源码分析](https://juejin.cn/post/6885211340999229454)
+更加具体的内容可阅读 [微前端框架之 qiankun 从入门到源码分析](微前端框架之%20qiankun%20从入门到源码分析.md)
 
 # HTML Entry 源码分析
 
@@ -654,4 +655,4 @@ export function execScripts(entry, scripts, proxy = window, opts = {}) {
 
 # 结语
 
-以上就是 `HTML Entry` 的全部内容，也是深入理解 `微前端`、`single-spa`、`qiankun` 不可或缺的一部分，源码在 [github](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fliyongning%2Fimport-html-entry)
+以上就是 `HTML Entry` 的全部内容，也是深入理解 `微前端`、`single-spa`、`qiankun` 不可或缺的一部分，源码在 [github](https://github.com/panyu97py/import-html-entry)

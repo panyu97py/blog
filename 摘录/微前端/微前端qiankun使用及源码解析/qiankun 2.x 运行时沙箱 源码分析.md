@@ -1,5 +1,5 @@
 # qiankun 2.x 运行时沙箱 源码分析
-
+> 本文转自[掘金](https://juejin.cn/post/6885214342552223757)
 # 序言
 
 `沙箱` 这个词想必大家应该不陌生，即使陌生，读完这篇文章也就不那么陌生了
@@ -55,7 +55,7 @@ free 函数执行完成后返回 rebuild 函数，在微应用重新挂载时会
 
 # 源码分析
 
-接下来就进入令人头昏脑胀的源码分析部分，说实话，运行时沙箱这段代码还是有一些难度的，我在阅读 `qiankun` 源码的时候，这部分内容反反复复阅读了好几遍，[github](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fliyongning%2Fqiankun.git)
+接下来就进入令人头昏脑胀的源码分析部分，说实话，运行时沙箱这段代码还是有一些难度的，我在阅读 `qiankun` 源码的时候，这部分内容反反复复阅读了好几遍，[github](https://github.com/panyu97py/qiankun)
 
 ## 入口位置 - createSandbox
 
