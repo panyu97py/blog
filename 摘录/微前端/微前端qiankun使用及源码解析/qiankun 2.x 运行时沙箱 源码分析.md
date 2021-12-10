@@ -175,7 +175,7 @@ export function createSandbox(
   };
 }
 
-复制代码
+
 ```
 
 ### JS 沙箱
@@ -317,7 +317,6 @@ function setWindowProp(prop: PropertyKey, value: any, toDelete?: boolean) {
   }
 }
 
-复制代码
 ```
 
 #### ProxySandbox 多例 JS 沙箱
@@ -513,7 +512,7 @@ export default class ProxySandbox implements SandBox {
   }
 }
 
-复制代码
+
 ```
 
 #### createFakeWindow
@@ -591,7 +590,7 @@ function createFakeWindow(global: Window) {
   };
 }
             
-复制代码
+
 ```
 
 #### SnapshotSandbox
@@ -662,7 +661,7 @@ export default class SnapshotSandbox implements SandBox {
   }
 }
 
-复制代码
+
 ```
 
 ### 样式沙箱
@@ -703,7 +702,7 @@ export function patchAtBootstrapping(
   return patchersInSandbox[sandbox.type]?.map(patch => patch());
 }
 
-复制代码
+
 ```
 
 #### patch
@@ -815,7 +814,7 @@ export default function patch(
   };
 }
 
-复制代码
+
 ```
 
 #### patchDocumentCreateElement
@@ -880,7 +879,7 @@ function patchDocumentCreateElement(
   };
 }
 
-复制代码
+
 ```
 
 #### patchTHMLDynamicAppendPrototypeFunctions
@@ -963,7 +962,7 @@ function patchHTMLDynamicAppendPrototypeFunctions(
   };
 }
 
-复制代码
+
 ```
 
 #### getOverwrittenAppendChildOrInsertBefore
@@ -1140,7 +1139,7 @@ function getOverwrittenAppendChildOrInsertBefore(opts: {
   };
 }
 
-复制代码
+
 ```
 
 #### getNewRemoveChild
@@ -1189,7 +1188,7 @@ function getNewRemoveChild(opts: {
   };
 }
 
-复制代码
+
 ```
 
 ### patchAtMounting
@@ -1225,7 +1224,7 @@ export function patchAtMounting(
   return patchersInSandbox[sandbox.type]?.map(patch => patch());
 }
 
-复制代码
+
 ```
 
 #### patch => patchInterval
@@ -1261,7 +1260,7 @@ export default function patch(global: Window) {
   };
 }
 
-复制代码
+
 ```
 
 #### patch => patchWindowListener

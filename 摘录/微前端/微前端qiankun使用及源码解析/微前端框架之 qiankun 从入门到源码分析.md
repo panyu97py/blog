@@ -4,13 +4,13 @@
 
 `qiankun` 是基于 `single-spa` 做了二次封装的微前端框架，通过解决了 `single-spa` 的一些弊端和不足，来帮助大家实现更简单、无痛的构建一个生产可用的微前端架构系统。
 
-[微前端框架 之 single-spa 从入门到精通](https://juejin.cn/post/6862661545592111111) 通过 `示例项目 => 打包部署 => 源码分析 => 手写框架` 详细介绍了 `single-spa`。
+[微前端框架 之 single-spa 从入门到精通](微前端框架%20之%20single-spa%20从入门到精通.md) 通过 `示例项目 => 打包部署 => 源码分析 => 手写框架` 详细介绍了 `single-spa`。
 
 因为 `qiankun` 是基于 `single-spa` 做的二次封装，主要解决了 `single-spa` 的一些痛点和不足，所以最好对 `single-spa` 有一个全面的了解和认识，明白其原理、了解它的不足和缺陷，然后带着问题和目的去阅读 `qiankun` 源码，可以达到事半功倍的效果，整个阅读过程的思路也会更加清晰明了。
 
 # 为什么不是 single-spa
 
-如果你很了解 `single-spa` 或者阅读过 [微前端框架 之 single-spa 从入门到精通](https://juejin.cn/post/6862661545592111111) ，你会发现 `single-spa` 就做了两件事，加载微应用（加载方法还是用户自己提供的）、维护微应用状态（初始化、挂载、卸载）。了解多了会发现 `single-spa` 虽好，但是却存在一些比较严重的问题
+如果你很了解 `single-spa` 或者阅读过 [微前端框架 之 single-spa 从入门到精通](微前端框架%20之%20single-spa%20从入门到精通.md) ，你会发现 `single-spa` 就做了两件事，加载微应用（加载方法还是用户自己提供的）、维护微应用状态（初始化、挂载、卸载）。了解多了会发现 `single-spa` 虽好，但是却存在一些比较严重的问题
 
 1. **对微应用的侵入性太强**
 
@@ -107,14 +107,14 @@
 
   ```shell
   yarn install
-  复制代码
+  
   ```
 
 - 安装示例项目的包
 
   ```shell
   yarn examples:install
-  复制代码
+  
   ```
 
 以上命令执行结束以后：
@@ -152,14 +152,14 @@
   }
   ...
 }
-复制代码
+
 ```
 
 ### 启动示例项目
 
 ```shell
 yarn examples:start
-复制代码
+
 ```
 
 命令执行结束以后，访问 `localhost:7099` 和 `localhost:7088` 两个地址，可以看到如下内容：
@@ -303,7 +303,7 @@ runAfterFirstMounted(() => {
   console.log('[MainApp] first app mounted');
 });
 
-复制代码
+
 ```
 
 ##### VueRender.js
@@ -345,7 +345,7 @@ export default function render({ loading }) {
   }
 }
 
-复制代码
+
 ```
 
 ##### ReactRender.js
@@ -375,7 +375,7 @@ export default function render({ loading }) {
   ReactDOM.render(<Render loading={loading} />, container);
 }
 
-复制代码
+
 ```
 
 #### 手动加载微应用
@@ -410,7 +410,7 @@ const app2 = loadMicroApp(
   },
 );
 
-复制代码
+
 ```
 
 ### vue
@@ -440,7 +440,7 @@ vue 微应用在 `examples/vue` 目录下，就是一个通过 vue-cli 创建的
   }
   ...
 }
-复制代码
+
 ```
 
 #### main.js
@@ -530,7 +530,7 @@ export async function unmount() {
   router = null;
 }
 
-复制代码
+
 ```
 
 #### public-path.js
@@ -547,7 +547,7 @@ if (window.__POWERED_BY_QIANKUN__) {
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
 }
 
-复制代码
+
 ```
 
 ### jQuery
@@ -567,7 +567,7 @@ if (window.__POWERED_BY_QIANKUN__) {
   },
   ...
 }
-复制代码
+
 ```
 
 #### entry.js
@@ -598,7 +598,7 @@ const render = $ => {
   };
 })(window);
 
-复制代码
+
 ```
 
 #### index.html
@@ -623,7 +623,7 @@ const render = $ => {
 </body>
 </html>
 
-复制代码
+
 ```
 
 ### angular 9、react 15、react 16
@@ -665,7 +665,7 @@ export * from './interfaces';
 // prefetch
 export { prefetchImmediately as prefetchApps } from './prefetch';
 
-复制代码
+
 ```
 
 ### registerMicroApps
@@ -734,7 +734,7 @@ export function registerMicroApps<T extends object = {}>(
   });
 }
 
-复制代码
+
 ```
 
 ### start
@@ -775,7 +775,7 @@ export function start(opts: FrameworkConfiguration = {}) {
   frameworkStartedDefer.resolve();
 }
 
-复制代码
+
 ```
 
 ### 预加载 - doPrefetchStrategy
@@ -906,7 +906,7 @@ export function prefetchImmediately(apps: AppMetadata[], opts?: ImportEntryOpts)
   apps.forEach(({ entry }) => prefetch(entry, opts));
 }
 
-复制代码
+
 ```
 
 ### 应用间通信 initGlobalState
@@ -1028,7 +1028,7 @@ export function getMicroAppStateActions(id: string, isMaster?: boolean): MicroAp
   };
 }
 
-复制代码
+
 ```
 
 ### 全局未捕获异常处理器
@@ -1054,7 +1054,7 @@ export function removeGlobalUncaughtErrorHandler(errorHandler: (...args: any[]) 
   window.removeEventListener('unhandledrejection', errorHandler);
 }
 
-复制代码
+
 ```
 
 ### setDefaultMountApp
@@ -1088,7 +1088,7 @@ export function runDefaultMountEffects(defaultAppLink: string) {
   setDefaultMountApp(defaultAppLink);
 }
 
-复制代码
+
 ```
 
 ### runAfterFirstMounted
@@ -1113,7 +1113,7 @@ export function runAfterFirstMounted(effect: () => void) {
   });
 }
 
-复制代码
+
 ```
 
 ### 手动加载微应用 loadMicroApp
@@ -1138,7 +1138,7 @@ export function loadMicroApp<T extends object = {}>(
   });
 }
 
-复制代码
+
 ```
 
 ### qiankun 的核心 loadApp
@@ -1369,7 +1369,7 @@ export async function loadApp<T extends object>(
 
   return parcelConfig;
 }
-复制代码
+
 ```
 
 ### 样式隔离
@@ -1418,7 +1418,7 @@ function createElement(appContent: string, strictStyleIsolation: boolean): HTMLE
 
   return appElement;
 }
-复制代码
+
 ```
 
 #### 实验性样式隔离
@@ -1433,7 +1433,7 @@ function createElement(appContent: string, strictStyleIsolation: boolean): HTMLE
 div[data-qiankun-react16] .app-main {
   font-size: 14px;
 }
-复制代码
+
 ```
 
 ##### process
@@ -1484,10 +1484,10 @@ export const process = (
   }
 }
 
-复制代码
+
 export const QiankunCSSRewriteAttr = 'data-qiankun';
 
-复制代码
+
 ```
 
 ##### ScopedCSS
@@ -1764,7 +1764,7 @@ export class ScopedCSS {
   }
 }
 
-复制代码
+
 ```
 
 # 结语
