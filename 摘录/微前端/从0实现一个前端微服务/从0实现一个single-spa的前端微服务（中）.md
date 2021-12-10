@@ -18,7 +18,7 @@
 
 1. 修改`index.html`文件
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -85,7 +85,7 @@
 
 1. 子项目和公共文件url的配置文件`config/importmap.json`:
 
-```
+```json
 {
   "imports": {
     "appVue": "http://localhost:7778/app.js",
@@ -95,7 +95,6 @@
     "vue-router": "https://cdn.jsdelivr.net/npm/vue-router@3.0.7/dist/vue-router.min.js"
   }
 }
-
 ```
 
 ## 子项目改造
@@ -108,20 +107,18 @@
 
 如果是老项目，需要分别安装一下三个插件：
 
-```
+```bash
 npm install systemjs-webpack-interop -S
 
 npm install single-spa-vue -S
 
 npm install vue-cli-plugin-single-spa -D
-
 ```
 
 如果是新项目，则可以使用以下命令：
 
 ```
 vue add single-spa
-
 ```
 
 > 注意：该命令会改写你的 main.js，老项目不要用这个命令
@@ -159,7 +156,7 @@ VUE_APP__ENV = singleSpa
 
 所以我将两种模式下公共的部分任然写在`main.js`，并导出两种模式所需的配置对象:
 
-```
+```javascript
 import store from "./store";
 import Vue from 'vue';
 import App from './App.vue';
@@ -179,7 +176,7 @@ export default appOptions;
 
 新增`index.js`（正常模式入口文件） :
 
-```
+```javascript
 import appOptions from './main';
 import './main';
 import Vue from 'vue';
@@ -190,7 +187,7 @@ new Vue(appOptions).$mount('#app');
 
 新增`index.spa.js`（`single-spa`模式入口文件） :
 
-```
+```javascript
 import './set-public-path'
 import singleSpaVue from 'single-spa-vue';
 import appOptions from './main';
@@ -210,7 +207,7 @@ export { bootstrap, mount, unmount };
 
 其中`index.spa.js`里面的`set-public-path.js`:
 
-```
+```javascript
 import { setPublicPath } from 'systemjs-webpack-interop'
 //模块的名称必须和system.js的配置文件(importmap.json)中的模块名称保持一致
 setPublicPath('appVueHash')
@@ -225,7 +222,7 @@ setPublicPath('appVueHash')
 
 > 需要注意的是文件不能带有hash值了，文件没了hash值就需要服务器自己生成hash值来设置缓存了。
 
-```
+```javascript
 const CopyPlugin = require('copy-webpack-plugin');
 
 const env = process.env.VUE_APP__ENV; // 是否是single-spa
@@ -285,7 +282,7 @@ module.exports = config;
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1-20210623181009286)
+![img](assets/1-20210623181009286)
 
 
 
@@ -295,7 +292,7 @@ module.exports = config;
 
 `single-spa`模式下开发/打包都需要改动环境变量，将正常的`build`命令修改成：按顺序打包两次，就可以实现和原来一样打包部署流程。
 
-```
+```json
 "scripts": {
     "spa-serve": "vue-cli-service serve --mode devSingleSpa",
     "serve": "vue-cli-service serve",
@@ -315,7 +312,7 @@ module.exports = config;
 
 由于我们给子项目路由强行加了不同前缀（`/app-vue-history`），在`hash`模式是没问题的，因为`hash`模式下路由跳转只会修改`url`的`hash`值，不会修改`path`值。`history`模式则需要告诉`vue-router`，`/app-vue-history/`是项目路由前缀，跳转只需要修改这后面的部分，否则路由跳转会直接覆盖全部路径。那么这个配置项就是`base`属性：
 
-```
+```javascript
 const router = new VueRouter({
   mode: "history",
   base: '/',//默认是base
@@ -330,7 +327,7 @@ const router = new VueRouter({
 
 `router/index.js`路由文件不导出实例化的路由对象，而导出一个函数：
 
-```
+```javascript
 const router = base => new VueRouter({
   mode: "history",
   base,
@@ -343,7 +340,7 @@ const router = base => new VueRouter({
 
 正常模式的入口文件`index.js`:
 
-```
+```javascript
 import router from './router';
 
 const baseUrl = '/';
@@ -353,7 +350,7 @@ appOptions.router = router(baseUrl);
 
 `single-spa`模式的入口文件`index.spa.js`:
 
-```
+```javascript
 import router from './router';
 
 const baseUrl = '/app-vue-history';
@@ -369,13 +366,13 @@ appOptions.router = router(baseUrl);
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1)
+![img](assets/1)
 
 
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1-20210623181009333)
+![img](assets/1-20210623181009333)
 
 
 
@@ -395,7 +392,7 @@ appOptions.router = router(baseUrl);
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1-20210623181009333-4443009.)
+![img](assets/1-20210623181009333-4443009.)
 
 
 
@@ -409,7 +406,7 @@ appOptions.router = router(baseUrl);
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1-20210623181009251)
+![img](assets/1-20210623181009251)
 
 
 
@@ -417,7 +414,7 @@ appOptions.router = router(baseUrl);
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1-20210623181009273)
+![img](assets/1-20210623181009273)
 
 
 
@@ -427,7 +424,7 @@ appOptions.router = router(baseUrl);
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1-20210623181009291)
+![img](assets/1-20210623181009291)
 
 
 
@@ -441,7 +438,7 @@ appOptions.router = router(baseUrl);
 
 其修改`webpack`配置的源码：
 
-```
+```javascript
 module.exports = (api, options) => {
   options.css.extract = false
   api.chainWebpack(webpackConfig => {
@@ -464,7 +461,7 @@ module.exports = (api, options) => {
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1-20210623181009298)
+![img](assets/1-20210623181009298)
 
 
 
@@ -482,7 +479,7 @@ module.exports = (api, options) => {
 
 `index.spa.js`文件：
 
-```
+```javascript
 appOptions.store.commit('setSingleSpa',true);
 
 ```
@@ -497,7 +494,7 @@ appOptions.store.commit('setSingleSpa',true);
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1-20210623181009301)
+![img](assets/1-20210623181009301)
 
 
 
@@ -509,7 +506,7 @@ appOptions.store.commit('setSingleSpa',true);
 
 `home-nav/public/index.html`:
 
-```
+```html
 <script type="systemjs-importmap" src="/config/importmap.json"></script>
 
 ```
@@ -518,7 +515,7 @@ appOptions.store.commit('setSingleSpa',true);
 
 查看`single-spa-vue`源码可以发现，在`unmount`生命周期，它将`vue`实例`destroy`（销毁了）并且清空了`DOM`。要想实现`keep-alive`,我们只需要去掉`destroy`并且不清空`DOM`，然后自己使用`display:none`来隐藏和显示子项目的`DOM`即可。
 
-```
+```javascript
 function unmount(opts, mountedInstances) {
   return Promise
     .resolve()
@@ -542,7 +539,7 @@ function unmount(opts, mountedInstances) {
 
 
 
-![img](从0实现一个single-spa的前端微服务（中）.assets/1-20210623181009312)
+![img](assets/1-20210623181009312)
 
 
 
@@ -562,7 +559,7 @@ function unmount(opts, mountedInstances) {
 
 可以借助`localstorage`和自定义事件通信。`localstorage`一般用来共享用户的登陆信息等，而自定义事件一般用于共享实时数据，例如消息数量等。
 
-```
+```javascript
 //1、子组件A 创建事件并携带数据
 const myCustom = new CustomEvent("custom",{ detail: { data: 'test' } });
 //2、子组件B 注册事件监听器
@@ -580,7 +577,7 @@ window.dispatchEvent(myCustom);
 
 我们可以动态生成`script`标签：
 
-```
+```javascript
 //在加载模块之前先生成配置json
 function insertNewImportMap(newMapJSON) {
   const newScript = document.createElement('script')

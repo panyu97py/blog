@@ -66,7 +66,7 @@
 2. `iframe`存在安全隐患，两个`iframe`页面互相引用则会导致无限嵌套`bug`，会导致页面卡死，目前只能通过代理服务器检查`iframe`页面内容来处理
 3. 页面可以通过一些代码，不允许自己被`iframe`嵌入。这种情况下就只能选择其他的方案，淘宝京东腾讯等都曾设置过，代码如下：
 
-```
+```javascript
 if(window.top !== window.self){ window.top.location = window.location;}
 
 ```
@@ -79,7 +79,7 @@ iframe很简单，一个标签就实现了。single-spa比较陌生，我会详�
 
 以`vue`为例，`vue-cli4`生成的项目打包生成的`index.html`文件内容如下（精简了一些无关的内容）：
 
-```
+```html
 <!DOCTYPE html>
 <html lang=en>
 <head>
@@ -106,7 +106,7 @@ iframe很简单，一个标签就实现了。single-spa比较陌生，我会详�
 
 其中最核心的部分是：
 
-```
+```html
 <link href=/css/app.c8c4d97c.css rel=stylesheet>
 <div id=app></div>
 <script src=/js/chunk-vendors.164d8230.js> </script>
@@ -118,7 +118,7 @@ iframe很简单，一个标签就实现了。single-spa比较陌生，我会详�
 
 `node`代理代码实现，操作`DOM`使用的是`cheerio`插件:
 
-```
+```javascript
 const http = require('http')
 // 引入cheerio模块
 const cheerio = require('cheerio')

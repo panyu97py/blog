@@ -22,7 +22,7 @@
 
 代码如下：
 
-```js
+```javascript
 async function mount(props){
   //给body加class,以解决全局样式污染
   document.body.classList.add('app-vue-history')
@@ -53,7 +53,7 @@ async function unmount(props){
 
 这是一个比较常见的需求，类似还有某个系统需要插入一段特殊的`js/css`，而其他系统不需要，解决办法任然是在子系统加载时(`mount`)插入需要的`js/css`，在子系统卸载时(`unmount`)删掉。
 
-```js
+```javascript
 const headEle = document.querySelector('head');
 let linkEle = null ;
 // 因为新插入的icon会覆盖旧的，所以旧的不用删除，如果需要删除，可以在unmount时再插入进来
@@ -82,7 +82,7 @@ async function unmount(props){
 
 注册子系统的时候：
 
-```js
+```javascript
 singleSpa.registerApplication(
     'appVueHistory',
     () => System.import('appVueHistory'),
@@ -94,7 +94,7 @@ singleSpa.registerApplication(
 
 子系统（`appVueHistory`）接收数据：
 
-```js
+```javascript
 export function mount(props) {
   //官方文档写的是props.customProps.authToken，实际上发现是props.authToken
   console.log(props.authToken); 
@@ -115,7 +115,7 @@ export function mount(props) {
 
 我们需要修改`single-spa-vue`的部分源代码：
 
-```js
+```javascript
 function mount(opts, mountedInstances, props) {
   let instance = mountedInstances[props.name];
   return Promise.resolve().then(() => {
@@ -195,7 +195,7 @@ function unmount(opts, mountedInstances, props) {
 
 `vue-router`路由配置的时候可以使用按需加载（代码如下），按需加载之后路由文件就会单独打包成一个`js`和`css`。
 
-```js
+```javascript
 path: "/about",
 name: "about",
 component: () => import( "../views/About.vue")
@@ -230,7 +230,7 @@ component: () => import( "../views/About.vue")
 
 具体代码如下(源代码是`ts`版的，我简化修改了一些)：
 
-```js
+```javascript
 // 沙箱期间新增的全局变量
 const addedPropsMapInSandbox = new Map();
 // 沙箱期间更新的全局变量
@@ -288,7 +288,7 @@ const sandbox = new Proxy(fakeWindow, {
 
 重写定时器(`setInterval`)部分代码如下：
 
-```js
+```javascript
 const rawWindowInterval = window.setInterval;
 const hijack = function () {
   const timerIds = [];
@@ -318,7 +318,7 @@ const hijack = function () {
 
 `function`关键字直接声明一个全局函数，这个函数属于`window`对象，但是无法被`delete`:
 
-```js
+```javascript
 function a(){}
 Object.getOwnPropertyDescriptor(window, "a")
 //控制台打印如下信息
@@ -353,7 +353,7 @@ delete window.a // 返回false，表示删除失败
 
 qiankun处理后：
 
-```js
+```javascript
 (function(window){;
     function b(){}
     //测试全局变量污染
@@ -364,7 +364,7 @@ qiankun处理后：
 
 那他是如何实现的呢？首先用正则匹配到`index.html`里面的外链`js`和内联`js`，然后外链`js`请求到内容字符串后存储到一个对象中，内联`js`直接用正则匹配到内容也记录到这个对象中：
 
-```js
+```javascript
 const fetchScript = scriptUrl => scriptCache[scriptUrl] ||
 		(scriptCache[scriptUrl] = fetch(scriptUrl).then(response => response.text()));
 
@@ -372,7 +372,7 @@ const fetchScript = scriptUrl => scriptCache[scriptUrl] ||
 
 然后运行的时候，采用`eval`函数：
 
-```js
+```javascript
 //内联js
 eval(`;(function(window){;${inlineScript}\n}).bind(window.proxy)(window.proxy);`)
 //外链js
@@ -394,7 +394,7 @@ eval(`;(function(window){;${downloadedScriptText}\n}).bind(window.proxy)(window.
 
 网络不好和移动端访问的时候，`qiankun`不会进行预请求，移动端大多是使用数据流量，预请求则会浪费用户流量，判断代码如下：
 
-```js
+```javascript
 const isMobile = 
    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 const isSlowNetwork = navigator.connection
@@ -407,7 +407,7 @@ const isSlowNetwork = navigator.connection
 
 以下代码就是它请求`js`并进行缓存：
 
-```js
+```javascript
 const defaultFetch = window.fetch.bind(window);
 //scripts是用正则匹配到的script标签
 function getExternalScripts(scripts, fetch = defaultFetch) {
@@ -435,7 +435,7 @@ function getExternalScripts(scripts, fetch = defaultFetch) {
 2. 安装`qiankun`框架：`npm i qiankun -S`
 3. 修改`app.vue`,使其成为菜单和子项目的容器。其中两个数据，`loading`就是加载的状态，而`content`则是子系统生成的`HTML`片段（子系统独立运行时，这个`HTML`片段会被插入到`#app`里面的）
 
-```vue
+```html
 <template>
   <div id="app">
     <header>
@@ -466,7 +466,7 @@ export default {
 
 1. 修改`main.js`，注册子项目，子项目入口文件采用`index.html`
 
-```js
+```javascript
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -530,7 +530,7 @@ start();
 1. `vue-cli3`生成一个全新的`vue`项目，注意路由使用`hash`模式。
 2. 在`src`目录新增文件`public-path.js`，主要用于修改子项目的`publicPath`。
 
-```js
+```javascript
 if (window.__POWERED_BY_QIANKUN__) {
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
 }
@@ -539,7 +539,7 @@ if (window.__POWERED_BY_QIANKUN__) {
 
 1. 修改`main.js`，配合主项目导出`single-spa`需要的三个生命周期。注意：路由实例化需要在main.js里面完成，以便于路由的销毁，所以路由文件只需要导出路由配置即可（原模板导出的是路由实例）
 
-```js
+```javascript
 import './public-path';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -580,7 +580,7 @@ export async function unmount() {
 
 1. 修改打包配置文件`vue.config.js` ，主要是允许跨域、以及打包成`umd`格式
 
-```js
+```javascript
 const { name } = require('./package');
 
 const port = 7101; // dev port
@@ -615,7 +615,7 @@ module.exports = {
 
 即`main.js`里面路由实例化的时候需要加入条件判断，注入路由前缀
 
-```js
+```javascript
 function render() {
   router = new VueRouter({
     base: window.__POWERED_BY_QIANKUN__ ? '/app-vue-history' : '/',
@@ -645,7 +645,7 @@ function render() {
 
 主项目`main.js`:
 
-```js
+```javascript
 import store from './store';
 
 registerMicroApps([
@@ -669,7 +669,7 @@ registerMicroApps([
 
 子项目的`main.js`:
 
-```js
+```javascript
 function render(parentStore) {
   router = new VueRouter({
     routes,
@@ -720,7 +720,7 @@ export default {
 
 1. 如果想关闭`js`沙箱和预请求，在`start`函数中配置即可
 
-```js
+```javascript
 start({
     prefetch: false, //默认是true，可选'all'
     jsSandbox: false, //默认是true
@@ -730,7 +730,7 @@ start({
 
 1. 子项目注册函数`registerMicroApps`也可以传递数据给子项目，并且可以设置全局的生命周期函数
 
-```js
+```javascript
 // 其中app对象的props属性就是传递给子项目的数据，默认是空对象
 registerMicroApps(
   [
@@ -793,7 +793,7 @@ registerMicroApps(
 
 我觉得可以将入口文件改为两者配合，使用一个对象来配置：
 
-```js
+```json
 {
   publicPath: 'http://www.baidu.com',
   entry: [
