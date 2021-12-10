@@ -1,5 +1,6 @@
 # Editor directories and files
 .idea
+_book
 
 # System
 .DS_Store
