@@ -48,9 +48,9 @@ vue create app1
 
 > 按图选择，去除一切项目不需要的干扰项，后面一路回车，等待应用创建完毕
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/5c60db4a69a849e6af2214a02d4935df~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/5c60db4a69a849e6af2214a02d4935df~tplv-k3u1fbpfcp-watermark.awebp)
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/6a027b80d3d34b46934629bd9b51ab01~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/6a027b80d3d34b46934629bd9b51ab01~tplv-k3u1fbpfcp-watermark.awebp)
 
 ### 配置子应用
 
@@ -251,7 +251,7 @@ npm run serve:micro
 
 #### 作为独立应用访问
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/11c15258d5ca4a129b18ffadb87478a6~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/11c15258d5ca4a129b18ffadb87478a6~tplv-k3u1fbpfcp-watermark.awebp)
 
 ## 子应用 app2
 
@@ -259,7 +259,7 @@ npm run serve:micro
 
 ### 启动应用，作为独立应用访问
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/3966235ac67648a183517357a62e5ff9~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/3966235ac67648a183517357a62e5ff9~tplv-k3u1fbpfcp-watermark.awebp)
 
 ## 子应用 app3（react）
 
@@ -331,11 +331,11 @@ npm run eject
 
 > 由于文章内容太多，字数超出限制，这部分代码就通过图片的形式来展示了，如果需要拷贝可去 [github](https://github.com/panyu97py/micro-frontend)
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/294f4c6828574294a8eebef06a3aa346~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/294f4c6828574294a8eebef06a3aa346~tplv-k3u1fbpfcp-watermark.awebp)
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/b6d107db273141a1888248fd1379d423~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/b6d107db273141a1888248fd1379d423~tplv-k3u1fbpfcp-watermark.awebp)
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/ad6856f3d8fa4376a7a7a9ce54747667~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/ad6856f3d8fa4376a7a7a9ce54747667~tplv-k3u1fbpfcp-watermark.awebp)
 
 #### /src/index.css
 
@@ -527,7 +527,7 @@ npm run serve
 
 ### 浏览器访问基座应用
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/c861159484c64ea8bf71d254f3df28d6~tplv-k3u1fbpfcp-watermark.awebp) ![img](微前端框架 之 single-spa 从入门到精通.assets/ce7cf883fbb54eef84dfbc00299ff8a3~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/c861159484c64ea8bf71d254f3df28d6~tplv-k3u1fbpfcp-watermark.awebp) ![img](assets/微前端框架 之 single-spa 从入门到精通.assets/ce7cf883fbb54eef84dfbc00299ff8a3~tplv-k3u1fbpfcp-watermark.awebp)
 
 终于看到了结果。
 
@@ -579,11 +579,11 @@ serve ./dist -p port
 
 [single-spa 源码阅读思维导图](https://www.processon.com/view/link/5f3b53d57d9c0806d41e1a72#map)
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/3a55c39884644a36bdf2cc31520ce91a~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/3a55c39884644a36bdf2cc31520ce91a~tplv-k3u1fbpfcp-watermark.awebp)
 
 > 这是我在阅读时整理的一个思维导图，源码中也写了大量的注释，大家可以参照着进行阅读。Ok ！！这就开始吧
 
-![img](微前端框架 之 single-spa 从入门到精通.assets/5c1d7ffe15bc48e3bde1a10feccff6cd~tplv-k3u1fbpfcp-watermark.awebp)
+![img](assets/微前端框架 之 single-spa 从入门到精通.assets/5c1d7ffe15bc48e3bde1a10feccff6cd~tplv-k3u1fbpfcp-watermark.awebp)
 
 从源码目录中可以看到，`single-spa`是使用`rollup`来打包的，从`rollup.config.js`中可以发现入口是`single-spa.js`， 打开会发现里面导出了一大堆东西，有我们非常熟悉的各个方法，我们就从`registerApplication`方法开始
 
