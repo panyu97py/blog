@@ -652,6 +652,52 @@ export function execScripts(entry, scripts, proxy = window, opts = {}) {
 
 ```
 
+
+
+## getExecutableScript
+
+```javascript
+function getExecutableScript(scriptSrc, scriptText, proxy, strictGlobal) {
+	const sourceUrl = isInlineCode(scriptSrc) ? '' : `//# sourceURL=${scriptSrc}\n`;
+
+	// 通过这种方式获取全局 window，因为 script 也是在全局作用域下运行的，所以我们通过 window.proxy 绑定时也必须确保绑定到全局 window 上
+	// 否则在嵌套场景下， window.proxy 设置的是内层应用的 window，而代码其实是在全局作用域运行的，会导致闭包里的 window.proxy 取的是最外层的微应用的 proxy
+	const globalWindow = (0, eval)('window');
+	globalWindow.proxy = proxy;
+	// TODO 通过 strictGlobal 方式切换 with 闭包，待 with 方式坑趟平后再合并
+	return strictGlobal
+		? `;(function(window, self, globalThis){with(window){;${scriptText}\n${sourceUrl}}}).bind(window.proxy)(window.proxy, window.proxy, window.proxy);`
+		: `;(function(window, self, globalThis){;${scriptText}\n${sourceUrl}}).bind(window.proxy)(window.proxy, window.proxy, window.proxy);`;
+}
+```
+
+[`(0, eval)('window')`](https://stackoverflow.com/questions/40967162/what-is-the-meaning-of-this-code-0-function-in-javascript),通过间接调用的方式绑定`window`,这里使用到了[逗号运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Comma_Operator),间接调用了`eval`方法。案例如下
+
+* 案例1
+
+```javascript
+function() {
+  (0,eval)("var foo = 123"); // indirect call to eval, creates global variable
+})();
+console.log(foo);            // 123
+(function() {
+  eval("var bar = 123");     // direct call to eval, creates local variable
+})();
+console.log(bar);            // ReferenceError
+```
+
+* 案例2
+
+```javascript
+var obj = {
+  method: function() { return this; }
+};
+console.log(obj.method() === obj);     // true
+console.log((0,obj.method)() === obj); // false
+```
+
+相比使用`call`，避免了部分可调用对象不是继承自`Function.prototype`或`call`方法被隐藏。
+
 # 结语
 
 以上就是 `HTML Entry` 的全部内容，也是深入理解 `微前端`、`single-spa`、`qiankun` 不可或缺的一部分，源码在 [github](https://github.com/panyu97py/import-html-entry)
