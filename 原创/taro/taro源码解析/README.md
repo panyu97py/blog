@@ -13,6 +13,7 @@ taro 用 lerna 做多模块管理
 * [taro-cli](taro-cli源码解析.md)
 * taro-api
 * taro-utils
+* taro-helper
 * [taro-service](taro-service源码解析.md)
 * babel-preset-taro
 * postcss-pxtransform
@@ -74,7 +75,6 @@ taro 用 lerna 做多模块管理
 ### 未分类
 
 * babel-plugin-transform-jsx-to-stylesheet
-* taro-helper
 * taro-router
 * taro-runner-utils
 * taro-with-weapp
