@@ -143,10 +143,54 @@ export default class CLI {
 }
 ```
 
-由代码可见`@tarojs/cli`中涉及到`customCommand`、`Kernel`、`init`，但我们还不知到他们实现了什么功能。而`Kernels`是在另一个模块[`@tarojs/service`](tarojs-service源码解析.md)中实现的。
-
-## `@tarojs/cli/src/commands/customCommand.ts`
+由代码可见`@tarojs/cli`中涉及到`customCommand`、`Kernel`、`init`，但我们还不知到他们实现了什么功能。而`Kernels`是在另一个模块[`@tarojs/service`](taro-service源码解析.md)中实现的。
 
 
 
-## `@tarojs/cli/src/commands/init.ts`
+### `@tarojs/cli/src/commands/customCommand.ts`
+
+```typescript
+import { Kernel } from '@tarojs/service'
+export default function init (kernel: Kernel,{
+  // 一系列参数，此处非重点故省略
+}:{
+  // 一系列参数类型定义，此处非重点故省略
+}){
+  kernel.run({
+    name: 'init',
+    opts: {
+      // 省略的一系列参数
+    }
+  })
+}
+```
+
+### `@tarojs/cli/src/commands/init.ts`
+
+```typescript
+import { Kernel } from '@tarojs/service'
+
+export default function customCommand (
+  command: string,
+  kernel: Kernel,
+  args: { _: string[], [key: string]: any }
+) {
+  
+  //...
+  
+  // 省略一系列参数处理逻辑
+  
+  // ...
+  
+  kernel.run({
+    name: command,
+    opts: {
+     // 一系列参数，此处非重点故省略
+    }
+  })
+}
+```
+
+
+
+由代码可见`customCommand`与`init`方法都执行了`kernel.run`。此时我们能发现`Kernels`在`@tarojs/cli`模块中是关键逻辑。那么此时我们应该去[`@tarojs/service`](taro-service源码解析.md)模块看看`Kernels`到底实现了什么。
