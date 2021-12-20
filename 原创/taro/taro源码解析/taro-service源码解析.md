@@ -318,7 +318,7 @@ export default class Kernel extends EventEmitter {
               })
             }
           }
-          // 这里存在疑问，因为从逻辑上看 method 一定是一个数据。也有可能是我哪里没看明白
+          // 这里存在疑问，因为从逻辑上看 method 一定是一个数组。也有可能是我哪里没看明白。
           return method
         }
         
