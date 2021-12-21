@@ -91,7 +91,7 @@ export default class CLI {
       const kernel = new Kernel({
         appPath: this.appPath,
         presets: [
-          path.resolve(__dirname, '.', 'presets', 'index.js')
+          path.resolve(__dirname, '.', 'presets', 'index.js') // 这里将 presets 的插件添加至 Kernel 中 this.optsPresets 等待注册
         ]
       })
       switch (command) {
@@ -194,3 +194,78 @@ export default function customCommand (
 
 
 由代码可见`customCommand`与`init`方法都执行了`kernel.run`。此时我们能发现`Kernels`在`@tarojs/cli`模块中是关键逻辑。那么此时我们应该去[`@tarojs/service`](taro-service源码解析.md)模块看看`Kernels`到底实现了什么。
+
+## `@tarojs/cli/src/presets/commands/build.ts`
+
+> `build`命令主要实现钩子函数的注册及部门参数的转换，最后指向对应的平台插件
+
+``` typescript
+import { IPluginContext } from '@tarojs/service'
+import * as hooks from '../constant'
+import configValidator from '../../doctor/configValidator'
+
+export default (ctx: IPluginContext) => {
+  // 注册钩子函数
+  registerBuildHooks(ctx)
+  
+  // 注册 build 命令
+  ctx.registerCommand({
+    name: 'build',
+    optionsMap: {
+      // ...
+      // 省略帮助日志输出
+      // ...
+    },
+    synopsisList: [
+      // ...
+      // 省略示例日志输出
+      // ...
+    ],
+    async fn (opts) {
+      
+      // ...... 
+      // 省略非关键逻辑
+      // ......
+
+      // 执行钩子函数
+      await ctx.applyPlugins(hooks.ON_BUILD_START)
+      
+      // 执行平台插件
+      await ctx.applyPlugins({
+        name: platform,
+        opts: {
+          config: {
+            // .....
+          	// 省略一些参数
+            // .....
+          }
+        }
+      })
+      
+      // 执行钩子函数
+      await ctx.applyPlugins(hooks.ON_BUILD_COMPLETE)
+    }
+  })
+}
+
+function registerBuildHooks (ctx) {
+  [
+    hooks.MODIFY_WEBPACK_CHAIN,
+    hooks.MODIFY_BUILD_ASSETS,
+    hooks.MODIFY_MINI_CONFIGS,
+    hooks.MODIFY_COMPONENT_CONFIG,
+    hooks.ON_COMPILER_MAKE,
+    hooks.ON_PARSE_CREATE_ELEMENT,
+    hooks.ON_BUILD_START,
+    hooks.ON_BUILD_FINISH,
+    hooks.ON_BUILD_COMPLETE,
+    hooks.MODIFY_RUNNER_OPTS
+  ].forEach(methodName => {
+    ctx.registerMethod(methodName)
+  })
+}
+
+// ...
+
+```
+
