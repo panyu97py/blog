@@ -25,7 +25,7 @@
 
 ## `@tarojs/mini-runner/src/index.ts`
 
-基于[`@tarojs/service/src/platform-plugin-base.ts`](taro-service源码解析.md)`getRunner`方法的调用可知，当执行`taro build ...`时运行的时指向的是`@tarojs/mini-runner`
+基于[`@tarojs/service/src/platform-plugin-base.ts`](taro-service源码解析.md)中`getRunner`方法的调用可知，当执行`taro build ...`时运行的时指向的是`@tarojs/mini-runner`
 
 而我们基于`package.json`入口文件的配置可知，最后执行的是`@tarojs/mini-runner/src/index.ts`文件中的`build`方法
 
