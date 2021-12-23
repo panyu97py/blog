@@ -28,7 +28,7 @@ taro 用 lerna 做多模块管理
 * postcss-unit-transform
 * taro-loader
 * taro-react
-* taro-mini-runner
+* [taro-mini-runner](taro-mini-runner源码解析.md)
 * taro-runtime
 
 #### 编译平台插件
