@@ -35,6 +35,15 @@
 
 // ...
 
+const customizeChain = async (chain, modifyWebpackChainFunc: Func, customizeFunc?: Func) => {
+    if (modifyWebpackChainFunc instanceof Function) {
+        await modifyWebpackChainFunc(chain, webpack)
+    }
+    if (customizeFunc instanceof Function) {
+        customizeFunc(chain, webpack, META_TYPE)
+    }
+}
+
 export default async function build (appPath: string, config: IBuildConfig): Promise<webpack.Stats> {
   const mode = config.mode
 
