@@ -33,7 +33,15 @@
 
 ```typescript
 
-// ...
+import * as webpack from 'webpack'
+import { META_TYPE } from '@tarojs/helper'
+
+import { IBuildConfig, Func } from './utils/types'
+import { printBuildError, bindProdLogger, bindDevLogger } from './utils/logHelper'
+import buildConf from './webpack/build.conf'
+import { Prerender } from './prerender/prerender'
+import { isEmpty } from 'lodash'
+import { makeConfig } from './webpack/chain'
 
 const customizeChain = async (chain, modifyWebpackChainFunc: Func, customizeFunc?: Func) => {
     if (modifyWebpackChainFunc instanceof Function) {
@@ -91,3 +99,86 @@ export default async function build (appPath: string, config: IBuildConfig): Pro
 }
 
 ```
+## `@tarojs/mini-runner/src/webpack/build.conf.ts`
+
+`@tarojs/mini-runner/src/index.ts` 中`export default`的`build`方法中使用`buildConf`方法初始化了`webpackConfig`及相关的配置。于是我们就顺着逻辑看看`buildConf`方法到底做了什么。
+
+1. 使用`copy-webpack-plugin`实现了编译过程中文件的拷贝即 [`copy`](https://docs.taro.zone/docs/config-detail#copy) 配置。
+2. 基于`framework`配置修改`react-dom`指向。
+
+   在 `react` 体系中，`react` 库实现了 `ReactComponent` 和 `ReactElement` 的核心部分，而 `react-dom` 库负责通过操作 `DOM` 来实现 `react` 在浏览器中的渲染更新操作。在小程序中，并不能直接操作 `DOM` 树或者说没有传统的 `DOM` 树，此时直接使用 `react-dom` 则会导致报错。所以，`taro` 实现了一套在小程序上的 仿 `react-dom` 运行时，以保证 `React` 可以正常在小程序端渲染、更新节点。我们也可以这么理解，`react-dom` 是浏览器端的 `render`，`react-native` 是原生 APP 的 `render`，而 `@tarojs/react` 是小程序上的 `render`。`nervjs`同理。
+3. 使用`webpack.DefinePlugin`实现了[`defineConstants`](https://docs.taro.zone/docs/config-detail#defineconstants) 配置。
+
+```typescript
+
+// ......
+
+import getBaseConf from './base.conf'
+
+// ......
+
+export default (appPath: string, mode, config: Partial<IBuildConfig>): any => {
+    const chain = getBaseConf(appPath)
+    const {
+        // ....
+    } = config
+    config.modifyComponentConfig?.(componentConfig, config)
+
+    
+    // taro 中 copy 配置的实现  https://docs.taro.zone/docs/config-detail#copy
+    let { copy } = config
+    
+    // ..... 省略一些 copy-webpack-plugin 配置初始化的代码
+    
+    if (copy) {
+        // 这边使用 copy-webpack-plugin 实现文件的拷贝
+        plugin.copyWebpackPlugin = getCopyWebpackPlugin({ copy, appPath })
+    }
+    alias[taroJsComponents + '$'] = taroComponentsPath || `${taroJsComponents}/mini`
+    if (framework === 'react') {
+        // 使用 @tarojs/react 替代 react-dom
+        alias['react-dom$'] = '@tarojs/react'
+        
+        // ...
+        
+    }
+    if (framework === 'nerv') {
+        // 使用 nervjs 替代 react-dom
+        alias['react-dom'] = 'nervjs'
+        alias.react = 'nervjs'
+    }
+    
+    env.FRAMEWORK = JSON.stringify(framework)
+    env.TARO_ENV = JSON.stringify(buildAdapter)
+    
+    // 从配置中读取运行时常量
+    const runtimeConstants = getRuntimeConstants(runtime)
+    
+    // 合并运行时常量与 defineConstants 中配置的常量。
+    const constantsReplaceList = mergeOption([processEnvOption(env), defineConstants, runtimeConstants])
+    
+    const entryRes = getEntry({
+        sourceDir,
+        entry,
+        isBuildPlugin
+    })
+    const defaultCommonChunks = isBuildPlugin
+        ? ['plugin/runtime', 'plugin/vendors', 'plugin/taro', 'plugin/common']
+        : ['runtime', 'vendors', 'taro', 'common']
+    let customCommonChunks = defaultCommonChunks
+    if (typeof commonChunks === 'function') {
+        customCommonChunks = commonChunks(defaultCommonChunks.concat()) || defaultCommonChunks
+    } else if (Array.isArray(commonChunks) && commonChunks.length) {
+        customCommonChunks = commonChunks
+    }
+    
+    // 使用 webpack.DefinePlugin 实现全局变量
+    plugin.definePlugin = getDefinePlugin([constantsReplaceList])
+    
+    // ......
+}
+```
+## `@tarojs/mini-runner/src/webpack/base.conf.ts`
+
+## 参考
+[Taro 源码解读 - miniRunner 篇](https://github.com/a1029563229/blogs/blob/master/Source-Code/taro/4.md)

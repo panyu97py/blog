@@ -9,7 +9,7 @@
   - React
     * [自定义装饰器开发](原创/react/自定义装饰器开发.md)
   - Taro
-    - [taro源码解析](原创/taro/taro源码解析/README.md)
+    - [taro源码解析（持续更新中）](原创/taro/taro源码解析/README.md)
       * [taro-cli源码解析](原创/taro/taro源码解析/taro-cli源码解析.md)
       * [taro-service源码解析](原创/taro/taro源码解析/taro-service源码解析.md)
       * [taro-mini-runner源码解析](原创/taro/taro源码解析/taro-mini-runner源码解析.md)
