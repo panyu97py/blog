@@ -283,5 +283,10 @@ export default (appPath: string, mode, config: Partial<IBuildConfig>): any => {
 
 ## `@tarojs/mini-runner/src/plugins/miniTemplateLoader.ts`
 
+
+
 ## 参考
 [Taro 源码解读 - miniRunner 篇](https://github.com/a1029563229/blogs/blob/master/Source-Code/taro/4.md)
+
+[Taro 源码解读 - TaroMiniPlugin 上篇](https://github.com/a1029563229/blogs/blob/master/Source-Code/taro/5.md)
+
