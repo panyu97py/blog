@@ -18,8 +18,8 @@
     "prod": "tsc && npm run mv:comp"
     // ....
   }
+  // ...
 }
-// ...
 ```
 由`main`配置可知代码的入口文件为`index.js`。
 
@@ -97,8 +97,8 @@ export default async function build (appPath: string, config: IBuildConfig): Pro
     }
   })
 }
-
 ```
+
 ## `@tarojs/mini-runner/src/webpack/build.conf.ts`
 
 `@tarojs/mini-runner/src/index.ts` 中`export default`的`build`方法中使用`buildConf`方法初始化了`webpackConfig`及相关的配置。于是我们就顺着逻辑看看`buildConf`方法到底做了什么。
