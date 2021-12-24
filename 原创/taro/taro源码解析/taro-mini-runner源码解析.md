@@ -237,7 +237,28 @@ export default (appPath: string, mode, config: Partial<IBuildConfig>): any => {
     
    // 修改通用 webapck 配置
    chain.merge({
-      // ......
+      mode,
+      devtool: getDevtool(enableSourceMap, sourceMapType),
+      entry: entryRes!.entry,
+      output: getOutput(appPath, [{
+         outputRoot,
+         publicPath: '/',
+         globalObject
+      }, output]),
+      target: createTarget({
+         framework
+      }),
+      // rule 及对应 loader 配置，其中包括了相对比较重要的 miniTemplateLoader
+      module: getModule(appPath,{
+          // ......
+      }),
+      // 路径别名配置
+      resolve: { alias },
+      // webpack 插件配置
+      plugin,
+      optimization:{
+          // ....
+      }
    })
 
    switch (framework) {
@@ -255,7 +276,12 @@ export default (appPath: string, mode, config: Partial<IBuildConfig>): any => {
    return chain
 }
 ```
-## `@tarojs/mini-runner/src/webpack/base.conf.ts`
+
+## `@tarojs/mini-runner/src/plugins/MiniPlugin.ts`
+
+## `@tarojs/mini-runner/src/plugins/BuildNativePlugin.ts`
+
+## `@tarojs/mini-runner/src/plugins/miniTemplateLoader.ts`
 
 ## 参考
 [Taro 源码解读 - miniRunner 篇](https://github.com/a1029563229/blogs/blob/master/Source-Code/taro/4.md)
