@@ -108,6 +108,10 @@ export default async function build (appPath: string, config: IBuildConfig): Pro
 
    在 `react` 体系中，`react` 库实现了 `ReactComponent` 和 `ReactElement` 的核心部分，而 `react-dom` 库负责通过操作 `DOM` 来实现 `react` 在浏览器中的渲染更新操作。在小程序中，并不能直接操作 `DOM` 树或者说没有传统的 `DOM` 树，此时直接使用 `react-dom` 则会导致报错。所以，`taro` 实现了一套在小程序上的 仿 `react-dom` 运行时，以保证 `React` 可以正常在小程序端渲染、更新节点。我们也可以这么理解，`react-dom` 是浏览器端的 `render`，`react-native` 是原生 APP 的 `render`，而 `@tarojs/react` 是小程序上的 `render`。`nervjs`同理。
 3. 使用`webpack.DefinePlugin`实现了[`defineConstants`](https://docs.taro.zone/docs/config-detail#defineconstants) 配置。
+4. `@tarojs/mini-runner/src/plugins/MiniSplitChunksPlugin.ts` 压缩主包大小。
+5. 使用`@tarojs/mini-runner/src/plugins/BuildNativePlugin.ts`或`@tarojs/mini-runner/src/plugins/MiniPlugin.ts`将 `framework` 源文件转换为 `platform` 平台代码。
+6. 使用 `mini-css-extract-plugin` 将所有的 `css` 文件提取到一个文件中
+7. 使用`webpack.ProvidePlugin` 将运行时环境从浏览器环境切换到 `taro` 的运行时环境，比如将 `window` 替换成 `@tarojs/runtime` 中导出的 `window`
 
 ```typescript
 
@@ -174,8 +178,41 @@ export default (appPath: string, mode, config: Partial<IBuildConfig>): any => {
     
     // 使用 webpack.DefinePlugin 实现全局变量
     plugin.definePlugin = getDefinePlugin([constantsReplaceList])
+
+   // 主包大小优化
+   if (optimizeMainPackage.enable) {
+      plugin.miniSplitChunksPlugin = getMiniSplitChunksPlugin({
+         exclude: optimizeMainPackage.exclude,
+         fileType
+      })
+   }
     
-    // ......
+   // 初始化 miniPlugin 插件配置
+   const miniPluginOptions = {
+      // ......
+   }
+
+   // 将 framework 源文件转换为 platform 平台代码
+   plugin.miniPlugin = !isBuildNativeComp ? getMiniPlugin(miniPluginOptions) : getBuildNativePlugin(miniPluginOptions)
+
+   // 使用 mini-css-extract-plugin 将所有的 css 文件提取到一个文件中
+   plugin.miniCssExtractPlugin = getMiniCssExtractPlugin([{
+      filename: `[name]${fileType.style}`,
+      chunkFilename: `[name]${fileType.style}`
+   }, miniCssExtractPluginOption])
+
+   // 使用 webpack.ProvidePlugin 将运行时环境从浏览器环境切换到 taro 的运行时环境，比如将 window 替换成 @tarojs/runtime 中导出的 window
+   plugin.providerPlugin = getProviderPlugin({
+      window: ['@tarojs/runtime', 'window'],
+      document: ['@tarojs/runtime', 'document'],
+      navigator: ['@tarojs/runtime', 'navigator'],
+      requestAnimationFrame: ['@tarojs/runtime', 'requestAnimationFrame'],
+      cancelAnimationFrame: ['@tarojs/runtime', 'cancelAnimationFrame'],
+      Element: ['@tarojs/runtime', 'TaroElement'],
+      SVGElement: ['@tarojs/runtime', 'SVGElement']
+   })
+
+   // ......
 }
 ```
 ## `@tarojs/mini-runner/src/webpack/base.conf.ts`
