@@ -103,17 +103,17 @@ export default async function build (appPath: string, config: IBuildConfig): Pro
 
 `@tarojs/mini-runner/src/index.ts` 中`export default`的`build`方法中使用`buildConf`方法初始化了`webpackConfig`及相关的配置。于是我们就顺着逻辑看看`buildConf`方法到底做了什么。
 
-1. 使用`copy-webpack-plugin`实现了编译过程中文件的拷贝即 [`copy`](https://docs.taro.zone/docs/config-detail#copy) 配置。
+1. 使用 [`copy-webpack-plugin`](https://www.webpackjs.com/plugins/copy-webpack-plugin/) 实现了编译过程中文件的拷贝即 [`copy`](https://docs.taro.zone/docs/config-detail#copy) 配置。
 2. 基于`framework`配置修改`react-dom`指向。
 
    在 `react` 体系中，`react` 库实现了 `ReactComponent` 和 `ReactElement` 的核心部分，而 `react-dom` 库负责通过操作 `DOM` 来实现 `react` 在浏览器中的渲染更新操作。在小程序中，并不能直接操作 `DOM` 树或者说没有传统的 `DOM` 树，此时直接使用 `react-dom` 则会导致报错。所以，`taro` 实现了一套在小程序上的 仿 `react-dom` 运行时，以保证 `React` 可以正常在小程序端渲染、更新节点。我们也可以这么理解，`react-dom` 是浏览器端的 `render`，`react-native` 是原生 APP 的 `render`，而 `@tarojs/react` 是小程序上的 `render`。`nervjs`同理。
-3. 使用`webpack.DefinePlugin`实现了[`defineConstants`](https://docs.taro.zone/docs/config-detail#defineconstants) 配置。
+3. 使用 [`webpack.DefinePlugin`](https://webpack.docschina.org/plugins/define-plugin/) 实现了[`defineConstants`](https://docs.taro.zone/docs/config-detail#defineconstants) 配置。
 4. `@tarojs/mini-runner/src/plugins/MiniSplitChunksPlugin.ts` 压缩主包大小。
 5. 使用`@tarojs/mini-runner/src/plugins/BuildNativePlugin.ts`或`@tarojs/mini-runner/src/plugins/MiniPlugin.ts`将 `framework` 源文件转换为 `platform` 平台代码。
-6. 使用 `mini-css-extract-plugin` 将所有的 `css` 文件提取到一个文件中
-7. 使用`webpack.ProvidePlugin` 将运行时环境从浏览器环境切换到 `taro` 的运行时环境，比如将 `window` 替换成 [`@tarojs/runtime`](taro-runtime源码解析.md) 中导出的 `window`
-8. 使用 `terser-webpack-plugin` 开启 `js` 代码压缩
-9. 使用 `csso-webpack-plugin` 压缩 `css` 代码
+6. 使用 [`mini-css-extract-plugin`](https://webpack.docschina.org/plugins/mini-css-extract-plugin/) 将所有的 `css` 文件提取到一个文件中
+7. 使用 [`webpack.ProvidePlugin`](https://www.webpackjs.com/plugins/provide-plugin/) 将运行时环境从浏览器环境切换到 `taro` 的运行时环境，比如将 `window` 替换成 [`@tarojs/runtime`](taro-runtime源码解析.md) 中导出的 `window`
+8. 使用 [`terser-webpack-plugin`](https://webpack.docschina.org/plugins/terser-webpack-plugin/) 开启 `js` 代码压缩
+9. 使用 [`csso-webpack-plugin`](https://github.com/zoobestik/csso-webpack-plugin) 压缩 `css` 代码
 
 ```typescript
 
