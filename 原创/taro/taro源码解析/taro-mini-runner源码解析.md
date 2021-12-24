@@ -111,7 +111,9 @@ export default async function build (appPath: string, config: IBuildConfig): Pro
 4. `@tarojs/mini-runner/src/plugins/MiniSplitChunksPlugin.ts` 压缩主包大小。
 5. 使用`@tarojs/mini-runner/src/plugins/BuildNativePlugin.ts`或`@tarojs/mini-runner/src/plugins/MiniPlugin.ts`将 `framework` 源文件转换为 `platform` 平台代码。
 6. 使用 `mini-css-extract-plugin` 将所有的 `css` 文件提取到一个文件中
-7. 使用`webpack.ProvidePlugin` 将运行时环境从浏览器环境切换到 `taro` 的运行时环境，比如将 `window` 替换成 `@tarojs/runtime` 中导出的 `window`
+7. 使用`webpack.ProvidePlugin` 将运行时环境从浏览器环境切换到 `taro` 的运行时环境，比如将 `window` 替换成 [`@tarojs/runtime`](taro-runtime源码解析.md) 中导出的 `window`
+8. 使用 `terser-webpack-plugin` 开启 `js` 代码压缩
+9. 使用 `csso-webpack-plugin` 压缩 `css` 代码
 
 ```typescript
 
@@ -212,7 +214,45 @@ export default (appPath: string, mode, config: Partial<IBuildConfig>): any => {
       SVGElement: ['@tarojs/runtime', 'SVGElement']
    })
 
-   // ......
+   const isCssoEnabled = !((csso && csso.enable === false))
+
+   const isTerserEnabled = !((terser && terser.enable === false))
+
+   if (mode === 'production') {
+       
+       // 使用 terser-webpack-plugin 开启代码压缩
+      if (isTerserEnabled) {
+         minimizer.push(getTerserPlugin([
+            enableSourceMap,
+            terser ? terser.config : {}
+         ]))
+      }
+
+      // 使用 csso-webpack-plugin 压缩 js 代码
+      if (isCssoEnabled) {
+         const cssoConfig: any = csso ? csso.config : {}
+         plugin.cssoWebpackPlugin = getCssoWebpackPlugin([cssoConfig])
+      }
+   }
+    
+   // 修改通用 webapck 配置
+   chain.merge({
+      // ......
+   })
+
+   switch (framework) {
+      // 适配 vue 2.x 修改 webpack 配置
+      case FRAMEWORK_MAP.VUE:
+         customVueChain(chain)
+         break
+      // 适配 vue 3.x 修改 webpack 配置
+      case FRAMEWORK_MAP.VUE3:
+         customVue3Chain(chain)
+         break
+      default:
+   }
+
+   return chain
 }
 ```
 ## `@tarojs/mini-runner/src/webpack/base.conf.ts`
