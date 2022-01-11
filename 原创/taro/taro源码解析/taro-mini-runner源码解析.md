@@ -279,6 +279,141 @@ export default (appPath: string, mode, config: Partial<IBuildConfig>): any => {
 
 ## `@tarojs/mini-runner/src/plugins/MiniPlugin.ts`
 
+
+
+### 插件入口
+
+> 由插件入口注册各钩子函数，用于`webpack`各生命周期执行。
+
+```typescript
+export default class TaroMiniPlugin {
+  // ......
+  
+  /**
+   * 插件入口
+   */
+  apply (compiler: webpack.Compiler) {
+
+    this.context = compiler.context
+    
+    // 获取入口文件路径
+    this.appEntry = this.getAppEntry(compiler)
+    
+    // 获取插件传入的一些参数
+    const {
+   		// ......
+    } = this.options
+    
+    /** build mode */
+    compiler.hooks.run.tapAsync(
+    	// ...... 注册生命周期钩子函数，当 webpack 开始编译时执行 ......
+    )
+    
+    /** watch mode */
+    compiler.hooks.watchRun.tapAsync(
+    	// ...... 注册生命周期钩子函数，在 webpack 监听模式下，一个新的编译被触发之后执行 ......
+    )
+    
+    /** compilation.addEntry */
+    compiler.hooks.make.tapAsync(
+    	// ...... 注册生命周期钩子函数，在 webpack 完成编译之前执行 ......
+    )
+    
+    compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation, { normalModuleFactory }) => {
+    	// ...... 注册生命周期钩子函数，在 compilation 创建成功之后执行，compilation 代表一次单独的编译 ......
+      
+      /**
+       * webpack NormalModule 在 runLoaders 真正解析资源的前一刻，
+       * 往 NormalModule.loaders 中插入对应的 Taro Loader
+       */
+      compilation.hooks.normalModuleLoader.tap(
+    		// ......
+    	)
+      
+      /**
+       * 与原生小程序混写时解析模板与样式
+       */
+      compilation.hooks.afterOptimizeAssets.tap(
+    		// ......
+    	)
+      
+    })
+    
+    compiler.hooks.emit.tapAsync(
+			// ...... 注册生命周期钩子函数，在 webpack 生成资源到 output 目录之前执行 ......
+    )
+    
+    compiler.hooks.afterEmit.tapAsync(
+			// ...... 注册生命周期钩子函数，在 webpack 生成资源到 output 目录之后执行 ......
+    )
+    
+    // 在注册完了生命周期钩子函数后，继续调用 TaroNormalModulesPlugin 插件的 apply 方法
+    new TaroNormalModulesPlugin(this.options.onParseCreateElement).apply(compiler)
+  }
+  
+  // ......
+}
+```
+
+### `compiler.hooks.run`
+
+```typescript
+import TaroLoadChunksPlugin from './TaroLoadChunksPlugin'
+const PLUGIN_NAME = 'TaroMiniPlugin'
+
+export default class TaroMiniPlugin {
+  // ......
+  
+   apply (compiler: webpack.Compiler) {
+    // ......
+     
+    /** build mode */
+    compiler.hooks.run.tapAsync(
+      PLUGIN_NAME,
+      // 当 webpack 开始编译时执行
+      this.tryAsync(async (compiler: webpack.Compiler) => {
+        await this.run(compiler)
+        new TaroLoadChunksPlugin({
+          commonChunks: commonChunks,
+          isBuildPlugin,
+          addChunkPages: addChunkPages,
+          pages: this.pages,
+          framework: framework,
+          isBuildQuickapp
+        }).apply(compiler)
+      })
+    )
+     
+    // ......
+   
+   }
+  
+  // ......
+  
+    /**
+   * 分析 app 入口文件，搜集页面、组件信息，
+   * 往 this.dependencies 中添加资源模块
+   */
+  run (compiler: webpack.Compiler) {
+    if (this.options.isBuildPlugin) {
+      this.getPluginFiles()
+      this.getConfigFiles(compiler)
+    } else {
+      this.appConfig = this.getAppConfig()
+      this.getPages()
+      this.getPagesConfig()
+      this.getDarkMode()
+      this.getConfigFiles(compiler)
+      this.addEntries()
+    }
+  }
+  
+  // ......
+}
+```
+
+
+
 ## `@tarojs/mini-runner/src/plugins/BuildNativePlugin.ts`
 
 ## `@tarojs/mini-runner/src/plugins/miniTemplateLoader.ts`
