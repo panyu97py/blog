@@ -344,7 +344,7 @@ export default class TaroMiniPlugin {
     )
     
     compiler.hooks.afterEmit.tapAsync(
-			// ...... 注册生命周期钩子函数，在 webpack 生成资源到 output 目录之后执行 ......
+      // ...... 注册生命周期钩子函数，在 webpack 生成资源到 output 目录之后执行 ......
     )
     
     // 在注册完了生命周期钩子函数后，继续调用 TaroNormalModulesPlugin 插件的 apply 方法
