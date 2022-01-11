@@ -353,7 +353,13 @@ export default class TaroMiniPlugin {
 }
 ```
 
-### `compiler.hooks.run`
+#### `TaroLoadChunksPlugin`
+
+```typescript
+
+```
+
+#### [`compiler.hooks.run`](https://webpack.js.org/api/compiler-hooks/#run)
 
 ```typescript
 import TaroLoadChunksPlugin from './TaroLoadChunksPlugin'
@@ -426,6 +432,62 @@ export default class TaroMiniPlugin {
   }
   
   // ......
+}
+```
+
+#### [`compiler.hooks.watchRun`](https://webpack.js.org/api/compiler-hooks/#watchrun)
+
+> 触发新编译后并在新编译执行之前
+
+```typescript
+export default class TaroMiniPlugin {
+  // ......
+  
+   apply (compiler: webpack.Compiler) {
+    // ......
+        /** watch mode */
+    compiler.hooks.watchRun.tapAsync(
+      PLUGIN_NAME,
+      this.tryAsync(async (compiler: webpack.Compiler) => {
+        
+        // 获取改变的文件
+        const changedFiles = this.getChangedFiles(compiler)
+        
+        // 存在文件改变则修改 this.isWatch 状态 
+        if (changedFiles.length) {
+          this.isWatch = true
+        }
+        
+        // 重新执行 compiler.hooks.run 钩子中的方法
+        await this.run(compiler)
+        if (!this.loadChunksPlugin) {
+          this.loadChunksPlugin = new TaroLoadChunksPlugin({
+            commonChunks: commonChunks,
+            isBuildPlugin,
+            addChunkPages: addChunkPages,
+            pages: this.pages,
+            framework: framework,
+            isBuildQuickapp
+          })
+          this.loadChunksPlugin.apply(compiler)
+        }
+      })
+    )
+    // ......
+   }
+  
+  // ........
+  
+  getChangedFiles (compiler) {
+    const { watchFileSystem } = compiler
+    // webpack 文档中并没有提及，但查阅相关资料了解到这是一个包含变更文件路径的对象 
+    // https://stackoverflow.com/questions/43140501/can-webpack-report-which-file-triggered-a-compilation-in-watch-mode
+    const watcher = watchFileSystem.watcher || watchFileSystem.wfs.watcher
+
+    return Object.keys(watcher.mtimes)
+  }
+  
+  // ........
 }
 ```
 
