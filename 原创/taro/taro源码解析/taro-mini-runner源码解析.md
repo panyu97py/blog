@@ -301,7 +301,7 @@ export default class TaroMiniPlugin {
     
     // 获取插件传入的一些参数
     const {
-   		// ......
+   	// ......
     } = this.options
     
     /** build mode */
@@ -334,17 +334,17 @@ export default class TaroMiniPlugin {
        * 与原生小程序混写时解析模板与样式
        */
       compilation.hooks.afterOptimizeAssets.tap(
-    		// ......
+		// ......
     	)
       
     })
     
     compiler.hooks.emit.tapAsync(
-			// ...... 注册生命周期钩子函数，在 webpack 生成资源到 output 目录之前执行 ......
+    	// ...... 注册生命周期钩子函数，在 webpack 生成资源到 output 目录之前执行 ......
     )
     
     compiler.hooks.afterEmit.tapAsync(
-      // ...... 注册生命周期钩子函数，在 webpack 生成资源到 output 目录之后执行 ......
+	// ...... 注册生命周期钩子函数，在 webpack 生成资源到 output 目录之后执行 ......
     )
     
     // 在注册完了生命周期钩子函数后，继续调用 TaroNormalModulesPlugin 插件的 apply 方法
