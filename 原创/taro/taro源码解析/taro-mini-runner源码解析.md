@@ -279,9 +279,7 @@ export default (appPath: string, mode, config: Partial<IBuildConfig>): any => {
 
 ## `@tarojs/mini-runner/src/plugins/MiniPlugin.ts`
 
-
-
-### 插件入口
+### 插件入口`apply`
 
 > 由插件入口注册各钩子函数，用于`webpack`各生命周期执行。
 
@@ -390,20 +388,39 @@ export default class TaroMiniPlugin {
   
   // ......
   
-    /**
+  /**
    * 分析 app 入口文件，搜集页面、组件信息，
    * 往 this.dependencies 中添加资源模块
    */
   run (compiler: webpack.Compiler) {
     if (this.options.isBuildPlugin) {
+      
+      // 读取插件文件并根据类型 分别添加至 this.components 、 this.pages
+      // 并在 this.dependencies 中新增或修改 app、模板组件、页面、组件等资源模块
       this.getPluginFiles()
+      
+      // 判断文件是否存在，存在则往 this.dependencies 中新增或修改所有 config 配置模块
+      // 并在 webpack createChunkAssets 前 删除与 this.filesConfig 同名 chunks
       this.getConfigFiles(compiler)
     } else {
+      // 从 app.config.js 读取配置
       this.appConfig = this.getAppConfig()
+      
+      // 基于 app config 的 pages 配置项，收集所有页面信息（包含 subPackages），并保存至 this.pages
       this.getPages()
+      
+      // 基于 this.pages 读取页面及其依赖的组件的配置，并保存至 this.filesConfig。
+      // 并基于  app config 的  usingComponents 配置项 递归收集依赖的第三方组件 保存至 this.components并将相关配置保存至 this.filesConfig
       this.getPagesConfig()
+      
+      // 收集 dark mode 配置中的文件
       this.getDarkMode()
+      
+      // 判断文件是否存在，存在则往 this.dependencies 中新增或修改所有 config 配置模块
+      // 并在 webpack createChunkAssets 前 删除与 this.filesConfig 同名 chunks
       this.getConfigFiles(compiler)
+      
+      // 在 this.dependencies 中新增或修改 app、模板组件、页面、组件等资源模块
       this.addEntries()
     }
   }
