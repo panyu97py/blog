@@ -493,6 +493,8 @@ export default class TaroMiniPlugin {
 
 ##### `watchFileSystem debugger` 截图
 
+> 图中被选中的即为我变更的文件路径
+
 
 
 ![watchFileSystem debugger 截图](assets/taro-mini-runer_watchFile.jpg)
