@@ -491,7 +491,11 @@ export default class TaroMiniPlugin {
 }
 ```
 
+##### `watchFileSystem debugger` 截图
 
+
+
+![watchFileSystem debugger 截图](assets/taro-mini-runer_watchFile.jpg)
 
 ## `@tarojs/mini-runner/src/plugins/BuildNativePlugin.ts`
 
