@@ -353,13 +353,19 @@ export default class TaroMiniPlugin {
 }
 ```
 
+
+
 #### `TaroLoadChunksPlugin`
 
 ```typescript
 
 ```
 
+
+
 #### [`compiler.hooks.run`](https://webpack.js.org/api/compiler-hooks/#run)
+
+> 当 webpack 开始编译时执行
 
 ```typescript
 import TaroLoadChunksPlugin from './TaroLoadChunksPlugin'
@@ -435,9 +441,11 @@ export default class TaroMiniPlugin {
 }
 ```
 
+
+
 #### [`compiler.hooks.watchRun`](https://webpack.js.org/api/compiler-hooks/#watchrun)
 
-> 触发新编译后并在新编译执行之前
+> 触发新编译后并在新编译执行之前,即每次文件变更后新编译执行之前。
 
 ```typescript
 export default class TaroMiniPlugin {
@@ -491,6 +499,8 @@ export default class TaroMiniPlugin {
 }
 ```
 
+
+
 ##### `watchFileSystem debugger` 截图
 
 > 图中被选中的即为我变更的文件路径
@@ -498,6 +508,47 @@ export default class TaroMiniPlugin {
 
 
 ![watchFileSystem debugger 截图](assets/taro-mini-runer_watchFile.jpg)
+
+
+
+#### [`compiler.hooks.make`](https://webpack.js.org/api/compiler-hooks/#make)
+
+> webpack 完成编译之前执行
+
+``` typescript
+const PLUGIN_NAME = 'TaroMiniPlugin'
+
+export default class TaroMiniPlugin {
+  // ......
+  
+   apply (compiler: webpack.Compiler) {
+    // ......
+     
+    /** compilation.addEntry */
+    compiler.hooks.make.tapAsync(
+      PLUGIN_NAME,
+      this.tryAsync(async (compilation: webpack.compilation.Compilation) => {
+        const dependencies = this.dependencies
+        const promises: Promise<null>[] = []
+        this.compileIndependentPages(compiler, compilation, dependencies, promises)
+        dependencies.forEach(dep => {
+          promises.push(new Promise<null>((resolve, reject) => {
+            compilation.addEntry(this.options.sourceDir, dep, dep.name, err => err ? reject(err) : resolve(null))
+          }))
+        })
+        await Promise.all(promises)
+        await this.options.onCompilerMake?.(compilation)
+      })
+    )
+     
+     // ......
+   }
+  
+  // ......
+}
+```
+
+
 
 ## `@tarojs/mini-runner/src/plugins/BuildNativePlugin.ts`
 
