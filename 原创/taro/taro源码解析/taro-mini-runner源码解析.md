@@ -1,8 +1,10 @@
 ## 介绍
 
-根据 `@tarojs/mini-runner` 代码库中`README.md`文件中的描述。`@tarojs/mini-runner`是暴露给 `@tarojs/cli` 的小程序 Webpack 启动器。
+> 根据 `@tarojs/mini-runner` 代码库中`README.md`文件中的描述。`@tarojs/mini-runner`是暴露给 `@tarojs/cli` 的小程序 Webpack 启动器。
+>
+> `@tarojs/mini-runner` 从 `@tarojs/cli` 接受 [Taro 编译配置](https://taro-docs.jd.com/taro/docs/config.html)，把编译配置分解成 Webpack 配置，并刚启动 Webpack 把项目源码编译为适配小程序目录结构的代码。
 
-`@tarojs/mini-runner` 从 `@tarojs/cli` 接受 [Taro 编译配置](https://taro-docs.jd.com/taro/docs/config.html)，把编译配置分解成 Webpack 配置，并刚启动 Webpack 把项目源码编译为适配小程序目录结构的代码。
+这部分大量涉及`webpack`编译流程及流程中的`hook`调用，所以目前暂时只做主流程上的解析，可能比较浅显。待后续恶补`webpack`编译流程知识后再做详尽的补充。
 
 ## `package.json`
 
@@ -546,6 +548,118 @@ export default class TaroMiniPlugin {
         await this.options.onCompilerMake?.(compilation)
       })
     )
+     
+     // ......
+   }
+  
+  // ......
+}
+```
+
+
+
+#### [`compiler.hooks.compilation`](https://webpack.docschina.org/api/compiler-hooks/#compilation)
+
+> compilation 创建之后，基于 module.miniType 往 NormalModule.loaders 中插入对应的 Taro Loader，并解析与原生小程序混写时解析模板和样式。
+
+``` typescript
+const PLUGIN_NAME = 'TaroMiniPlugin'
+
+export default class TaroMiniPlugin {
+  // ......
+  
+   apply (compiler: webpack.Compiler) {
+    // ......
+     
+    compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation, { normalModuleFactory }) => {
+     /** For Webpack compilation get factory from compilation.dependencyFactories by denpendence's constructor */
+      compilation.dependencyFactories.set(SingleEntryDependency, normalModuleFactory) // 具体作用还不太了解，待恶补 webpack 编译流程后补充
+      compilation.dependencyFactories.set(TaroSingleEntryDependency as any, normalModuleFactory)// 具体作用还不太了解，待恶补 webpack 编译流程后补充
+      
+     /**
+       * webpack NormalModule 在 runLoaders 真正解析资源的前一刻，
+       * 基于 module.miniType 往 NormalModule.loaders 中插入对应的 Taro Loader
+       */
+      compilation.hooks.normalModuleLoader.tap(PLUGIN_NAME, (_loaderContext, module:/** TaroNormalModule */ any) => {
+        // ........
+      })
+      
+     /**
+       * 与原生小程序混写时解析模板与样式
+       */
+      compilation.hooks.afterOptimizeAssets.tap(PLUGIN_NAME, assets => {
+        // ......
+      })
+    })
+     
+     // ......
+   }
+  
+  // ......
+}
+```
+
+
+
+#### [`compiler.hooks.emit`](https://webpack.docschina.org/api/compiler-hooks/#emit)、[`compiler.hooks.afterEmit`](https://webpack.docschina.org/api/compiler-hooks/#afteremit)
+
+```typescript
+const PLUGIN_NAME = 'TaroMiniPlugin'
+
+export default class TaroMiniPlugin {
+  // ......
+  
+   apply (compiler: webpack.Compiler) {
+    // ......
+     
+    // 输出 asset 到 output 目录之前执行,生成小程序文件 
+    compiler.hooks.emit.tapAsync(
+      PLUGIN_NAME,
+      this.tryAsync(async (compilation: webpack.compilation.Compilation) => {
+        // 生成小程序文件（即最后上传至小程序后台运行的代码文件）
+        await this.generateMiniFiles(compilation)
+      })
+    )
+
+    // 输出 asset 到 output 目录之后执行，添加状态栏文件至文件依赖（即对应的状态栏图标）
+    compiler.hooks.afterEmit.tapAsync(
+      PLUGIN_NAME,
+      this.tryAsync(async (compilation: webpack.compilation.Compilation) => {
+        await this.addTarBarFilesToDependencies(compilation)
+      })
+    )
+     
+     // ......
+   }
+  
+  // ，添加状态栏文件至依赖（即对应的状态栏图标）
+  addTarBarFilesToDependencies (compilation: webpack.compilation.Compilation) {
+    const { fileDependencies } = compilation
+    this.tabBarIcons.forEach(icon => {
+      if (!fileDependencies.has(icon)) {
+        fileDependencies.add(icon)
+      }
+    })
+  }
+  
+  // ......
+}
+```
+
+
+
+#### `TaroNormalModulesPlugin`
+
+```typescript
+const PLUGIN_NAME = 'TaroMiniPlugin'
+
+export default class TaroMiniPlugin {
+  // ......
+  
+   apply (compiler: webpack.Compiler) {
+    // ......
+     
+     new TaroNormalModulesPlugin(this.options.onParseCreateElement).apply(compiler)
      
      // ......
    }
