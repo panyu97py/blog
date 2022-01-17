@@ -530,13 +530,19 @@ export default class TaroMiniPlugin {
       this.tryAsync(async (compilation: webpack.compilation.Compilation) => {
         const dependencies = this.dependencies
         const promises: Promise<null>[] = []
+        // 编译独立页面(即微信小程序中 independent 字段标识的独立分包，无需主包即可运行的独立分包)
         this.compileIndependentPages(compiler, compilation, dependencies, promises)
+        
         dependencies.forEach(dep => {
           promises.push(new Promise<null>((resolve, reject) => {
+            // 为编译添加入口。 https://webpack.js.org/api/compilation-object/#addentry
             compilation.addEntry(this.options.sourceDir, dep, dep.name, err => err ? reject(err) : resolve(null))
           }))
         })
+        
+        // 等待入口添加完成
         await Promise.all(promises)
+        // 调用事件回调 options 中 onCompilerMake 触发 @tarojs/cli/src/presets/commands/build.ts 中注册的钩子  hooks.ON_COMPILER_MAKE
         await this.options.onCompilerMake?.(compilation)
       })
     )
