@@ -30,7 +30,7 @@
 
 - 目标对象 
 
-  ```
+  ```javascript
   Subject
   ```
 
@@ -46,7 +46,7 @@
 
 ![Observer.png](assets/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%20vs%20%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%EF%BC%8C%E5%8D%83%E4%B8%87%E4%B8%8D%E8%A6%81%E5%86%8D%E6%B7%B7%E6%B7%86%E4%BA%86.assets/1f96a826bb7945dd96f9696f41b45534~tplv-k3u1fbpfcp-watermark.awebp)
 
-```js
+```javascript
 class Observer {
     constructor(name) {
         this.name = name;
@@ -108,7 +108,7 @@ subject.notify(warTask);
 
 输出结果:
 
-```js
+```javascript
 // 战斗任务
 发布五星任务
 弟子1去任务大殿抢猎杀时刻任务
@@ -141,7 +141,7 @@ subject.notify(warTask);
 
 - 中介功能 —— 
 
-  ```
+  ```javascript
   Event Channel
   ```
 
@@ -157,7 +157,7 @@ subject.notify(warTask);
 
 上面案例中，开端就是发布者 `Publisher`，追剧人就是订阅者 `Subscribe`，平台则承担了事件通道 `Event Channel` 功能。
 
-```js
+```javascript
 class PubSub {
     constructor() {
         // 事件中心
