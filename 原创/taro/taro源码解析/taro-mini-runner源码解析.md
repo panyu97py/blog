@@ -674,6 +674,8 @@ export default class TaroMiniPlugin {
 
 ## `@tarojs/mini-runner/src/plugins/miniTemplateLoader.ts`
 
+> 使用[`sax`](https://github.com/isaacs/sax-js#readme)解析`taro`与原生混写时的原生模版文件（即：`xxx.wxml`）
+
 
 
 ## 参考
