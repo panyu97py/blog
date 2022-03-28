@@ -12,7 +12,7 @@
 
 我们从编写`createElement`开始，这个函数主要用于把`JSX`转换成虚拟DOM（`js对象`）。这里我们使用`@babel/plugin-transform-react-jsx`这个插件自动转换。
 
-```js
+```jsx
 // jsx
 const element = (
   <div id="name">
@@ -27,12 +27,11 @@ const element = React.createElement(
   React.createElement("a", null, "name"),
   React.createElement("b")
 )
-1234567891011121314
 ```
 
 在这里我们将属性和子节点，都放入`props`这个参数中。因为文本、数字类型不是一个对象，这里我们需要对文本对象进行包装，这样做是为了代码更加简洁（`react`为了性能用的其他方式）。
 
-```js
+```jsx
 // ----------------- React -----------------
 /**
  * 创建文本节点
@@ -63,7 +62,6 @@ React.createElement = function (type, props, ...children) {
     },
   };
 };
-123456789101112131415161718192021222324252627282930
 ```
 
 [搭建项目详细](https://juejin.cn/post/6914902070135488520#heading-2)
@@ -77,7 +75,7 @@ React.createElement = function (type, props, ...children) {
 3. 把真实DOM节点附加到容器中。
 4. 有子虚拟DOM，循环子节点，递归处理每个节点。
 
-```js
+```jsx
 // ----------------- ReactDOM -----------------
 const ReactDOM = {};
 /**
@@ -109,7 +107,6 @@ ReactDOM.render = function (vDom, container) {
 
 // ----------------- 使用 -----------------
 ReactDOM.render(<div id="name">1111</div>,document.getElementById('root'));
-12345678910111213141516171819202122232425262728293031
 ```
 
 ## 使用Fiber架构
@@ -125,7 +122,7 @@ ReactDOM.render(<div id="name">1111</div>,document.getElementById('root'));
 所以我们把任务分解成多个工作单元，每个单元完成后，都让浏览器判断是否有时间继续执行，时间不够就中断执行。
 这里使用的是 [requestIdleCallback](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback) 浏览器每一帧都会调用这个方法，并返回剩余多少时间。当然 `react` 不是使用的这个方法，而是自己实现了功能更强大的 [Scheduler](https://github.com/facebook/react/blob/1fb18e22ae66fdb1dc127347e169e73948778e5a/packages/scheduler/README.md)。
 
-```js
+```javascript
 // 要执行的工作单元
 let nextUnitOfWork = null;
 /**
@@ -154,7 +151,6 @@ function workLoop(deadline) {
 function performUnitOfWork(nextUnitOfWork) {
 
 }
-12345678910111213141516171819202122232425262728
 ```
 
 **2. Fiber节点**
@@ -175,7 +171,7 @@ function performUnitOfWork(nextUnitOfWork) {
 
 我们先修改 `render` 函数，并把创建真实DOM的功能封装为公用函数。
 
-```js
+```javascript
 // 进入
 ReactDOM.render = function (element, container) {
   nextUnitOfWork = {
@@ -207,12 +203,11 @@ function createDom(fiber) {
 
   return dom;
 }
-12345678910111213141516171819202122232425262728293031
 ```
 
 然后在 `performUnitOfWork` 添加对应功能。
 
-```js
+```javascript
 /**
  * 操作节点
  * @param {*} fiber
@@ -274,7 +269,6 @@ function performUnitOfWork(fiber) {
     nextFiber = nextFiber.parent;
   }
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061
 ```
 
 ## 渲染和提交阶段
@@ -290,7 +284,7 @@ function performUnitOfWork(fiber) {
 
 提交阶段是提交整个fiber树，所以我们需要创建一个变量保存fiber树。
 
-```js
+```jsx
 // fiber 树
 let wipRoot = null
 /**
@@ -310,12 +304,11 @@ ReactDOM.render = function (element, container) {
 
   requestIdleCallback(workLoop);
 };
-12345678910111213141516171819
 ```
 
 需要在工作单元执行完成后立即提交，在`workLoop`循环中添加判断，执行完后提交整个`fiber树`，渲染到页面上。
 
-```js
+```javascript
 /**
  * 判断是否有时间继续执行
  * @param {*} deadline
@@ -359,7 +352,6 @@ function commitWork(fiber) {
   commitWork(fiber.child)
   commitWork(fiber.sibling)
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243
 ```
 
 ## 加入 diff 对比
@@ -367,7 +359,7 @@ function commitWork(fiber) {
 要实现对比，就需要保存上一次的`fiber数据`，添加`currentRoot`变量保存。
 在对比阶段是不修改节点的。所以要定义 `deletions` 收集要删除的节点，在渲染阶段删除。
 
-```js
+```javascript
 // 上一次提交的树
 let currentRoot = null
 // 对比后要删除的节点
@@ -401,12 +393,11 @@ function commitRoot() {
   currentRoot = wipRoot // 保存 提交的树
   wipRoot = null
 }
-123456789101112131415161718192021222324252627282930313233
 ```
 
 现在开始修改`performUnitOfWork`函数，添加 `reconcileChildren` 函数，实现`fiber节点`对比的操作，并在该阶段对节点打上标签，以判断节点的操作类型。
 
-```js
+```javascript
 /**
  * 操作节点
  * @param {*} fiber
@@ -541,12 +532,11 @@ function reconcileChildren(wipFiber, elements) {
     index++;
   }
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134
 ```
 
 最后就是修改提交操作，通过前面定义的标签，来判断如何处理节点。
 
-```js
+```javascript
 /**
  * 修改DOM节点
  * @param {*} fiber 
@@ -627,12 +617,11 @@ function updateDom(dom, prevProps, nextProps) {
       }
     });
 }
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980
 ```
 
 我们实现了一个全新的属性对比方法，修改`createDom`函数，使用`updateDom`。
 
-```js
+```javascript
 /**
  * 创建节点
  * @param {*} fiber
@@ -653,14 +642,13 @@ function createDom(fiber) {
   //   });
   return dom;
 }
-1234567891011121314151617181920
 ```
 
 ## 加入组件
 
 组件和一般的DOM有两点不同，**组件中的`fiber节点`是没有真实DOM的**，**组件的子节点是通过执行后返回的**。所以在`performUnitOfWork`函数中，添加根据`fiber节点`类型来分别处理，真实DOM创建和子DOM获取的方式。
 
-```js
+```javascript
 /**
  * 操作节点
  * @param {*} fiber
@@ -755,14 +743,12 @@ function updateFunctionComponent(fiber) {
   // 子节点对比
   reconcileChildren(fiber, children);
 }
-
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495
 ```
 
 接下来就是提交阶段，因为组件没有真实DOM，那么子节点就需要放入组件节点，父节点真实DOM中。
 删除是同样的道理，没有真实DOM，就删除子节点的真实DOM。
 
-```js
+```javascript 
 /**
  * 修改DOM节点
  * @param {*} fiber 
@@ -811,14 +797,13 @@ function commitDeletion(fiber, domParent){
     commitDeletion(fiber.child, domParent)
   }
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748
 ```
 
 ## 加入useState
 
 我们知道`useState`是在函数运行的时候调用的。为了实现`state`一直保存状态，我们就需要在调用之前初始化一些全局变量，还需要在`fiber节点`上初始化`hooks`数据以保存上一次的状态。
 
-```js
+```javascript
 let wipFiber = null;// 本次操作的节点
 let hookIndex = null;// state的索引
 /**
@@ -834,14 +819,13 @@ function updateFunctionComponent(fiber) {
   const children = [fiber.type(fiber.props)];
   reconcileChildren(fiber, children);
 }
-123456789101112131415
 ```
 
 要完整的实现 `useState` 需要
 **1. 状态数据的获取和保存。**
 当函数调用`useState`时，先判断之前的`fiber节点`是否有值。如果有值就使用之前的值，然后把值放入当前节点。（–注意一个函数可以有多个钩子，通过执行顺序来添加索引）
 
-```js
+```javascript
 /**
  * 钩子函数
  * @param {*} initial
@@ -863,13 +847,12 @@ ReactDOM.useState = function(initial) {
   // 返回对应的值
   return [hook.state]
 }
-123456789101112131415161718192021
 ```
 
 **2. 修改状态动作的接收和执行。**
 为了实现更新状态，我们先定义一个`setState` **接收修改状态的动作**。并把这个动作加入`hooks`的队列中。然后，我们执行与`render`函数中类似的操作，将本次操作的`fiber节点`设置为下一个工作单元，进入循环。当再次执行`useState`时，获取之前 **接收修改状态的动作** 并全部执行，修改当前状态的值，最后返回最新的状态数据。
 
-```js
+```javascript
 /**
  * 钩子函数
  * @param {*} initial
@@ -921,12 +904,11 @@ ReactDOM.useState = function(initial) {
   // 返回最新值
   return [hook.state,setState]
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051
 ```
 
 测试使用
 
-```js
+```jsx
 // ----------------- 使用 -----------------
 const APPS = ()=>{
   const [state, setState] = ReactDOM.useState(1)
@@ -953,7 +935,6 @@ const APPP = ()=>{
     )
   }
 ReactDOM.render( <APP />,document.getElementById('root'));
-1234567891011121314151617181920212223242526
 ```
 
 源码地址: https://github.com/nie-ny/react-simple/tree/main/react-simulation-fiber

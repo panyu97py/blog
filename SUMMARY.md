@@ -40,6 +40,7 @@
     * [redux中的connect用法介绍及原理解析](摘录/react/redux中的connect用法介绍及原理解析.md)
     * [一名 vueCoder 总结的 React 基础](摘录/react/一名%20vueCoder%20总结的%20React%20基础.md)
     * [手写系列-实现一个铂金段位的 React](摘录/react/手写系列-实现一个铂金段位的%20React.md)
+    * [实现一个简单的react框架 -- (Fiber架构)](摘录/react/实现一个简单的react框架%20--%20(Fiber架构).md)
   - React Native
     * [React Native之配置URL方案](摘录/react-native/React%20Native之配置URL方案.md)
     * [ReactNative_ios14看不见图片](摘录/react-native/ReactNative_ios14看不见图片.md)
