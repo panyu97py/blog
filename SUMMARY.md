@@ -56,6 +56,7 @@
     * [手把手写一个检测vue单文件template是否有合并冲突的webpack插件](摘录/webpack&babel/手把手写一个检测vue单文件template是否有合并冲突的webpack插件.md)
   - 其他
     * [使用Travis-ci自动SSH部署vue代码](摘录/其他/使用Travis-ci自动SSH部署vue代码.md)
+    * [前端进阶](摘录/其他/前端进阶.md)
   - 微前端
     - 从0实现一个前端微服务
       * [从0实现一个single-spa的前端微服务（上）](摘录/微前端/从0实现一个前端微服务/从0实现一个single-spa的前端微服务（上）.md)
