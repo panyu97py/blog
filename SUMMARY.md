@@ -32,7 +32,6 @@
     * [Android 和 IOS 使用 WebViewJavascriptBridge 进行交互方法](摘录/javascript/Android%20和%20IOS%20使用%20WebViewJavascriptBridge%20进行交互方法.md)
     * [手写一个虚拟DOM库，彻底让你理解diff算法](摘录/javascript/手写一个虚拟DOM库，彻底让你理解diff算法.md)
     * [观察者模式 vs 发布订阅模式，千万不要再混淆了](摘录/javascript/观察者模式%20vs%20发布订阅模式，千万不要再混淆了.md)
-    * [JavaScript设计模式es6（23种）](摘录/javascript/JavaScript设计模式es6（23种）.md)
   - Linux
     - [Nginx](摘录/linux/Nginx/Nginx.md)
   - React
