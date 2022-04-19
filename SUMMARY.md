@@ -56,6 +56,9 @@
     * [使用babel插件监控是否遗留合并冲突代码](摘录/webpack&babel/使用babel插件监控是否遗留合并冲突代码.md)
     * [基于webpack修改插件源码，使用自定义文件替换node_modules里面的源码文件](摘录/webpack&babel/基于webpack修改插件源码，使用自定义文件替换node_modules里面的源码文件.md)
     * [手把手写一个检测vue单文件template是否有合并冲突的webpack插件](摘录/webpack&babel/手把手写一个检测vue单文件template是否有合并冲突的webpack插件.md)
+  - rollup
+    
+    - [用rollup打包typescript编写的库](摘录/rollup/用rollup打包typescript编写的库.md)
   - 其他
     * [使用Travis-ci自动SSH部署vue代码](摘录/其他/使用Travis-ci自动SSH部署vue代码.md)
     * [前端进阶](摘录/其他/前端进阶.md)
